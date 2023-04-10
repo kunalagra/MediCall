@@ -1,0 +1,19 @@
+// Base
+@import "./base/variables";
+@import "./base/mixins";
+@import "./base/reset";
+@import "./base/common";
+
+
+// Components
+@import "./components/header";
+@import "./components/footer";
+@import "./components/backtop";
+@import "./components/form";
+
+// Pages
+@import "./pages/dashboard";
+@import "./pages/diseaseprediction";
+@import "./pages/doctors";
+@import "./pages/homepage";
+@import "./pages/medicines";
