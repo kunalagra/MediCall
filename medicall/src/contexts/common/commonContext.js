@@ -7,7 +7,14 @@ const commonContext = createContext();
 // Initial State
 const initialState = {
     isFormOpen: false,
-    formUserInfo: '',
+    formUserInfo: {
+        username: localStorage.getItem("username", ""),
+        usertype: localStorage.getItem("usertype", "patient"),
+        gender: localStorage.getItem("gender", "male"),
+        phone: localStorage.getItem("phone", ""),
+        email: localStorage.getItem("email", ""),
+        passwd: localStorage.getItem("passwd", "")
+    },
     isSearchOpen: false,
     searchResults: []
 };

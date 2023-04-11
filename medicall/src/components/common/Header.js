@@ -34,7 +34,7 @@ const Header = () => {
                         </h2>
 
                         {
-                            formUserInfo? (
+                            (formUserInfo.username!==null && formUserInfo.username!=="")? (
 
                                 <nav className="nav_actions">
 
@@ -72,7 +72,7 @@ const Header = () => {
                                             <AiOutlineUser />
                                         </span>
                                         <div className="dropdown_menu">
-                                            <h4>Hello! {formUserInfo && <Link to="*">&nbsp;{formUserInfo}</Link>}</h4>
+                                            <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn'>
                                                 Profile

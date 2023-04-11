@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import commonContext from '../contexts/common/commonContext';
 
 const useForm = () => {
-    const { toggleForm, setFormUserInfo } = useContext(commonContext);
+    const { setFormUserInfo } = useContext(commonContext);
     const [inputValues, setInputValues] = useState({});
 
     // handling input-values
@@ -24,8 +24,8 @@ const useForm = () => {
         e.preventDefault();
         setInputValues({});
         setFormUserInfo(loggedUserInfo);
-        toggleForm(false);
-        alert(`Hello ${loggedUserInfo}, you're successfully logged-in.`);
+        // toggleForm(false);
+        alert(inputValues);
     };
 
     return { inputValues, handleInputValues, handleFormSubmit };
