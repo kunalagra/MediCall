@@ -6,13 +6,11 @@ import { TbStethoscope } from 'react-icons/tb';
 import { MdDashboard } from 'react-icons/md';
 import commonContext from '../../contexts/common/commonContext';
 import AccountForm from '../form/Accountform';
-// import { dropdownMenu } from '../../data/headerData';
-// import SearchBar from './SearchBar';
 
 
 const Header = () => {
 
-    const { formUserInfo, toggleForm } = useContext(commonContext);
+    const { formUserInfo, toggleForm, setFormUserInfo } = useContext(commonContext);
     const [isSticky, setIsSticky] = useState(false);
 
     // handle the sticky-header
@@ -34,77 +32,66 @@ const Header = () => {
                         <h2 className="nav_logo">
                             <Link to="/">Medicall</Link>
                         </h2>
-                        <nav className="nav_actions">
 
-                            <div className="dash_action">
-                                <span>
-                                    <MdDashboard />
-                                </span>
-                                <div className="tooltip">Dashboard</div>
-                            </div>
+                        {
+                            formUserInfo? (
 
-                            <div className="doctor_action">
-                                <span>
-                                    <TbStethoscope />
-                                </span>
-                                <div className="tooltip">Doctors</div>
-                            </div>
+                                <nav className="nav_actions">
 
-                            <div className="model_action">
-                                <span>
-                                    <BsRobot />
-                                </span>
-                                <div className="tooltip">Disease Prediction</div>
-                            </div>
+                                    <div className="dash_action">
+                                        <span>
+                                            <MdDashboard />
+                                        </span>
+                                        <div className="tooltip">Dashboard</div>
+                                    </div>
 
-                            <div className="medicine_action">
-                                <Link to="/">
-                                    <AiOutlineMedicineBox />
-                                    <span className="badge">20% off</span>
-                                </Link>
-                                <div className="tooltip">Medicines</div>
-                            </div>
+                                    <div className="doctor_action">
+                                        <span>
+                                            <TbStethoscope />
+                                        </span>
+                                        <div className="tooltip">Doctors</div>
+                                    </div>
 
-                            <div className="user_action">
-                                <span>
-                                    <AiOutlineUser />
-                                </span>
-                                <div className="dropdown_menu">
-                                    <h4>Hello! {formUserInfo && <Link to="*">&nbsp;{formUserInfo}</Link>}</h4>
-                                    <p>Access account and manage orders</p>
-                                    {
-                                        !formUserInfo? (
-                                            <button
-                                                type="button"
-                                                onClick={() => toggleForm(true)}
-                                            >
-                                                Login / Signup
+                                    <div className="model_action">
+                                        <span>
+                                            <BsRobot />
+                                        </span>
+                                        <div className="tooltip">Disease Prediction</div>
+                                    </div>
+
+                                    <div className="medicine_action">
+                                        <Link to="/">
+                                            <AiOutlineMedicineBox />
+                                            <span className="badge">20% off</span>
+                                        </Link>
+                                        <div className="tooltip">Medicines</div>
+                                    </div>
+
+                                    <div className="user_action">
+                                        <span>
+                                            <AiOutlineUser />
+                                        </span>
+                                        <div className="dropdown_menu">
+                                            <h4>Hello! {formUserInfo && <Link to="*">&nbsp;{formUserInfo}</Link>}</h4>
+                                            <p>Have a great health!!</p>
+                                            <button type="button" className='profile_btn'>
+                                                Profile
                                             </button>
-                                        ) : (
-                                            <button
-                                                type="button"
-                                            >
+                                            <button type="button" className='logout_btn' onClick={() => setFormUserInfo("")}>
                                                 Logout
                                             </button>
-
-                                        )
-                                    }
-                                    {/* <div className="separator"></div> */}
-                                    {/* <ul>
-                                        {
-                                            dropdownMenu.map(item => {
-                                                const { id, link, path } = item;
-                                                return (
-                                                    <li key={id}>
-                                                        <Link to={path}>{link}</Link>
-                                                    </li>
-                                                );
-                                            })
-                                        }
-                                    </ul> */}
+                                        </div>
+                                    </div>
+                                </nav>
+                            ) : (
+                                <div>
+                                    <button type="button" onClick={toggleForm} className='get_started_btn'>
+                                        Get Started
+                                    </button>
                                 </div>
-                            </div>
-                        </nav>
+                            )
+                        }
+
                     </div>
                 </div>
             </header>

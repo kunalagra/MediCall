@@ -47,14 +47,14 @@
 
 .btn {
     display: inline-block;
-    background-color: rgba($color: #FF0000, $alpha: 0.8);
-    color: #fff;
+    background-color: rgba($color: var(--blue-color-8), $alpha: 0.8);
+    color: var(--blue-color-1);
     padding: 0.8rem 1.5rem;
     border-radius: 3px;
     @include transition(background-color, 0.2s, ease-out);
 
     &:hover {
-        background-color: var(--main-color);
+        background-color: var(--blue-color-7);
     }
 }
 
@@ -65,16 +65,16 @@
 .input_field {
     display: block;
     background: transparent;
-    color: #fff;
+    color: var(--blue-color-1);
     width: 100%;
     padding: 0.65rem 0.55rem;
     font-size: 1rem;
     border-radius: 3px;
-    border: 2px solid rgba($color: #ffffff, $alpha: 0.3);
+    border: 2px solid var(--blue-color-2);
     @include transition(border-color, 0.2s, ease-in-out);
 
     &:focus {
-        border-color: rgba($color: #ffffff, $alpha: 0.6);
+        border-color: var(--white-color);
     }
 }
 
@@ -85,12 +85,12 @@
 
 .badge {
     display: inline-block;
-    color: #fff;
+    color: var(--white-color);
     line-height: 1;
     font-size: 0.9rem;
     font-weight: 600;
     text-align: center;
-    text-shadow: var(--text-shadow);
+    text-shadow: var(--grey-color-2);
     overflow: hidden;
 
     @include devices(xs) {
@@ -105,7 +105,7 @@
 }
 
 .rating_star {
-    color: var(--main-color-2);
+    color: var(--blue-color-8);
     font-size: 0.9rem;
 }
 
@@ -122,8 +122,8 @@
 
         &.active,
         &:hover {
-            background-color: var(--main-color);
-            color: #fff;
+            background-color: var(--blue-color-8);
+            color: var(--blue-color-1);
         }
 
         @include devices(sm) {
@@ -147,13 +147,13 @@
     top: 45px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--bg-color-3);
+    background-color: var(--blue-color-6);
     color: #eee;
     border-radius: 3px;
     user-select: none;
     font-size: 0.8rem;
     padding: 0.4rem 0.6rem;
-    @include bordered(1px, var(--text-muted));
+    @include bordered(1px, var(--grey-color-3));
     @include toggleVisibility(hidden, 0);
     @include transition(all, 0.2s, ease-in-out);
 
@@ -163,7 +163,7 @@
 }
 
 .backdrop {
-    background-color: rgba($color: #000000, $alpha: 0.5);
+    background-color: rgba($color: var(--black-color-2), $alpha: 0.5);
     position: fixed;
     top: 0;
     left: 0;
@@ -189,9 +189,9 @@
 }
 
 .swiper-pagination-bullet {
-    background: var(--text-color) !important;
+    background: var(--grey-color-3) !important;
 }
 
 .swiper-pagination-bullet-active {
-    background: var(--main-color) !important;
+    background: var(--blue-color-8) !important;
 }

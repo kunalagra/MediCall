@@ -1,6 +1,7 @@
 #account_form {
     position: relative;
-    background-color: var(--bg-color);
+    background-color: var(--blue-color-3);
+    color: var(--blue-color-8);
     max-width: 480px;
     width: 100%;
     padding: 3rem;
@@ -12,8 +13,8 @@
     }
 
     .close_btn {
-        background-color: rgba($color: #000000, $alpha: 0.5);
-        color: #eee;
+        background-color: rgba($color: var(--black-color-2), $alpha: 0.5);
+        color: var(--white-color);
         position: absolute;
         top: 0;
         right: 0;
@@ -39,7 +40,7 @@
     }
 
     button {
-        color: #eee;
+        color: var(--blue-color-1);
         opacity: 0.8;
 
         &:hover {
@@ -58,7 +59,8 @@
         top: 50%;
         left: 10px;
         transform-origin: 0 0;
-        background-color: var(--bg-color);
+        background-color: var(--blue-color-3);
+        color: var(--blue-color-1);
         @include margin-y(-8px, -8px);
         @include padding-x(5px, 5px);
         @include transition(transform, 0.2s, ease-in-out);
@@ -66,15 +68,22 @@
 
     .input_field {
         padding: 0.95rem 0.85rem;
+        color: var(--white-color);
 
         &:focus-within ~ .input_label,
         &:valid ~ .input_label {
             transform: scale(0.85) translateY(-185%);
+            color: var(--white-color);
         }
     }
 
     .login_btn {
         @include margin-y(0.8rem, 0.4rem);
+        background-color: var(--blue-color-7);
+
+        &:hover {
+            background-color: var(--blue-color-6);
+        }
     }
 
 }
@@ -112,14 +121,29 @@
 
         &:nth-child(1) {
             background-color: var(--fb-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            &:hover {
+                background-color: var(--fb-hover-color);
+            }
         }
 
         &:nth-child(2) {
             background-color: var(--google-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            &:hover {
+                background-color: var(--google-hover-color);
+            }
         }
 
         &:nth-child(3) {
             background-color: var(--twitter-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            &:hover {
+                background-color: var(--twitter-hover-color);
+            }
         }
 
         @include devices(xs) {

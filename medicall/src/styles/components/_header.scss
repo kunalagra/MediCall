@@ -4,11 +4,12 @@
     left: 0;
     z-index: 99;
     width: 100%;
+    color: var(--blue-color-8);
     @include padding-y(0.8rem, 0.8rem);
     @include transition(background-color, 0.2s, linear);
 
     &.sticky {
-        background-color: var(--black-color);
+        background-color: var(--blue-color-1);
     }
 }
 
@@ -22,7 +23,20 @@
     }
 
     &:hover {
-        color: var(--main-color);
+        color: var(--blue-color-9);
+    }
+}
+
+.get_started_btn {
+    padding: 0.8rem 1rem;
+    border-radius: 4px;
+    color: var(--white-color);
+    background-color: var(--blue-color-4);
+    @include transition(all, 0.3s, ease);
+    
+    &:hover {
+        color: var(--blue-color-1);
+        background-color: var(--blue-color-5);
     }
 }
 
@@ -54,7 +68,7 @@
     }
    
     &:hover {
-        color: var(--main-color);
+        color: var(--blue-color-9);
     }
 
 }
@@ -71,7 +85,7 @@
 
 .user_action:hover {
     span {
-        color: var(--main-color);
+        color: var(--blue-color-9);
     }
 }
 
@@ -83,9 +97,15 @@
         position: absolute;
         top: 0;
         right: -37px;
-        background-color: var(--main-color-2);
+        background-color: var(--blue-color-8);
         border-radius: 40px;    
         font-size: 0.75rem;
+    }
+    
+    &:hover {
+        .badge {
+            background-color: var(--blue-color-9);
+        }
     }
 }
 
@@ -96,11 +116,12 @@
         top: 50px;
         right: 0;
         width: 17.5rem;
-        background-color: var(--bg-color-2);
+        background-color: var(--blue-color-6);
         padding: 1.4rem;
         font-size: 0.9rem;
         border-radius: 3px;
-        @include bordered(1px, var(--text-muted));
+        color: #eee;
+        @include bordered(1px, var(--grey-color-3));
         @include toggleVisibility(hidden, 0);
         @include transition(all, 0.2s, ease-in-out);
 
@@ -109,7 +130,7 @@
             letter-spacing: 0.5px;
 
             a {
-                color: var(--main-color);
+                color: var(--blue-color-2);
                 opacity: 0.95;
 
                 &:hover {
@@ -126,12 +147,26 @@
         button {
             margin-top: 1rem;
             padding: 0.8rem 1rem;
-            @include bordered(1px, var(--text-muted));
+            border-radius: 4px;
+            @include bordered(1px, var(--grey-color-2));
             @include transition(all, 0.3s, ease);
 
             &:hover {
-                color: #eee;
-                border-color: #eee;
+                color: var(--blue-color-1);
+                border-color: var(--blue-color-3);
+                background-color: var(--blue-color-3);
+            }
+        }
+
+        .profile_btn {
+            color: var(--blue-color-1);
+            border-color: var(--blue-color-3);
+            background-color: var(--blue-color-3);
+            margin-right: 10px;
+            
+            &:hover {
+                border-color: var(--blue-color-5);
+                background-color: var(--blue-color-5);
             }
         }
 

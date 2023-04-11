@@ -1,5 +1,6 @@
 #footer {
-    background-color: var(--black-color);
+    background-color: var(--blue-color-1);
+    color: var(--blue-color-8);
     @include padding-y(3rem, 2rem);
 
     .separator {
@@ -10,7 +11,6 @@
 
 .footer_wrapper {
     grid-template-columns: 1.4fr repeat(3, 1fr);
-    // grid-template-columns: 1fr;
     justify-items: center;
     gap: 2rem;
 
