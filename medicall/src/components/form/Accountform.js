@@ -13,6 +13,7 @@ const AccountForm = () => {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [passwd, setPasswd] = useState("");
+    const [specialization, setSpecialization] = useState("");
     const [isInvEmail, setIsInvEmail] = useState(false);
     const [isInvPass, setIsInvPass] = useState(false);
     const [isAlert, setIsAlert] = useState("");
@@ -29,6 +30,7 @@ const AccountForm = () => {
         setPhone("");
         setEmail("");
         setPasswd("");
+        setSpecialization("");
     });
 
     useScrollDisable(isFormOpen);
@@ -73,6 +75,7 @@ const AccountForm = () => {
             // localStorage.setItem("phone", phone);
             // localStorage.setItem("email", email);
             // localStorage.setItem("passwd", passwd);
+            // localStorage.setItem("specialization", specialization);
             // console.log(username, usertype, gender, phone, email, passwd);
             
             setFormUserInfo({username, usertype, gender, phone, email, passwd});
@@ -158,6 +161,20 @@ const AccountForm = () => {
                                                 />
                                                 <label className="input_label">Username</label>
                                             </div>
+
+                                            { usertype==="doctor" && (
+                                                <div className="input_box">
+                                                    <input
+                                                        type="text"
+                                                        name="specialization"
+                                                        className="input_field"
+                                                        value={specialization}
+                                                        onChange={(e) => setSpecialization(e.target.value)}
+                                                        required
+                                                    />
+                                                    <label className="input_label">Specialization {"(Eg. Cancer Surgeon)"}</label>
+                                                </div>
+                                            )}
 
                                             <div className="input_box">
                                                 <label className="radio_label">Gender</label>

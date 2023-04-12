@@ -18,6 +18,10 @@
 }
 
 .nav_logo {
+    // a {
+    //     font-weight: bolder;
+    // }
+
     @include devices(xs) {
         font-size: 1.2rem;
     }
@@ -99,7 +103,7 @@
         right: -37px;
         background-color: var(--blue-color-8);
         border-radius: 40px;    
-        font-size: 0.75rem;
+        font-size: 0.6rem;
     }
     
     &:hover {

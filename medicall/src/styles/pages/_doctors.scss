@@ -1,0 +1,150 @@
+.MuiDataGrid-root {
+
+    width: min(980px, 90vw);
+    border: none;
+
+    .MuiDataGrid-cell {
+        border: none;
+        outline: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 12px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: transparent;
+    }
+
+    .name-column--cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .social-column--cell {
+        padding: 5px;
+        @include flexbox(space-evenly, center);
+
+        .social-icon {
+            color: var(--blue-color-5);
+        }
+    }
+
+    .appointment-column--cell {
+        padding: 5px;
+        @include flexbox(space-evenly, center);
+
+        button {
+            background-color: var(--blue-color-3);
+            padding: 0.7rem 1rem;
+            border-radius: 4px;
+            color: var(--white-color);
+            transition: all 0.3s ease;
+            
+            &:hover, &:active {
+                background-color: var(--blue-color-5);
+            }
+        }
+    }
+}
+
+.MuiDataGrid-panelContent {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.MuiDataGrid-filterForm {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.MuiDataGrid-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-edit-button > button {
+    background-color: var(--green-color-1);
+    border: 1px solid var(--green-color-3);
+    
+    &:hover, &:active {
+        background-color: var(--green-color-2);
+    }
+}
+
+.table-delete-button > button {
+    background-color: var(--red-color-1);
+    border: 1px solid var(--red-color-3);
+    
+    &:hover, &:active {
+        background-color: var(--red-color-3);
+    }
+}
+
+.MuiDataGrid-toolbarContainer > button {
+    background-color: var(--blue-color-3);
+    border: 1px solid var(--blue-color-5);
+    color: var(--white-color);
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin: 8px 5px;
+    font-family: 'Montserrat', sans-serif;
+    
+    &:hover, &:active {
+        background-color: var(--blue-color-5);
+    }
+
+}
+
+#doctors-page {
+    margin: 100px 0;
+
+    .doctor-details {
+        min-height: 600px;
+        padding: 10px;
+        width: min(1000px, 100vw);
+        margin: 0 auto;
+        color: var(--blue-color-8);
+        
+        .doctor-details-table {
+            min-height: 500px;
+            max-height: 500px;
+            box-shadow: 0 0 10px 1px var(--blue-color-2);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .meet-details {
+            margin: 10px 0 25px 0;
+            @include flexbox(flex-start, center);
+
+            .create-meet {
+                background-color: var(--blue-color-2);
+                color: var(--white-color);
+                padding: 1rem 2rem;
+                margin: 1rem;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 10px 1px var(--blue-color-1);
+                
+                &:hover, &:active {
+                    background-color: var(--blue-color-4);
+                }
+            }
+        }
+
+    }
+
+}

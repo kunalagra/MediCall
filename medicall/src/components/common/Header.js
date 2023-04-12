@@ -6,12 +6,14 @@ import { TbStethoscope } from 'react-icons/tb';
 import { MdDashboard } from 'react-icons/md';
 import commonContext from '../../contexts/common/commonContext';
 import AccountForm from '../form/Accountform';
+import { useNavigate } from 'react-router-dom';
 
 
 const Header = () => {
 
     const { formUserInfo, toggleForm, userLogout } = useContext(commonContext);
     const [isSticky, setIsSticky] = useState(false);
+    const navigate = useNavigate();
 
     // handle the sticky-header
     useEffect(() => {
@@ -39,31 +41,31 @@ const Header = () => {
                                 <nav className="nav_actions">
 
                                     <div className="dash_action">
-                                        <span>
+                                    <span onClick={() => navigate("/")}>
                                             <MdDashboard />
                                         </span>
                                         <div className="tooltip">Dashboard</div>
                                     </div>
 
                                     <div className="doctor_action">
-                                        <span>
+                                        <span onClick={() => navigate("/doctors")}>
                                             <TbStethoscope />
                                         </span>
                                         <div className="tooltip">Doctors</div>
                                     </div>
 
                                     <div className="model_action">
-                                        <span>
+                                        <span onClick={() => navigate("/disease-prediction")}>
                                             <BsRobot />
                                         </span>
                                         <div className="tooltip">Disease Prediction</div>
                                     </div>
 
                                     <div className="medicine_action">
-                                        <Link to="/">
+                                        <span onClick={() => navigate("/buy-medicines")}>
                                             <AiOutlineMedicineBox />
                                             <span className="badge">20% off</span>
-                                        </Link>
+                                        </span>
                                         <div className="tooltip">Medicines</div>
                                     </div>
 
