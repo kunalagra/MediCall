@@ -119,6 +119,7 @@
         border-radius: 3px;
         cursor: pointer;
         @include transition(all, 0.2s, ease-out);
+        color: var(--blue-color-8);
 
         &.active,
         &:hover {
