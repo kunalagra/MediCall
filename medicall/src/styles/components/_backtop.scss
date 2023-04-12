@@ -3,7 +3,7 @@
     bottom: 13vh;
     right: 1.5vw;
     z-index: 99;
-    background-color: var(--blue-color-8);
+    background-color: var(--blue-color-9);
     color: var(--white-color);
     font-size: 1.4rem;
     padding: 0.6rem;
@@ -13,6 +13,10 @@
     @include centered;
     @include toggleVisibility(hidden, 0);
     @include transition($duration: 0.3s);
+
+    &:hover {
+        background-color: var(--blue-color-8);
+    }
 
     &.popped {
         transform: scale(1);

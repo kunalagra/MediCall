@@ -179,13 +179,33 @@
                 margin-bottom: 0.5rem;
             }
 
-            a:hover {
-                color: #eee;
+            .cart-icon {
+                font-size: 1.4em;
             }
+
+            a {
+                color: var(--blue-color-1);
+                margin-left: 10px;
+
+                &:hover {
+                    color: var(--white-color);
+                    text-decoration: underline;
+                }
+            }
+
+            .cart_badge {
+                background-color: var(--blue-color-3);
+                font-size: 0.8rem;
+                border-radius: 3px;
+                margin-left: 10px;
+                padding: 0.2rem 0.4rem;
+                color: var(--white-color);
+            }
+
         }
     }
 
-    &:hover .dropdown_menu {
+    &:hover .dropdown_menu, &:active .dropdown_menu {
         @include toggleVisibility(visible, 1);
     }
 }

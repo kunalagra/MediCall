@@ -7,11 +7,14 @@ import { MdDashboard } from 'react-icons/md';
 import commonContext from '../../contexts/common/commonContext';
 import AccountForm from '../form/Accountform';
 import { useNavigate } from 'react-router-dom';
+import cartContext from '../../contexts/cart/cartContext';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 
 const Header = () => {
 
     const { formUserInfo, toggleForm, userLogout } = useContext(commonContext);
+    const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
 
@@ -82,6 +85,14 @@ const Header = () => {
                                             <button type="button" className='logout_btn' onClick={() => userLogout()}>
                                                 Logout
                                             </button>
+                                            <div className="separator"></div>
+                                            <ul>
+                                                <li>
+                                                    <AiOutlineShoppingCart className='cart-icon' />
+                                                    <Link to="/my-cart">My cart</Link>
+                                                    <span className='cart_badge'>{cartItems.length}</span>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </nav>

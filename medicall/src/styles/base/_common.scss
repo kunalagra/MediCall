@@ -101,7 +101,7 @@
 
 .separator {
     @include margin-y(1rem, 1rem);
-    border-top: 1px solid rgba($color: #666666, $alpha: 0.6);
+    border-top: 1px solid var(--grey-color-2);
 }
 
 .rating_star {
@@ -123,7 +123,7 @@
         &.active,
         &:hover {
             background-color: var(--blue-color-8);
-            color: var(--blue-color-1);
+            color: var(--white-color);
         }
 
         @include devices(sm) {

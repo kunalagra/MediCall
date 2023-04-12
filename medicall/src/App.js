@@ -1,4 +1,5 @@
 import { CommonProvider } from './contexts/common/commonContext';
+import { CartProvider } from './contexts/cart/cartContext';
 import Header from './components/common/Header';
 import RouterRoutes from './routes/RouterRoutes';
 import Footer from './components/common/Footer';
@@ -9,10 +10,12 @@ const App = () => {
   return (
     <>
       <CommonProvider>
-        <Header />
-        <RouterRoutes />
-        <Footer />
-        <BackTop />
+        <CartProvider>
+          <Header />
+          <RouterRoutes />
+          <Footer />
+          <BackTop />
+        </CartProvider>
       </CommonProvider>
     </>
   );

@@ -74,24 +74,6 @@
     text-overflow: ellipsis;
 }
 
-.table-edit-button > button {
-    background-color: var(--green-color-1);
-    border: 1px solid var(--green-color-3);
-    
-    &:hover, &:active {
-        background-color: var(--green-color-2);
-    }
-}
-
-.table-delete-button > button {
-    background-color: var(--red-color-1);
-    border: 1px solid var(--red-color-3);
-    
-    &:hover, &:active {
-        background-color: var(--red-color-3);
-    }
-}
-
 .MuiDataGrid-toolbarContainer > button {
     background-color: var(--blue-color-3);
     border: 1px solid var(--blue-color-5);
@@ -130,17 +112,17 @@
             @include flexbox(flex-start, center);
 
             .create-meet {
-                background-color: var(--blue-color-2);
+                background-color: var(--grey-color-3);
                 color: var(--white-color);
                 padding: 1rem 2rem;
                 margin: 1rem;
                 border-radius: 8px;
                 cursor: pointer;
                 transition: all 0.3s ease-in-out;
-                box-shadow: 0 0 10px 1px var(--blue-color-1);
+                box-shadow: 0 0 10px 1px var(--grey-color-2);
                 
                 &:hover, &:active {
-                    background-color: var(--blue-color-4);
+                    background-color: var(--blue-color-7);
                 }
             }
         }
