@@ -14,19 +14,19 @@ const commonReducer = (state, action) => {
                 formUserInfo: action.payload.info
             };
 
-
-        case 'TOGGLE_SEARCH':
+        case 'USER_LOGOUT':
             return {
                 ...state,
-                isSearchOpen: action.payload.toggle
+                formUserInfo: {
+                    username: "",
+                    usertype: "",
+                    gender: "",
+                    phone: "",
+                    email: "",
+                    passwd: "" 
+                }
             };
 
-
-        case 'SET_SEARCH_RESULTS':
-            return {
-                ...state,
-                searchResults: action.payload.results
-            };
 
 
         default:

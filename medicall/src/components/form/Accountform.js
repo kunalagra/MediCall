@@ -2,11 +2,11 @@ import React, { useContext, useRef, useState } from 'react';
 import commonContext from '../../contexts/common/commonContext';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 const AccountForm = () => {
 
-    const { isFormOpen, toggleForm } = useContext(commonContext);
+    const { isFormOpen, toggleForm, setFormUserInfo } = useContext(commonContext);
     const [username, setUsername] = useState("");
     const [usertype, setUsertype] = useState("patient");
     const [gender, setGender] = useState("male");
@@ -15,11 +15,20 @@ const AccountForm = () => {
     const [passwd, setPasswd] = useState("");
     const [isInvEmail, setIsInvEmail] = useState(false);
     const [isInvPass, setIsInvPass] = useState(false);
+    const [isAlert, setIsAlert] = useState("");
+    const [alertCont, setAlertCont] = useState("");
+    const [isSuccessLoading, setIsSuccessLoading] = useState(false);
 
     const formRef = useRef();
 
     useOutsideClose(formRef, () => {
         toggleForm(false);
+        setUsername("");
+        setUsertype("patient");
+        setGender("male");
+        setPhone("");
+        setEmail("");
+        setPasswd("");
     });
 
     useScrollDisable(isFormOpen);
@@ -47,17 +56,46 @@ const AccountForm = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        if( isInvEmail || isInvPass ) {
+        if ( isInvEmail || isInvPass ) {
             return;
         }
-        localStorage.clear();
-        localStorage.setItem("username", username);
-        localStorage.setItem("usertype", usertype);
-        localStorage.setItem("gender", gender);
-        localStorage.setItem("phone", phone);
-        localStorage.setItem("email", email);
-        localStorage.setItem("passwd", passwd);
-        toggleForm(false);
+
+        setIsSuccessLoading(true);
+
+        // Sample loader for fetching the data --> TODO: replace it with actual fetcher
+        setTimeout(() => {
+            setIsSuccessLoading(false);
+            
+            // localStorage.clear();
+            // localStorage.setItem("username", username);
+            // localStorage.setItem("usertype", usertype);
+            // localStorage.setItem("gender", gender);
+            // localStorage.setItem("phone", phone);
+            // localStorage.setItem("email", email);
+            // localStorage.setItem("passwd", passwd);
+            // console.log(username, usertype, gender, phone, email, passwd);
+            
+            setFormUserInfo({username, usertype, gender, phone, email, passwd});
+            if (isSignupVisible) {
+                setIsAlert("success");
+                setAlertCont("Signup Successful");
+                setTimeout(() => {
+                    setIsAlert("");
+                    setIsSignupVisible(false);
+                }, 1500);
+            } 
+            
+            else {
+                setIsAlert("success");
+                setAlertCont("Login Successful");
+                setTimeout(() => {
+                    setIsAlert("");
+                    toggleForm(false);
+                }, 1500);
+            }
+        
+        }, 1500);
+
     }
 
 
@@ -68,6 +106,7 @@ const AccountForm = () => {
                     <div className="backdrop">
                         <div className="modal_centered">
                             <form id="account_form" ref={formRef} onSubmit={handleFormSubmit}>
+                                { isAlert!=="" && <Alert severity={isAlert} className='form_sucess_alert'>{alertCont}</Alert> }
 
                                 {/*===== Form-Header =====*/}
                                 <div className="form_head">
@@ -205,7 +244,14 @@ const AccountForm = () => {
                                         type="submit"
                                         className="btn login_btn"
                                     >
-                                        {isSignupVisible ? 'Signup' : 'Login'}
+                                        {isSuccessLoading? (
+                                            <CircularProgress
+                                                size={24}
+                                                sx={{ color: "#f5f5f5" }}
+                                            />
+                                        ) : (
+                                            isSignupVisible ? 'Signup' : 'Login'
+                                        )}
                                     </button>
 
                                 </div>

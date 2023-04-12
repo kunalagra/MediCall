@@ -10,7 +10,7 @@ import AccountForm from '../form/Accountform';
 
 const Header = () => {
 
-    const { formUserInfo, toggleForm, setFormUserInfo } = useContext(commonContext);
+    const { formUserInfo, toggleForm, userLogout } = useContext(commonContext);
     const [isSticky, setIsSticky] = useState(false);
 
     // handle the sticky-header
@@ -74,10 +74,10 @@ const Header = () => {
                                         <div className="dropdown_menu">
                                             <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
                                             <p>Have a great health!!</p>
-                                            <button type="button" className='profile_btn'>
+                                            <button type="button" className='profile_btn' onClick={() => console.log(formUserInfo)}>
                                                 Profile
                                             </button>
-                                            <button type="button" className='logout_btn' onClick={() => setFormUserInfo("")}>
+                                            <button type="button" className='logout_btn' onClick={() => userLogout()}>
                                                 Logout
                                             </button>
                                         </div>

@@ -31,6 +31,12 @@
             opacity: 1;
         }
     }
+
+    .form_success_alert {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 .form_head {
@@ -120,6 +126,7 @@
 
     .login_btn {
         @include margin-y(0.8rem, 0.4rem);
+        position: relative;
         background-color: var(--blue-color-7);
 
         &:hover {

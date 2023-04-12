@@ -8,15 +8,13 @@ const commonContext = createContext();
 const initialState = {
     isFormOpen: false,
     formUserInfo: {
-        username: localStorage.getItem("username", ""),
-        usertype: localStorage.getItem("usertype", "patient"),
-        gender: localStorage.getItem("gender", "male"),
-        phone: localStorage.getItem("phone", ""),
-        email: localStorage.getItem("email", ""),
-        passwd: localStorage.getItem("passwd", "")
-    },
-    isSearchOpen: false,
-    searchResults: []
+        username: localStorage.getItem("username")? localStorage.getItem("username") : "",
+        usertype: localStorage.getItem("usertype")? localStorage.getItem("usertype", "") : "",
+        gender: localStorage.getItem("gender")? localStorage.getItem("gender", "") : "",
+        phone: localStorage.getItem("phone")? localStorage.getItem("phone", "") : "",
+        email: localStorage.getItem("email")? localStorage.getItem("email", "") : "",
+        passwd: localStorage.getItem("passwd")? localStorage.getItem("passwd", "") : "" 
+    }
 };
 
 // Common-Provider Component
@@ -39,28 +37,18 @@ const CommonProvider = ({ children }) => {
         });
     };
 
-    // Search actions
-    const toggleSearch = (toggle) => {
+    const userLogout = () => {
         return dispatch({
-            type: 'TOGGLE_SEARCH',
-            payload: { toggle }
+            type: 'USER_LOGOUT'
         });
-    };
-
-    const setSearchResults = (results) => {
-        return dispatch({
-            type: 'SET_SEARCH_RESULTS',
-            payload: { results }
-        });
-    };
+    }
 
     // Context values
     const values = {
         ...state,
         toggleForm,
         setFormUserInfo,
-        toggleSearch,
-        setSearchResults
+        userLogout
     };
 
     return (
