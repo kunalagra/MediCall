@@ -5,7 +5,7 @@
     align-items: start;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 500;
 
     @include devices(lg) {
         grid-template-columns: 0.8fr;
