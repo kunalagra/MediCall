@@ -199,7 +199,12 @@
         &:hover {
             background-color: var(--yellow-color-6);
         }
+        
+        &.active {
+            background-color: var(--blue-color-7);
+        }
     }
+
 }
 
 

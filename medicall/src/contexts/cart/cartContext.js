@@ -43,13 +43,20 @@ const CartProvider = ({ children }) => {
         });
     };
 
+    const clearCart = () => {
+        return dispatch({
+            type: 'CLEAR_CART'
+        })
+    }
+
     // Context values
     const values = {
         ...state,
         addItem,
         removeItem,
         incrementItem,
-        decrementItem
+        decrementItem,
+        clearCart
     };
 
     return (

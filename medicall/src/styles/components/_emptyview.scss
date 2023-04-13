@@ -1,0 +1,25 @@
+.empty_view_wrapper {
+    @include centered;
+    gap: 2rem;
+}
+
+.empty_view_icon {
+    font-size: 10rem;
+    color: var(--main-color-2);
+}
+
+.empty_view_img {
+    width: min(400px, 90vw);
+
+    img {
+        border-radius: 80px;
+    }
+}
+
+.empty_msg {
+    text-align: center;
+}
+
+.start_shopping_btn {
+    background-color: var(--blue-color-9);
+}

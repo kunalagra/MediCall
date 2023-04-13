@@ -6,7 +6,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 2,
@@ -14,8 +15,9 @@ const medicinesData = [
             "/medicines/prod1.jpg"
         ],
         title: "New Medicine",
-        price: 79,
-        path: "/"
+        price: 69,
+        path: "/",
+        quantity: 0
     },
     {
         id: 3,
@@ -24,16 +26,18 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 4,
         images: [
             "/medicines/prod1.jpg"
         ],
-        title: "New Medicine",
+        title: "Latest Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 5,
@@ -42,16 +46,18 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 6,
         images: [
             "/medicines/prod1.jpg"
         ],
-        title: "New Medicine",
+        title: "Top Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 7,
@@ -60,7 +66,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 8,
@@ -69,16 +76,18 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 9,
         images: [
             "/medicines/prod1.jpg"
         ],
-        title: "New Medicine",
-        price: 79,
-        path: "/"
+        title: "Tada Medicine",
+        price: 59,
+        path: "/",
+        quantity: 0
     },
     {
         id: 10,
@@ -87,7 +96,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 11,
@@ -96,7 +106,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 12,
@@ -105,7 +116,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 13,
@@ -114,7 +126,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 14,
@@ -123,7 +136,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
     {
         id: 15,
@@ -132,7 +146,8 @@ const medicinesData = [
         ],
         title: "New Medicine",
         price: 79,
-        path: "/"
+        path: "/",
+        quantity: 0
     },
 ];
 

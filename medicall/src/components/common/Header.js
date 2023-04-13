@@ -17,6 +17,7 @@ const Header = () => {
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
+    const [showDropdown, setShowDropdown] = useState(false);
 
     // handle the sticky-header
     useEffect(() => {
@@ -73,23 +74,29 @@ const Header = () => {
                                     </div>
 
                                     <div className="user_action">
-                                        <span>
+                                        <span onClick={() => setShowDropdown(!showDropdown)}>
                                             <AiOutlineUser />
                                         </span>
-                                        <div className="dropdown_menu">
+                                        <div className={`dropdown_menu ${showDropdown && "active"}`}>
                                             <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
                                             <p>Have a great health!!</p>
-                                            <button type="button" className='profile_btn' onClick={() => console.log(formUserInfo)}>
+                                            <button type="button" className='profile_btn' onClick={() => {
+                                                setShowDropdown(false);
+                                                console.log(formUserInfo);
+                                            }}>
                                                 Profile
                                             </button>
-                                            <button type="button" className='logout_btn' onClick={() => userLogout()}>
+                                            <button type="button" className='logout_btn' onClick={() => {
+                                                setShowDropdown(false);
+                                                userLogout();
+                                            }}>
                                                 Logout
                                             </button>
                                             <div className="separator"></div>
                                             <ul>
                                                 <li>
                                                     <AiOutlineShoppingCart className='cart-icon' />
-                                                    <Link to="/my-cart">My cart</Link>
+                                                    <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My cart</Link>
                                                     <span className='cart_badge'>{cartItems.length}</span>
                                                 </li>
                                             </ul>

@@ -39,10 +39,15 @@ const MedicineDetails = () => {
 
     const navigate = useNavigate();
 
+    const [btnActive, setBtnActive] = useState(false);
+
 
     // handling Add-to-cart
     const handleAddItem = () => {
+        setBtnActive(true);
         addItem(product);
+
+        setTimeout(() => setBtnActive(false), 3000);
     };
 
 
@@ -128,10 +133,10 @@ const MedicineDetails = () => {
                                 </button>
                                 <button
                                     type="button"
-                                    className="btn add_to_cart_btn"
+                                    className={`btn add_to_cart_btn ${btnActive && "active"}`}
                                     onClick={handleAddItem}
                                 >
-                                    Add to cart
+                                    {btnActive ? 'Added' : 'Add to cart'}
                                 </button>
                             </div>
                         </div>

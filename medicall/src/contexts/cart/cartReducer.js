@@ -18,7 +18,7 @@ const cartReducer = (state, action) => {
                     return item;
                 });
             } else {
-                updatedCartItems = [...state.cartItems, action.payload.item];
+                updatedCartItems = [...state.cartItems, {...action.payload.item, quantity: 1}];
             }
 
             return {
@@ -62,6 +62,9 @@ const cartReducer = (state, action) => {
                     return item;
                 }).filter(item => item.quantity !== 0)
             };
+
+        case 'CLEAR_CART':
+            return { ...state, cartItems: [] }
 
 
         default:

@@ -10,6 +10,9 @@
 @import "./components/footer";
 @import "./components/backtop";
 @import "./components/form";
+@import "./components/emptyview";
+@import "./components/filterbar";
+@import "./components/searchbar";
 
 // Pages
 @import "./pages/dashboard";
@@ -18,3 +21,4 @@
 @import "./pages/homepage";
 @import "./pages/medicines";
 @import "./pages/medicinedetails";
+@import "./pages/cart";

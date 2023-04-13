@@ -1,5 +1,6 @@
 import { CommonProvider } from './contexts/common/commonContext';
 import { CartProvider } from './contexts/cart/cartContext';
+import { FiltersProvider } from './contexts/filters/filterContext';
 import Header from './components/common/Header';
 import RouterRoutes from './routes/RouterRoutes';
 import Footer from './components/common/Footer';
@@ -10,12 +11,14 @@ const App = () => {
   return (
     <>
       <CommonProvider>
-        <CartProvider>
-          <Header />
-          <RouterRoutes />
-          <Footer />
-          <BackTop />
-        </CartProvider>
+        <FiltersProvider>
+          <CartProvider>
+            <Header />
+            <RouterRoutes />
+            <Footer />
+            <BackTop />
+          </CartProvider>
+        </FiltersProvider>
       </CommonProvider>
     </>
   );

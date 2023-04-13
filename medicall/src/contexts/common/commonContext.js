@@ -15,7 +15,8 @@ const initialState = {
         email: localStorage.getItem("email")? localStorage.getItem("email") : "",
         passwd: localStorage.getItem("passwd")? localStorage.getItem("passwd") : "",
         specialization: localStorage.getItem("specialization")? localStorage.getItem("specialization") : ""
-    }
+    },
+    searchResults: []
 };
 
 // Common-Provider Component
@@ -42,14 +43,22 @@ const CommonProvider = ({ children }) => {
         return dispatch({
             type: 'USER_LOGOUT'
         });
-    }
+    };
+
+    const setSearchResults = (results) => {
+        return dispatch({
+            type: 'SET_SEARCH_RESULTS',
+            payload: { results }
+        });
+    };
 
     // Context values
     const values = {
         ...state,
         toggleForm,
         setFormUserInfo,
-        userLogout
+        userLogout,
+        setSearchResults
     };
 
     return (

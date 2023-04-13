@@ -231,11 +231,18 @@
 }
 
 
+/*------ Search Bar ------*/
+#search-bar {
+    padding-top: 5rem;
+}
+
+
 /*------ All-Products Page ------*/
 #all_products {
-    padding-top: 8rem;
+    padding-top: 2rem;
     display: grid;
     grid-template-columns: 240px 1fr;
+    color: var(--blue-color-6);
 
     @include devices(lg) {
         grid-template-columns: 1fr;

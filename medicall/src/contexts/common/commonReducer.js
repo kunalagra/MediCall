@@ -28,6 +28,12 @@ const commonReducer = (state, action) => {
             };
 
 
+        case 'SET_SEARCH_RESULTS':
+            return {
+                ...state,
+                searchResults: action.payload.results
+            };
+
 
         default:
             return state;
