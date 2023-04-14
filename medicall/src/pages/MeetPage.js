@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import { TbTrash } from 'react-icons/tb';
 import { MdContentCopy } from 'react-icons/md';
 import { Alert } from "@mui/material";
+import useDocTitle from "../hooks/useDocTitle";
 
 const MeetPage = () => {
   const apiRef = useRef();
@@ -21,6 +22,8 @@ const MeetPage = () => {
     const [prescription, setPrescription] = useState([]);
     const [newPrescription, setNewPrescription] = useState([]);
     const [copyAlert, setCopyAlert] = useState(false);
+
+    useDocTitle("Meet");
 
   const printEventOutput = (payload) => {
     updateLog((items) => [...items, JSON.stringify(payload)]);

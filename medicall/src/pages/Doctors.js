@@ -6,12 +6,15 @@ import { BsWhatsapp } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi"
 import Modal from '@mui/material/Modal';
 import { IoMdClose } from "react-icons/io";
+import useDocTitle from "../hooks/useDocTitle";
 
 
 const Doctors = () => {
   // const getMeet = (p) => {
   //   console.log(p.email);
   // };
+
+    useDocTitle("Doctors");
 
     const [meetModal, setMeetModal] = useState(false);
 
