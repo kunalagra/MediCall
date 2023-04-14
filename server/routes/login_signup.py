@@ -20,6 +20,7 @@ def register():
             else:
                 hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
                 data['passwd'] = hashed_password
+                del data['specialization']
                 patients.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
         elif data['registerer'] == 'doctor':
@@ -30,6 +31,7 @@ def register():
                 hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
                 data['passwd'] = hashed_password
                 data['meet'] = "na"
+                del data["age"]
                 doctor.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
         else:
@@ -47,7 +49,7 @@ def login():
         if bcrypt.check_password_hash(var['passwd'], data['passwd']):
             access_token = create_access_token(identity=data['email'])
             token = access_token.decode('utf-8')
-            return jsonify({'message': 'User logged in successfully', 'access_token': token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"]}), 200
+            return jsonify({'message': 'User logged in successfully', 'access_token': token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "age": var["age"]}), 200
         else:
             return jsonify({'message': 'Invalid password'}), 400
     else:

@@ -10,6 +10,7 @@ const AccountForm = () => {
     const { isFormOpen, toggleForm, setFormUserInfo } = useContext(commonContext);
     const [username, setUsername] = useState("");
     const [usertype, setUsertype] = useState("patient");
+    const [age, setAge] = useState("");
     const [gender, setGender] = useState("male");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ const AccountForm = () => {
         toggleForm(false);
         setUsername("");
         setUsertype("patient");
+        setAge("");
         setGender("male");
         setPhone("");
         setEmail("");
@@ -84,6 +86,7 @@ const AccountForm = () => {
                 httpClient.post("/register", {
                     username,
                     registerer: usertype,
+                    age,
                     gender,
                     phone,
                     email,
@@ -120,7 +123,7 @@ const AccountForm = () => {
                     setTimeout(() => {
                         setIsAlert("");
                         toggleForm(false);
-                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization });
+                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization, age:res.data.age });
                     }, 1500);
                 }
                 )
@@ -211,6 +214,20 @@ const AccountForm = () => {
                                                         required
                                                     />
                                                     <label className="input_label">Specialization {"(Eg. Cancer Surgeon)"}</label>
+                                                </div>
+                                            )}
+
+                                            { usertype==="patient" && (
+                                                <div className="input_box">
+                                                    <input
+                                                        type="text"
+                                                        name="age"
+                                                        className="input_field"
+                                                        value={age}
+                                                        onChange={(e) => setAge(e.target.value)}
+                                                        required
+                                                    />
+                                                    <label className="input_label">Age</label>
                                                 </div>
                                             )}
 

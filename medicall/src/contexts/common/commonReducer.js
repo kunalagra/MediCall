@@ -16,6 +16,7 @@ const commonReducer = (state, action) => {
             localStorage.setItem("email", action.payload.info.email);
             localStorage.setItem("passwd", action.payload.info.passwd);
             localStorage.setItem("specialization", action.payload.info.specialization);
+            localStorage.setItem("age", action.payload.info.age);
             return state;
 
         case 'USER_LOGOUT':
