@@ -1,7 +1,11 @@
 import FeaturedSlider from "../components/medicines/FeaturedProducts";
 import TopProducts from "../components/medicines/TopProducts";
+import useDocTitle from "../hooks/useDocTitle";
 
 const BuyMedicines = () => {
+
+    useDocTitle("Buy Medicines");
+
     return (
         <div id="buy-medicines">
             <section className="home">

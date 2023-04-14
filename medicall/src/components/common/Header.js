@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineMedicineBox } from 'react-icons/ai';
 import { BsRobot } from 'react-icons/bs';
@@ -9,6 +9,7 @@ import AccountForm from '../form/Accountform';
 import { useNavigate } from 'react-router-dom';
 import cartContext from '../../contexts/cart/cartContext';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import useOutsideClose from '../../hooks/useOutsideClose';
 
 
 const Header = () => {
@@ -29,6 +30,10 @@ const Header = () => {
             window.removeEventListener('scroll', handleIsSticky);
         };
     }, [isSticky]);
+
+    const dropdownRef = useRef();
+
+    useOutsideClose(dropdownRef, () => setShowDropdown(false));
 
     return (
         <>
@@ -77,7 +82,7 @@ const Header = () => {
                                         <span onClick={() => setShowDropdown(!showDropdown)}>
                                             <AiOutlineUser />
                                         </span>
-                                        <div className={`dropdown_menu ${showDropdown && "active"}`}>
+                                        <div className={`dropdown_menu ${showDropdown && "active"}`} ref={dropdownRef}>
                                             <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn' onClick={() => {

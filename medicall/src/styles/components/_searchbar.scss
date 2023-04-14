@@ -3,9 +3,6 @@
     grid-template-columns: 0.5fr;
     justify-content: center;
     align-items: start;
-    position: sticky;
-    top: 0;
-    z-index: 500;
 
     @include devices(lg) {
         grid-template-columns: 0.8fr;

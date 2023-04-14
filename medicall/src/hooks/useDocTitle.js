@@ -5,7 +5,7 @@ const useDocTitle = (title) => {
         if (title) {
             document.title = `${title} - Medicall`;
         } else {
-            document.title = 'Medicall | tagline';
+            document.title = 'Medicall';
         }
     }, [title]);
 
