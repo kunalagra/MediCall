@@ -1,28 +1,20 @@
 import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useState } from "react";
 import { BsWhatsapp } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi"
+import Modal from '@mui/material/Modal';
+import { IoMdClose } from "react-icons/io";
 
 
 const Doctors = () => {
 
-    const getMeet = (p) => {
-        console.log(p.email);
-    }
+    const [meetModal, setMeetModal] = useState(false);
 
-    // const [doctors, setDoctors] = useState([]);
-
-    // useEffect(() => {
-    //     httpClint.get("/doctor")
-    //         .then((response) => {
-    //           // console.log(response.data);
-    //             response.data.map((row, index) => row["id"] = index);
-    //             setDoctors(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }, []);
+    // const getMeet = (p) => {
+    //     console.log(p.email);
+    // }
     
     // temporary doctors data
     const doctors = [
@@ -67,6 +59,9 @@ const Doctors = () => {
             phone: "1234567890"
         },
     ];
+
+    const doctorNames = doctors.map(item => "Dr. " + item.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
+    const [selectedDoc, setSelectedDoc] = useState(doctorNames[0]);
     
     const columns = [
         {field: "id", headerName: "#", headerAlign:"center", align:"center", width: 100},
@@ -111,7 +106,7 @@ const Doctors = () => {
             renderCell: (params) => {
                 return (
                     <div className="appointment-column--cell">
-                      <button onClick={() => getMeet(params.row)}>
+                      <button>
                         BOOK NOW
                       </button>
                     </div>
@@ -121,11 +116,12 @@ const Doctors = () => {
     ];
 
     return (
+      <>
         <div id="doctors-page">
           <div className="doctor-details">
               <h3>Want to meet?</h3>
               <div className="meet-details">
-                <div className="create-meet">Create an Instant meet</div>
+                <div className="create-meet" onClick={() => {setMeetModal(true)}}>Create an Instant meet</div>
                 <div className="create-meet">Schedule a meet</div>
               </div>
               <h3>Doctor Details</h3>
@@ -138,6 +134,30 @@ const Doctors = () => {
               />
           </div>
         </div>
+        <Modal
+          open={meetModal}
+          onClose={() => setMeetModal(false)}
+        >
+          <div id="meet-modal">
+            <div className="close_btn_div">
+              <IoMdClose onClick={() => setMeetModal(false)} />
+            </div>
+            <div className="meet_details">
+              <div className="input_box">
+                <label className="select_input_label">Select the Doctor</label>
+                <select value={selectedDoc} onChange={(e) => setSelectedDoc(e.target.value)}>
+                  { doctorNames.map((docName, index) => (
+                    <option key={index} value={docName}>{docName}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="start_btn_div">
+                <Link className="btn start_btn" to="/instant-meet?meetId=abc">Start now</Link>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      </>
     )
 
 }
