@@ -3,6 +3,7 @@ import commonContext from '../../contexts/common/commonContext';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
 import { Alert, CircularProgress } from "@mui/material";
+import httpClient from '../../httpClient';
 
 const AccountForm = () => {
 
@@ -78,23 +79,66 @@ const AccountForm = () => {
             // localStorage.setItem("specialization", specialization);
             // console.log(username, usertype, gender, phone, email, passwd);
             
-            setFormUserInfo({username, usertype, gender, phone, email, passwd});
+            
             if (isSignupVisible) {
-                setIsAlert("success");
-                setAlertCont("Signup Successful");
-                setTimeout(() => {
-                    setIsAlert("");
-                    setIsSignupVisible(false);
-                }, 1500);
+                httpClient.post("/register", {
+                    username,
+                    registerer: usertype,
+                    gender,
+                    phone,
+                    email,
+                    passwd,
+                    specialization
+                })
+                .then(res => {
+                    console.log(res);
+                    setIsAlert("success");
+                    setAlertCont("Signup Successful");
+                    setTimeout(() => {
+                        setIsAlert("");
+                        toggleForm(false);
+                        setFormUserInfo({username, usertype, gender, phone, email, passwd});
+                    }, 1500);
+                    // setIsSignupVisible(false);
+                })
+                .catch(err => {
+                    console.log(err);
+                    setIsAlert("error");
+                    setAlertCont("Signup Failed");
+                    setTimeout(() => {
+                        setIsAlert("");
+                        setFormUserInfo({username, usertype, gender, phone, email, passwd});
+                    }, 1500);
+                });
             } 
             
             else {
-                setIsAlert("success");
-                setAlertCont("Login Successful");
-                setTimeout(() => {
-                    setIsAlert("");
-                    toggleForm(false);
-                }, 1500);
+                httpClient.post("/login", {
+                    email,
+                    passwd
+                })
+                .then(res => {
+                    setUsername(res.data.username);
+                    setUsertype(res.data.usertype);
+                    setGender(res.data.gender)
+                    setPhone(res.data.phone);
+                    setIsAlert("success");
+                    setAlertCont("Login Successful");
+                    setTimeout(() => {
+                        setIsAlert("");
+                        toggleForm(false);
+                    }, 1500);
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                    setIsAlert("error");
+                    setAlertCont("Login Failed");
+                    setTimeout(() => {
+                        setIsAlert("");
+                    }, 1500);
+                }
+                );
             }
         
         }, 1500);

@@ -8,7 +8,7 @@ const commonContext = createContext();
 const initialState = {
     isFormOpen: false,
     formUserInfo: {
-        username: localStorage.getItem("username")? localStorage.getItem("username") : "abc",
+        username: localStorage.getItem("username")? localStorage.getItem("username") : "",
         usertype: localStorage.getItem("usertype")? localStorage.getItem("usertype") : "",
         gender: localStorage.getItem("gender")? localStorage.getItem("gender") : "",
         phone: localStorage.getItem("phone")? localStorage.getItem("phone") : "",
