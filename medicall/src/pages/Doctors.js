@@ -9,6 +9,9 @@ import { IoMdClose } from "react-icons/io";
 
 
 const Doctors = () => {
+  // const getMeet = (p) => {
+  //   console.log(p.email);
+  // };
 
     const [meetModal, setMeetModal] = useState(false);
 
@@ -158,8 +161,7 @@ const Doctors = () => {
           </div>
         </Modal>
       </>
-    )
-
-}
+    );
+};
 
 export default Doctors;
