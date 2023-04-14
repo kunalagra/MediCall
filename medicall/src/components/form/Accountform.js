@@ -96,10 +96,8 @@ const AccountForm = () => {
                     setAlertCont("Signup Successful");
                     setTimeout(() => {
                         setIsAlert("");
-                        toggleForm(false);
-                        setFormUserInfo({username, usertype, gender, phone, email, passwd});
+                        setIsSignupVisible(false);
                     }, 1500);
-                    // setIsSignupVisible(false);
                 })
                 .catch(err => {
                     console.log(err);
@@ -107,7 +105,6 @@ const AccountForm = () => {
                     setAlertCont("Signup Failed");
                     setTimeout(() => {
                         setIsAlert("");
-                        setFormUserInfo({username, usertype, gender, phone, email, passwd});
                     }, 1500);
                 });
             } 
@@ -118,15 +115,12 @@ const AccountForm = () => {
                     passwd
                 })
                 .then(res => {
-                    setUsername(res.data.username);
-                    setUsertype(res.data.usertype);
-                    setGender(res.data.gender)
-                    setPhone(res.data.phone);
                     setIsAlert("success");
                     setAlertCont("Login Successful");
                     setTimeout(() => {
                         setIsAlert("");
                         toggleForm(false);
+                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization });
                     }, 1500);
                 }
                 )
@@ -159,7 +153,7 @@ const AccountForm = () => {
                                 <div className="form_head">
                                     <h2>{isSignupVisible ? 'Signup' : 'Login'}</h2>
                                     <p>
-                                        {isSignupVisible ? 'Already have an account ?' : 'New to X-Beat ?'}
+                                        {isSignupVisible ? 'Already have an account ?' : 'New to Medicall ?'}
                                         &nbsp;&nbsp;
                                         <button type="button" onClick={handleIsSignupVisible}>
                                             {isSignupVisible ? 'Login' : 'Create an account'}
