@@ -7,6 +7,12 @@ const commonReducer = (state, action) => {
                 isFormOpen: action.payload.toggle
             };
 
+        case 'TOGGLE_FEEDBACK':
+            return {
+                ...state,
+                isFeedbackOpen: action.payload.toggle
+            };
+
 
         case 'SET_FORM_USER_INFO':
             localStorage.setItem("username", action.payload.info.username);

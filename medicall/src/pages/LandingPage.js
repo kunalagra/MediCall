@@ -2,15 +2,15 @@ import useDocTitle from "../hooks/useDocTitle";
 
 
 
-const HomePage = () => {
+const LandingPage = () => {
 
     useDocTitle();
     
     return (
-        <div id="homepage">
+        <div id="landing-page">
 
         </div>
     )
 }
 
-export default HomePage;
+export default LandingPage;

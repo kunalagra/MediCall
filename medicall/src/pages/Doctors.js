@@ -1,19 +1,21 @@
 import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useState } from "react";
-import { BsWhatsapp } from "react-icons/bs";
-import { HiOutlineMail } from "react-icons/hi"
+import { IoMdMail } from "react-icons/io";
+import { RiWhatsappFill } from "react-icons/ri";
 import Modal from '@mui/material/Modal';
 import { IoMdClose } from "react-icons/io";
 import useDocTitle from "../hooks/useDocTitle";
-
+import { AiFillStar } from 'react-icons/ai';
+import { TbPointFilled } from 'react-icons/tb';
+import { useNavigate } from "react-router-dom";
 
 const Doctors = () => {
 
     useDocTitle("Doctors");
 
     const [meetModal, setMeetModal] = useState(false);
+    const navigate = useNavigate();
     
     // temporary doctors data
     const doctors = [
@@ -23,7 +25,11 @@ const Doctors = () => {
             email: "abc@gmail.com",
             gender: "male",
             specialization: "Cancer Surgeon",
-            phone: "1234567890"
+            phone: "1234567890",
+            status: "online",
+            noOfAppointments: 3,
+            noOfStars: 13,
+            isInMeet: false
         },
         {
             id: 2,
@@ -31,7 +37,11 @@ const Doctors = () => {
             email: "def@gmail.com",
             gender: "male",
             specialization: "Heart Surgeon",
-            phone: "1234567890"
+            phone: "1234567890",
+            status: "offline",
+            noOfAppointments: 5,
+            noOfStars: 19,
+            isInMeet: false
         },
         {
             id: 3,
@@ -39,7 +49,11 @@ const Doctors = () => {
             email: "ghi@gmail.com",
             gender: "male",
             specialization: "Brain Surgeon",
-            phone: "1234567890"
+            phone: "1234567890",
+            status: "online",
+            noOfAppointments: 2,
+            noOfStars: 9,
+            isInMeet: true
         },
         {
             id: 4,
@@ -47,7 +61,11 @@ const Doctors = () => {
             email: "jkl@gmail.com",
             gender: "male",
             specialization: "Penis Surgeon",
-            phone: "1234567890"
+            phone: "1234567890",
+            status: "online",
+            noOfAppointments: 3,
+            noOfStars: 14,
+            isInMeet: false
         },
         {
             id: 5,
@@ -55,12 +73,18 @@ const Doctors = () => {
             email: "mno@gmail.com",
             gender: "male",
             specialization: "Chutiyapa",
-            phone: "1234567890"
+            phone: "1234567890",
+            status: "offline",
+            noOfAppointments: 4,
+            noOfStars: 13,
+            isInMeet: false
         },
     ];
 
     const doctorNames = doctors.map(item => "Dr. " + item.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
     const [selectedDoc, setSelectedDoc] = useState(doctorNames[0]);
+    const [selectedDocStatus, setSelectedDocStatus] = useState(false);
+    const [selectedDocAvailable, setSelectedDocAvailable] = useState(false);
     
     const columns = [
         {field: "id", headerName: "#", headerAlign:"center", align:"center", width: 100},
@@ -88,16 +112,38 @@ const Doctors = () => {
                     const shareUrl = `https://wa.me/${params.row.phone}?text=Hello sir,%0AI want to talk to you!!`;
                     window.open(shareUrl, "_blank");
                   }}>
-                    <BsWhatsapp className="social-icon" />
+                    <RiWhatsappFill className="social-icon whatsapp" />
                   </IconButton>
                   <IconButton onClick={() => {
                     window.open(`mailto:${params.row.email}`, "_blank");
                   }}>
-                    <HiOutlineMail className="social-icon" />
+                    <IoMdMail className="social-icon mail" />
                   </IconButton>
               </div>
             )
           },
+        },
+        {
+            field: "ratings", 
+            headerName: "Ratings", headerAlign: "center", align: "center", width: 100,
+            renderCell: (params) => {
+              return (
+                <div className="ratings-column--cell">
+                  {(params.row.noOfStars / params.row.noOfAppointments).toFixed(1)} <AiFillStar className="ratings-icon" />
+                </div>
+              );
+            },
+        },
+        {
+            field: "status", 
+            headerName: "Status", headerAlign: "center", align: "center", width: 100,
+            renderCell: (params) => {
+              return (
+                <div className="status-column--cell">
+                 <TbPointFilled className={`${params.row.status==="online"? "green-icon" : "red-icon"}`} /> {params.row.status}
+                </div>
+              );
+            },
         },
         {
             field: "appointments", 
@@ -105,8 +151,13 @@ const Doctors = () => {
             renderCell: (params) => {
                 return (
                     <div className="appointment-column--cell">
-                      <button>
-                        BOOK NOW
+                      <button onClick={() => {
+                        setSelectedDoc("Dr. " + params.row.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
+                        setMeetModal(true);
+                        setSelectedDocStatus(params.row.status==="online");
+                        setSelectedDocAvailable(params.row.isInMeet);
+                      }}>
+                        BOOK
                       </button>
                     </div>
                 );
@@ -118,11 +169,6 @@ const Doctors = () => {
       <>
         <div id="doctors-page">
           <div className="doctor-details">
-              <h3>Want to meet?</h3>
-              <div className="meet-details">
-                <div className="create-meet" onClick={() => {setMeetModal(true)}}>Create an Instant meet</div>
-                <div className="create-meet">Schedule a meet</div>
-              </div>
               <h3>Doctor Details</h3>
               <DataGrid 
                   className="doctor-details-table"
@@ -137,21 +183,16 @@ const Doctors = () => {
           open={meetModal}
           onClose={() => setMeetModal(false)}
         >
-          <div id="meet-modal">
+          <div id="meet-modal" style={{width: `${selectedDocAvailable && selectedDocStatus? "min(570px, 90vw)" : "min(400px, 90vw)"}`}}>
             <div className="close_btn_div">
               <IoMdClose onClick={() => setMeetModal(false)} />
             </div>
-            <div className="meet_details">
-              <div className="input_box">
-                <label className="select_input_label">Select the Doctor</label>
-                <select value={selectedDoc} onChange={(e) => setSelectedDoc(e.target.value)}>
-                  { doctorNames.map((docName, index) => (
-                    <option key={index} value={docName}>{docName}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="start_btn_div">
-                <Link className="btn start_btn" to={`/instant-meet?meetId=abc&selectedDoc=${selectedDoc}`}>Start now</Link>
+            <div className="meet-details-div">
+              <h3>Wanna meet?</h3>
+              <div className="meet-details">
+                {selectedDocStatus && selectedDocAvailable && <div className="create-meet" onClick={() => navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}`)}>Create an Instant meet</div>}
+                <div className="create-meet">Schedule a meet</div>
+                {selectedDocStatus && !selectedDocAvailable && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
               </div>
             </div>
           </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router';
 import useScrollRestore from '../hooks/useScrollRestore';
-import HomePage from '../pages/HomePage';
+import LandingPage from '../pages/LandingPage';
+import Home from '../pages/Home';
 import Doctors from '../pages/Doctors';
 import BuyMedicines from '../pages/Medicines';
 import MedicineDetails from '../pages/MedicineDetails';
@@ -16,7 +17,8 @@ const RouterRoutes = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/doctors" element={<Doctors />} />
                 <Route path="/buy-medicines" element={<BuyMedicines />} />
                 <Route path="/all-medicines" element={<AllMedicines />} />
