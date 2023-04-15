@@ -5,14 +5,15 @@ import cartContext from "../contexts/cart/cartContext";
 import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { loadStripe } from "@stripe/stripe.js";
 
 const Cart = () => {
   useDocTitle("Cart");
 
   const { cartItems, clearCart } = useContext(cartContext);
-
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
   const cartQuantity = cartItems.length;
 
   // total original price
@@ -24,22 +25,9 @@ const Cart = () => {
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
-  const notify = () => {
-    toast.success("Cart updated!", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
 
   return (
     <>
-      <ToastContainer />
       <section id="cart" className="section">
         <div className="container">
           {cartQuantity === 0 ? (
@@ -110,7 +98,7 @@ const Cart = () => {
                         Error in ordering medicines
                       </Alert>
                     ) : (
-                      notify()
+                      <Alert severity="success">Order Successful</Alert>
                     ))}
                 </div>
               </div>
