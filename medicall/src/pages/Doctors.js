@@ -10,17 +10,10 @@ import useDocTitle from "../hooks/useDocTitle";
 
 
 const Doctors = () => {
-  // const getMeet = (p) => {
-  //   console.log(p.email);
-  // };
 
     useDocTitle("Doctors");
 
     const [meetModal, setMeetModal] = useState(false);
-
-    // const getMeet = (p) => {
-    //     console.log(p.email);
-    // }
     
     // temporary doctors data
     const doctors = [
@@ -158,7 +151,7 @@ const Doctors = () => {
                 </select>
               </div>
               <div className="start_btn_div">
-                <Link className="btn start_btn" to="/instant-meet?meetId=abc">Start now</Link>
+                <Link className="btn start_btn" to={`/instant-meet?meetId=abc&selectedDoc=${selectedDoc}`}>Start now</Link>
               </div>
             </div>
           </div>

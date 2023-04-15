@@ -123,9 +123,10 @@
 
     .send-prescription {
         margin-top: 2rem;
+        @include flexbox(center, center);
+        flex-wrap: wrap;
         
-        .send-btn {
-            margin: 0 auto;
+        .send-btn, .download-btn {
             padding: 0.7rem 1rem;
             border-radius: 4px;
             color: var(--white-color);

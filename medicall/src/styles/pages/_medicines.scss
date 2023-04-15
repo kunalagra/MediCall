@@ -15,13 +15,15 @@
                 @include flexbox(center, space-between);
             }
         }
-
-        &__img{
-            width: 240px;
     
-            &-bg{
+        &__imgdiv{
+            width: 240px;
+            background-color: var(--white-color);
+            padding-bottom: 50px;
+    
+            &__bg{
                 background-color: var(--blue-color-2);
-                width: 258px;
+                width: 260px;
                 height: 430px;
                 padding-bottom: 2rem;
                 display: flex;
@@ -29,9 +31,32 @@
                 align-items: flex-end;
                 justify-self: flex-end;
                 transform: translateX(1.5rem);
+                position: relative;
 
                 @include devices(xs) {
                     margin-bottom: 2rem;
+                }
+
+                &__design {
+                    position: absolute;
+                    bottom: -40px;
+                    left: 0;
+                    border-left: 26px solid transparent;
+                    border-right: 26px solid transparent;
+                    border-top: 40px solid var(--blue-color-2);
+
+                    &.triangle-2 {
+                        left: 52px;
+                    }
+                    &.triangle-3 {
+                        left: 104px;
+                    }
+                    &.triangle-4 {
+                        left: 156px;
+                    }
+                    &.triangle-5 {
+                        left: 208px;
+                    }
                 }
             }
         }

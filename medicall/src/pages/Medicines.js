@@ -10,8 +10,15 @@ const BuyMedicines = () => {
         <div id="buy-medicines">
             <section className="home">
                 <div className="home__container">
-                    <div className="home__img-bg">
-                        <img src="buy-medicines-banner.png" alt="" className="home__img"/>
+                    <div className="home__imgdiv">
+                        <div className="home__imgdiv__bg">
+                            <img src="buy-medicines-banner.png" alt="" className="home__img"/>
+                            <div className="home__imgdiv__bg__design triangle-1"></div>
+                            <div className="home__imgdiv__bg__design triangle-2"></div>
+                            <div className="home__imgdiv__bg__design triangle-3"></div>
+                            <div className="home__imgdiv__bg__design triangle-4"></div>
+                            <div className="home__imgdiv__bg__design triangle-5"></div>
+                        </div>
                     </div>
     
                     <div className="home__data">
