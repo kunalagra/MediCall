@@ -18,6 +18,7 @@ const AccountForm = () => {
     const [specialization, setSpecialization] = useState("");
     const [isInvEmail, setIsInvEmail] = useState(false);
     const [isInvPass, setIsInvPass] = useState(false);
+    const [isInvAge, setIsInvAge] = useState(false);
     const [isAlert, setIsAlert] = useState("");
     const [alertCont, setAlertCont] = useState("");
     const [isSuccessLoading, setIsSuccessLoading] = useState(false);
@@ -45,6 +46,12 @@ const AccountForm = () => {
     const handleIsSignupVisible = () => {
         setIsSignupVisible(prevState => !prevState);
     };
+
+    const checkAge = (a) => {
+        const t = ( parseInt(a) > 0 && parseInt(a) <= 120 && /^[0-9]{1,3}$/.test(a));
+        setIsInvAge(!t);
+        return t;
+    } 
 
     const checkEmail = (email) => {
         // eslint-disable-next-line
@@ -218,16 +225,22 @@ const AccountForm = () => {
                                             )}
 
                                             { usertype==="patient" && (
-                                                <div className="input_box">
-                                                    <input
-                                                        type="text"
-                                                        name="age"
-                                                        className="input_field"
-                                                        value={age}
-                                                        onChange={(e) => setAge(e.target.value)}
-                                                        required
-                                                    />
-                                                    <label className="input_label">Age</label>
+                                                <div>
+                                                    <div className="input_box">
+                                                        <input
+                                                            type="text"
+                                                            name="age"
+                                                            className="input_field"
+                                                            value={age}
+                                                            onChange={(e) => {
+                                                                checkAge(e.target.value);
+                                                                setAge(e.target.value);
+                                                            }}
+                                                            required
+                                                        />
+                                                        <label className="input_label">Age</label>
+                                                    </div>
+                                                    { age!=="" && isInvAge && <Alert severity="error" className='form_sucess_alert'>Invalid Age</Alert> }
                                                 </div>
                                             )}
 
@@ -315,6 +328,7 @@ const AccountForm = () => {
                                     <button
                                         type="submit"
                                         className="btn login_btn"
+                                        disabled={isInvAge || isInvEmail || isInvPass}
                                     >
                                         {isSuccessLoading? (
                                             <CircularProgress

@@ -20,9 +20,9 @@ const MeetPage = () => {
   const meetId = searchparams.get("meetId");
 //   const navigate = useNavigate();
 
-    const isDoctor = true;
-    const email = "abc@gmail.com";
-    const phone = "1234567890";
+    const isDoctor = localStorage.getItem("usertype")==="doctor";
+    const email = localStorage.getItem("email");
+    const phone = localStorage.getItem("phone");
     const [prescription, setPrescription] = useState([]);
     const [newPrescription, setNewPrescription] = useState([]);
     const [copyAlert, setCopyAlert] = useState(false);
