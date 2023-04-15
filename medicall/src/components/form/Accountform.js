@@ -125,6 +125,7 @@ const AccountForm = () => {
                     passwd
                 })
                 .then(res => {
+                    localStorage.setItem("token", res.data.access_token);
                     setIsAlert("success");
                     setAlertCont("Login Successful");
                     setTimeout(() => {
