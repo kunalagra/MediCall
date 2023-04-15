@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import cartContext from '../../contexts/cart/cartContext';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import useOutsideClose from '../../hooks/useOutsideClose';
+import httpClient from '../../httpClient';
 
 
 const Header = () => {
@@ -30,6 +31,18 @@ const Header = () => {
             window.removeEventListener('scroll', handleIsSticky);
         };
     }, [isSticky]);
+
+    const updatestatus = () => {
+        httpClient.put('/doc_status', { "email": localStorage.getItem("email")})
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        userLogout();
+    }
+
 
     const dropdownRef = useRef();
 
@@ -93,7 +106,7 @@ const Header = () => {
                                             </button>
                                             <button type="button" className='logout_btn' onClick={() => {
                                                 setShowDropdown(false);
-                                                userLogout();
+                                                {localStorage.getItem("usertype") === "doctor" ? updatestatus() : userLogout()}
                                             }}>
                                                 Logout
                                             </button>

@@ -48,8 +48,8 @@ def login():
     if var:
         if bcrypt.check_password_hash(var['passwd'], data['passwd']):
             access_token = create_access_token(identity=data['email'])
-            token = access_token.decode('utf-8')
-            return jsonify({'message': 'User logged in successfully', 'access_token': token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "age": var["age"]}), 200
+            # token = access_token.decode('utf-8')
+            return jsonify({'message': 'User logged in successfully', 'access_token': access_token, "username": var["username"], "usertype": "patient", "gender": var["gender"], "phone": var["phone"], "age": var["age"]}), 200
         else:
             return jsonify({'message': 'Invalid password'}), 400
     else:
@@ -58,8 +58,8 @@ def login():
         if var:
             if bcrypt.check_password_hash(var['passwd'], data['passwd']):
                 access_token = create_access_token(identity=data['email'])
-                token = access_token.decode('utf-8')
-                return jsonify({'message': 'User logged in successfully', 'access_token': token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "specialization": var["specialization"], "meet": var["meet"]}), 200
+                # token = access_token.decode('utf-8')
+                return jsonify({'message': 'User logged in successfully', 'access_token': access_token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "specialization": var["specialization"], "meet": var["meet"]}), 200
             else:
                 return jsonify({'message': 'Invalid password'}), 400
         else:
