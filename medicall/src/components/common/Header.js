@@ -96,7 +96,7 @@ const Header = () => {
                                             <AiOutlineUser />
                                         </span>
                                         <div className={`dropdown_menu ${showDropdown && "active"}`} ref={dropdownRef}>
-                                            <h4>Hello! {localStorage.getItem("username")!==undefined && <Link to="*">&nbsp;{localStorage.getItem("username")}</Link>}</h4>
+                                            <h4>Hello! {localStorage.getItem("username")!==undefined && <span>&nbsp;{localStorage.getItem("username")}</span>}</h4>
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn' onClick={() => {
                                                 setShowDropdown(false);
@@ -106,7 +106,7 @@ const Header = () => {
                                             </button>
                                             <button type="button" className='logout_btn' onClick={() => {
                                                 setShowDropdown(false);
-                                                {localStorage.getItem("usertype") === "doctor" ? updatestatus() : userLogout()}
+                                                localStorage.getItem("usertype") === "doctor" ? updatestatus() : userLogout()
                                             }}>
                                                 Logout
                                             </button>
