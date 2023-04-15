@@ -63,10 +63,10 @@ const Header = () => {
                                 <nav className="nav_actions">
 
                                     <div className="dash_action">
-                                    <span onClick={() => navigate("/")}>
+                                    <span onClick={() => navigate("/home")}>
                                             <MdDashboard />
                                         </span>
-                                        <div className="tooltip">Dashboard</div>
+                                        <div className="tooltip">Home</div>
                                     </div>
 
                                     <div className="doctor_action">

@@ -1,7 +1,7 @@
 import { JitsiMeeting } from "@jitsi/react-sdk";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TbTrash } from 'react-icons/tb';
 import { MdContentCopy } from 'react-icons/md';
 import { Alert } from "@mui/material";
@@ -10,6 +10,7 @@ import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import { imageData } from "../data/logoDataURL";
 import { signImageData } from "../data/signDataURL";
+import commonContext from "../contexts/common/commonContext";
 
 const MeetPage = () => {
   const apiRef = useRef();
@@ -18,7 +19,9 @@ const MeetPage = () => {
   const [knockingParticipants, updateKnockingParticipants] = useState([]);
   const [searchparams] = useSearchParams();
   const meetId = searchparams.get("meetId");
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const { toggleFeedback } = useContext(commonContext);
 
     const isDoctor = localStorage.getItem("usertype")==="doctor";
     const email = localStorage.getItem("email");
@@ -100,18 +103,10 @@ const MeetPage = () => {
   };
 
   const handleEndMeeting = () => {
-    if (isDoctor === "doctor") {
-    //   httpClint
-    //     .get("/del-meet")
-    //     .then((response) => {
-    //       navigate("/");
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // } else {
-    //   navigate("/invoice");
+    if (!isDoctor) {
+      toggleFeedback(true);
     }
+    navigate("/home");
   };
 
   // const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
@@ -189,7 +184,8 @@ const MeetPage = () => {
             padding: "12px 46px",
             margin: "2px 2px",
           }}
-          onClick={() => handleEndMeeting()}
+          onClick={handleEndMeeting}
+          disabled={prescription.length > 0}
         >
           End Meeting
         </button>
@@ -218,6 +214,8 @@ const MeetPage = () => {
   }
 
   const handleFormSubmit = () => {
+    setPrescription([]);
+    setNewPrescription("");
     console.log(email, phone);
     console.log(prescription);
   };

@@ -1,6 +1,6 @@
 .MuiDataGrid-root {
 
-    width: min(980px, 90vw);
+    width: min(1200px, 90vw);
     border: none;
 
     .MuiDataGrid-cell {
@@ -36,7 +36,39 @@
         @include flexbox(space-evenly, center);
 
         .social-icon {
-            color: var(--blue-color-5);
+            
+            &.whatsapp {
+                color: var(--whatsapp-color);
+            }
+            
+            &.mail {
+                color: #808080;
+            }
+        }
+    }
+
+    .ratings-column--cell {
+        padding: 5px;
+        @include flexbox(center, center);
+
+        .ratings-icon {
+            color: var(--yellow-color-3);
+            margin-left: 5px;
+        }
+    }
+
+    .status-column--cell {
+        padding: 5px;
+        @include flexbox(center, center);
+
+        .green-icon {
+            color: var(--whatsapp-color);
+            margin-right: 5px;
+        }
+
+        .red-icon {
+            color: rgb(255,0,0);
+            margin-right: 5px;
         }
     }
 
@@ -91,11 +123,12 @@
 
 #doctors-page {
     margin: 100px 0;
+    text-align: center;
 
     .doctor-details {
         min-height: 600px;
         padding: 10px;
-        width: min(1000px, 100vw);
+        width: min(1200px, 100vw);
         margin: 0 auto;
         color: var(--blue-color-8);
         
@@ -107,9 +140,42 @@
             margin: 20px 0;
         }
 
+    }
+
+}
+
+
+#meet-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // width: min(570px, 90vw);
+    padding: 14px 20px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+    text-align: center;
+
+    .close_btn_div {
+        text-align: right;
+        color: var(--blue-color-5);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--blue-color-8);
+        }
+    }
+
+    .meet-details-div {
+
         .meet-details {
             margin: 10px 0 25px 0;
-            @include flexbox(flex-start, center);
+            @include flexbox(center, center);
+            flex-wrap: wrap;
 
             .create-meet {
                 background-color: var(--grey-color-3);
@@ -127,79 +193,48 @@
             }
         }
 
-    }
+        // .input_box {
+        //     padding-top: 1rem;
+        //     @include flexbox(center, center);
+        //     flex-wrap: wrap;
 
-}
+        //     select {
+        //         margin-left: 1rem;
+        //         padding: 10px;
+        //         font-family: 'Montserrat', sans-serif;
+        //         border-radius: 6px;
+        //         color: var(--blue-color-9);
+        //         border-color: var(--blue-color-3);
+        //         outline-color: var(--blue-color-3);
 
+        //         @include devices(xxs) {
+        //             margin-top: 1rem;
+        //         }
+        //     }
 
-#meet-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(400px, 90vw);
-    padding: 14px 20px;
-    box-shadow: 0 0 10px 1px var(--blue-color-2);
-    border: 2px solid var(--blue-color-2);
-    background-color: var(--white-color);
-    border-radius: 8px;
-    color: var(--blue-color-7);
+        //     label {
+        //         color: var(--blue-color-4);
+        //     }
+        // }
 
-    .close_btn_div {
-        text-align: right;
-        color: var(--blue-color-5);
-        transition: all 0.3s ease-in-out;
-        cursor: pointer;
+        // .start_btn_div {
 
-        &:hover {
-            color: var(--blue-color-8);
-        }
-    }
+        //     margin: 20px 0;
+        //     text-align: center;
 
-    .meet_details {
-
-        .input_box {
-            padding-top: 1rem;
-            @include flexbox(center, center);
-            flex-wrap: wrap;
-
-            select {
-                margin-left: 1rem;
-                padding: 10px;
-                font-family: 'Montserrat', sans-serif;
-                border-radius: 6px;
-                color: var(--blue-color-9);
-                border-color: var(--blue-color-3);
-                outline-color: var(--blue-color-3);
-
-                @include devices(xxs) {
-                    margin-top: 1rem;
-                }
-            }
-
-            label {
-                color: var(--blue-color-4);
-            }
-        }
-
-        .start_btn_div {
-
-            margin: 20px 0;
-            text-align: center;
-
-            .start_btn {
-                background-color: var(--blue-color-3);
-                text-decoration: none;
-                color: var(--white-color);
-                transition: all 0.3s ease-in-out;
-                cursor: pointer;
-                border-radius: 6px;
+        //     .start_btn {
+        //         background-color: var(--blue-color-3);
+        //         text-decoration: none;
+        //         color: var(--white-color);
+        //         transition: all 0.3s ease-in-out;
+        //         cursor: pointer;
+        //         border-radius: 6px;
                 
-                &:hover, &:active {
-                    background-color: var(--blue-color-5);
-                }
-            }
-        }
+        //         &:hover, &:active {
+        //             background-color: var(--blue-color-5);
+        //         }
+        //     }
+        // }
 
     }
 
