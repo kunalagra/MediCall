@@ -1,0 +1,143 @@
+#meet-page {
+    padding: 6rem;
+    color: var(--blue-color-8);
+    text-align: center;
+
+    .meet-header {
+        span {
+            color: var(--blue-color-2);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            
+            &:hover {
+                color: var(--blue-color-3);
+            }
+
+            .copy-alert {
+                position: absolute;
+                top: -10px;
+                left: 30px;
+            }
+        }
+    }
+
+    .doctor-prescription {
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+    .jitsi-component-div {
+        margin: 1rem auto;
+    }
+
+    .prescription-items {
+        @include flexbox(flex-start, center);
+        flex-wrap: wrap;
+        margin: 1rem auto;
+        border: 2px solid var(--blue-color-2);
+        padding: 1rem;
+        border-radius: 8px;
+        
+
+        .item {
+            margin: 1rem;
+            padding: 1rem;
+            @include flexbox(space-around, center);
+            background-color: var(--grey-color-3);
+            color: var(--white-color);
+            box-shadow: 0 0 10px 1px var(--grey-color-2);
+            border-radius: 10px;
+
+            &:hover {
+                background-color: var(--blue-color-7);
+            }
+
+            .prescription {
+                position: relative;
+
+                p {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    max-width: 200px;
+                }
+
+                &:hover {
+                    .tooltip {
+                        @include toggleVisibility(visible, 1);
+                    }
+                }
+            }
+
+            .delete-item {
+                cursor: pointer;
+                margin-left: 1rem;
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+    }
+
+    .new_prescription {
+
+        @include flexbox(center, center);
+        margin-top: 1rem;
+
+        .input_box {
+            width: 500px;
+
+            .input_field {
+                background-color: var(--white-color);
+                outline: 1px solid var(--blue-color-1);
+                border: 1px solid var(--blue-color-1);
+                color: var(--blue-color-8);
+                
+                &:focus {
+                    outline-color: var(--blue-color-2);
+                    border-color: var(--blue-color-2);
+                    box-shadow: 0 0 6px 3px var(--blue-color-1);
+                }
+            }
+        }
+
+        button {
+            margin-left: 1rem;
+            padding: 0.7rem 1rem;
+            border-radius: 4px;
+            color: var(--white-color);
+            transition: all 0.3s ease;
+            background-color: var(--blue-color-4);
+
+            &:hover, &:active {
+                background-color: var(--blue-color-6);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                background-color: var(--blue-color-6);
+            }
+        }
+    }
+
+    .send-prescription {
+        margin-top: 2rem;
+        
+        .send-btn {
+            margin: 0 auto;
+            padding: 0.7rem 1rem;
+            border-radius: 4px;
+            color: var(--white-color);
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            background-color: var(--blue-color-8);
+            box-shadow: 0 0 10px 1px var(--blue-color-2);
+
+            &:hover, &:active {
+                background-color: var(--blue-color-9);
+            }
+        }
+    }
+}
+

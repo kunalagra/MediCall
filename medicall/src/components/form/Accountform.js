@@ -3,12 +3,14 @@ import commonContext from '../../contexts/common/commonContext';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
 import { Alert, CircularProgress } from "@mui/material";
+import httpClient from '../../httpClient';
 
 const AccountForm = () => {
 
     const { isFormOpen, toggleForm, setFormUserInfo } = useContext(commonContext);
     const [username, setUsername] = useState("");
     const [usertype, setUsertype] = useState("patient");
+    const [age, setAge] = useState("");
     const [gender, setGender] = useState("male");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -26,6 +28,7 @@ const AccountForm = () => {
         toggleForm(false);
         setUsername("");
         setUsertype("patient");
+        setAge("");
         setGender("male");
         setPhone("");
         setEmail("");
@@ -78,23 +81,61 @@ const AccountForm = () => {
             // localStorage.setItem("specialization", specialization);
             // console.log(username, usertype, gender, phone, email, passwd);
             
-            setFormUserInfo({username, usertype, gender, phone, email, passwd});
+            
             if (isSignupVisible) {
-                setIsAlert("success");
-                setAlertCont("Signup Successful");
-                setTimeout(() => {
-                    setIsAlert("");
-                    setIsSignupVisible(false);
-                }, 1500);
+                httpClient.post("/register", {
+                    username,
+                    registerer: usertype,
+                    age,
+                    gender,
+                    phone,
+                    email,
+                    passwd,
+                    specialization
+                })
+                .then(res => {
+                    console.log(res);
+                    setIsAlert("success");
+                    setAlertCont("Signup Successful");
+                    setTimeout(() => {
+                        setIsAlert("");
+                        setIsSignupVisible(false);
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.log(err);
+                    setIsAlert("error");
+                    setAlertCont("Signup Failed");
+                    setTimeout(() => {
+                        setIsAlert("");
+                    }, 1500);
+                });
             } 
             
             else {
-                setIsAlert("success");
-                setAlertCont("Login Successful");
-                setTimeout(() => {
-                    setIsAlert("");
-                    toggleForm(false);
-                }, 1500);
+                httpClient.post("/login", {
+                    email,
+                    passwd
+                })
+                .then(res => {
+                    setIsAlert("success");
+                    setAlertCont("Login Successful");
+                    setTimeout(() => {
+                        setIsAlert("");
+                        toggleForm(false);
+                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization, age:res.data.age });
+                    }, 1500);
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                    setIsAlert("error");
+                    setAlertCont("Login Failed");
+                    setTimeout(() => {
+                        setIsAlert("");
+                    }, 1500);
+                }
+                );
             }
         
         }, 1500);
@@ -115,7 +156,7 @@ const AccountForm = () => {
                                 <div className="form_head">
                                     <h2>{isSignupVisible ? 'Signup' : 'Login'}</h2>
                                     <p>
-                                        {isSignupVisible ? 'Already have an account ?' : 'New to X-Beat ?'}
+                                        {isSignupVisible ? 'Already have an account ?' : 'New to Medicall ?'}
                                         &nbsp;&nbsp;
                                         <button type="button" onClick={handleIsSignupVisible}>
                                             {isSignupVisible ? 'Login' : 'Create an account'}
@@ -173,6 +214,20 @@ const AccountForm = () => {
                                                         required
                                                     />
                                                     <label className="input_label">Specialization {"(Eg. Cancer Surgeon)"}</label>
+                                                </div>
+                                            )}
+
+                                            { usertype==="patient" && (
+                                                <div className="input_box">
+                                                    <input
+                                                        type="text"
+                                                        name="age"
+                                                        className="input_field"
+                                                        value={age}
+                                                        onChange={(e) => setAge(e.target.value)}
+                                                        required
+                                                    />
+                                                    <label className="input_label">Age</label>
                                                 </div>
                                             )}
 

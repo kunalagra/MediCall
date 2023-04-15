@@ -130,3 +130,77 @@
     }
 
 }
+
+
+#meet-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(400px, 90vw);
+    padding: 14px 20px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+
+    .close_btn_div {
+        text-align: right;
+        color: var(--blue-color-5);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--blue-color-8);
+        }
+    }
+
+    .meet_details {
+
+        .input_box {
+            padding-top: 1rem;
+            @include flexbox(center, center);
+            flex-wrap: wrap;
+
+            select {
+                margin-left: 1rem;
+                padding: 10px;
+                font-family: 'Montserrat', sans-serif;
+                border-radius: 6px;
+                color: var(--blue-color-9);
+                border-color: var(--blue-color-3);
+                outline-color: var(--blue-color-3);
+
+                @include devices(xxs) {
+                    margin-top: 1rem;
+                }
+            }
+
+            label {
+                color: var(--blue-color-4);
+            }
+        }
+
+        .start_btn_div {
+
+            margin: 20px 0;
+            text-align: center;
+
+            .start_btn {
+                background-color: var(--blue-color-3);
+                text-decoration: none;
+                color: var(--white-color);
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+                border-radius: 6px;
+                
+                &:hover, &:active {
+                    background-color: var(--blue-color-5);
+                }
+            }
+        }
+
+    }
+
+}

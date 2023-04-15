@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineMedicineBox } from 'react-icons/ai';
 import { BsRobot } from 'react-icons/bs';
@@ -9,11 +9,12 @@ import AccountForm from '../form/Accountform';
 import { useNavigate } from 'react-router-dom';
 import cartContext from '../../contexts/cart/cartContext';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import useOutsideClose from '../../hooks/useOutsideClose';
 
 
 const Header = () => {
 
-    const { formUserInfo, toggleForm, userLogout } = useContext(commonContext);
+    const { toggleForm, userLogout } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
@@ -30,6 +31,10 @@ const Header = () => {
         };
     }, [isSticky]);
 
+    const dropdownRef = useRef();
+
+    useOutsideClose(dropdownRef, () => setShowDropdown(false));
+
     return (
         <>
             <header id="header" className={isSticky ? 'sticky' : ''}>
@@ -40,7 +45,7 @@ const Header = () => {
                         </h2>
 
                         {
-                            (formUserInfo.username!==null && formUserInfo.username!=="")? (
+                            (localStorage.getItem("username")!==null && localStorage.getItem("username")!==undefined)? (
 
                                 <nav className="nav_actions">
 
@@ -77,12 +82,12 @@ const Header = () => {
                                         <span onClick={() => setShowDropdown(!showDropdown)}>
                                             <AiOutlineUser />
                                         </span>
-                                        <div className={`dropdown_menu ${showDropdown && "active"}`}>
-                                            <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
+                                        <div className={`dropdown_menu ${showDropdown && "active"}`} ref={dropdownRef}>
+                                            <h4>Hello! {localStorage.getItem("username")!==undefined && <Link to="*">&nbsp;{localStorage.getItem("username")}</Link>}</h4>
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn' onClick={() => {
                                                 setShowDropdown(false);
-                                                console.log(formUserInfo);
+                                                console.log(localStorage);
                                             }}>
                                                 Profile
                                             </button>
