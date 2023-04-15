@@ -19,6 +19,7 @@ def before_request():
 
 from routes.login_signup import *
 from routes.profile import *
+from routes.doctors import *
 
 if __name__ == "__main__":
     app.run(debug=True)

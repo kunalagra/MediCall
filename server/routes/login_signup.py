@@ -30,7 +30,9 @@ def register():
             else:
                 hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
                 data['passwd'] = hashed_password
-                data['meet'] = "na"
+                data['meet'] = False
+                data['appointments'] = 0
+                data['stars'] = 0
                 del data["age"]
                 doctor.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
