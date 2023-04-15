@@ -5,7 +5,7 @@ import cartContext from "../contexts/cart/cartContext";
 import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
-import { loadStripe } from "@stripe/stripe.js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   
