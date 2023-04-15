@@ -14,7 +14,7 @@ import useOutsideClose from '../../hooks/useOutsideClose';
 
 const Header = () => {
 
-    const { formUserInfo, toggleForm, userLogout } = useContext(commonContext);
+    const { toggleForm, userLogout } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Header = () => {
                         </h2>
 
                         {
-                            (formUserInfo.username!==null && formUserInfo.username!=="")? (
+                            (localStorage.getItem("username")!==null && localStorage.getItem("username")!==undefined)? (
 
                                 <nav className="nav_actions">
 
@@ -83,11 +83,11 @@ const Header = () => {
                                             <AiOutlineUser />
                                         </span>
                                         <div className={`dropdown_menu ${showDropdown && "active"}`} ref={dropdownRef}>
-                                            <h4>Hello! {formUserInfo.username!=="" && <Link to="*">&nbsp;{formUserInfo.username}</Link>}</h4>
+                                            <h4>Hello! {localStorage.getItem("username")!==undefined && <Link to="*">&nbsp;{localStorage.getItem("username")}</Link>}</h4>
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn' onClick={() => {
                                                 setShowDropdown(false);
-                                                console.log(formUserInfo);
+                                                console.log(localStorage);
                                             }}>
                                                 Profile
                                             </button>
