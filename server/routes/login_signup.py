@@ -55,7 +55,7 @@ def login():
         else:
             return jsonify({'message': 'Invalid password'}), 400
     else:
-        doctor.update_one({'email': data['email']}, {'$set': {'status': 'Online'}})
+        doctor.update_one({'email': data['email']}, {'$set': {'status': 'online'}})
         var = doctor.find_one({'email': data['email']})
         if var:
             if bcrypt.check_password_hash(var['passwd'], data['passwd']):

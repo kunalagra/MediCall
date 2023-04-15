@@ -107,6 +107,7 @@ const Header = () => {
                                             <button type="button" className='logout_btn' onClick={() => {
                                                 setShowDropdown(false);
                                                 localStorage.getItem("usertype") === "doctor" ? updatestatus() : userLogout()
+                                                navigate("/");
                                             }}>
                                                 Logout
                                             </button>
