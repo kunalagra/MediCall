@@ -1,6 +1,6 @@
 # GFG SFI
 
-Quad's Team repo for Hacknova 2.0
+Quad's Team repo for GFG's Soliving for India 
 
 We have successfully implemented
 
@@ -21,14 +21,14 @@ Front-end:
 
 - ReactJS & Material UI
 
-Video Call:
-
-- Jitsi
-
 Backend:
 
 - Flask
 - MongoDB
+
+Google Cloud:
+- Backend Hosting
+- MongoDB Atlas Cluster
 
 Team Memebers - <br />
 Kunal Agrawal <br />
