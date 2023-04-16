@@ -8,7 +8,6 @@ import { Alert, CircularProgress } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
-  
   useDocTitle("Cart");
 
   const { cartItems, clearCart } = useContext(cartContext);
@@ -73,6 +72,7 @@ const Cart = () => {
                   </div>
                   <button
                     type="button"
+                    method="post"
                     className={`btn checkout_btn ${
                       isCheckoutLoading && "active"
                     }`}
