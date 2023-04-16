@@ -2,6 +2,7 @@ from flask import Flask, request, Response, redirect
 from flask_jwt_extended import JWTManager
 import secrets
 import stripe
+from flask_mail import Mail
 
 secret_key = secrets.token_hex(16)
 
@@ -9,6 +10,13 @@ app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = secret_key
 SECRET_KEY = "jkajoisjosk"
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'deexithmadas277'
+app.config['MAIL_PASSWORD'] = 'rwaorvlmvyqbhney'
+app.config['MAIL_USE_TLS'] = True
+mail = Mail(app)
 
 stripe.api_key = "sk_test_51MxOxySAmG5gMbbMNX2Ma2lglF9BU7oQSVgoe9DdMUMTNo5YNERsuCCkMw286968PwCXCrSCpT3PeOI4MXU5uTgA00M1fUeEjJ"
 jwt = JWTManager(app)
