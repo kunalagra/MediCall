@@ -1,0 +1,12 @@
+#success {
+    margin: 100px 0;
+    text-align: center;
+
+    .home {
+        min-height: 600px;
+        padding: 100px;
+        width: min(1200px, 100vw);
+        margin: 0 auto;
+        color: var(--blue-color-8);
+    }
+}
