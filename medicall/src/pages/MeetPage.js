@@ -1,5 +1,5 @@
 import { JitsiMeeting } from "@jitsi/react-sdk";
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { TbTrash } from 'react-icons/tb';
@@ -23,14 +23,21 @@ const MeetPage = () => {
 
   const { toggleFeedback } = useContext(commonContext);
 
-    const isDoctor = localStorage.getItem("usertype")==="doctor";
-    const email = localStorage.getItem("email");
-    const phone = localStorage.getItem("phone");
-    const [prescription, setPrescription] = useState([]);
-    const [newPrescription, setNewPrescription] = useState([]);
-    const [copyAlert, setCopyAlert] = useState(false);
+  const isDoctor = localStorage.getItem("usertype")==="doctor";
+  const email = localStorage.getItem("email");
+  const phone = localStorage.getItem("phone");
+  const [prescription, setPrescription] = useState([]);
+  const [newPrescription, setNewPrescription] = useState([]);
+  const [copyAlert, setCopyAlert] = useState(false);
 
-    useDocTitle("Meet");
+  useDocTitle("Meet");
+
+  useEffect(() => {
+    if (!isDoctor) {
+      localStorage.setItem("lastMeetWith", searchparams.get("selectedDoc"));
+    }
+    //eslint-disable-next-line
+  }, []);
 
   const printEventOutput = (payload) => {
     updateLog((items) => [...items, JSON.stringify(payload)]);
@@ -103,9 +110,7 @@ const MeetPage = () => {
   };
 
   const handleEndMeeting = () => {
-    if (!isDoctor) {
-      toggleFeedback(true);
-    }
+    toggleFeedback(true);
     navigate("/home");
   };
 

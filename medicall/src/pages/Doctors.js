@@ -86,9 +86,9 @@ const Doctors = () => {
     useEffect(() => {
       httpClient.get("/get_status").then((res) => {
         setDoctors(res.data.details);
-        console.log(doctors)
+        // console.log(doctors)
       }).catch((res) => {
-        console.log(res)
+        // console.log(res)
       })
       //eslint-disable-next-line
     }, [])

@@ -1,0 +1,76 @@
+#home-page {
+    min-height: 60vh;
+}
+
+
+#feedback-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(500px, 90vw);
+    padding: 14px 20px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+    text-align: center;
+
+    .close_btn_div {
+        text-align: right;
+        color: var(--blue-color-5);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--blue-color-8);
+        }
+    }
+
+    h3 {
+        margin: 1rem 0;
+    }
+
+    .consultation-qn {
+        margin-bottom: 0.7rem;
+    }
+
+    .rating-icons {
+        @include flexbox(center, center);
+        margin-bottom: 1rem;
+
+        .icon {
+            margin: 0.5rem;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    }
+
+    .rating-text {
+        margin-bottom: 1rem;
+    }
+
+    .submit-btn > button {
+        background-color: var(--blue-color-3);
+        border: 1px solid var(--blue-color-5);
+        color: var(--white-color);
+        padding: 10px 12px;
+        border-radius: 5px;
+        margin: 8px 5px;
+        font-family: 'Montserrat', sans-serif;
+        
+        &:hover, &:active, &:disabled {
+            background-color: var(--blue-color-5);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    .doctor-feedback {
+        padding-bottom: 1.5rem;
+    }
+
+}

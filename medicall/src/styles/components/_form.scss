@@ -126,6 +126,11 @@
         &:hover {
             background-color: var(--blue-color-6);
         }
+
+        &:disabled {
+            background-color: var(--blue-color-7);
+            cursor: not-allowed;
+        }
     }
 
     .input_alert {
