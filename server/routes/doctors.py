@@ -18,8 +18,12 @@ def doc_status():
 def meet_status():
     data = request.get_json()
     user = data['email']
-    doctor.update_one({'email': user}, {'$set': {'meet': True}})
-    return jsonify({'message': 'Doctor status updated successfully'}), 200
+    details = doctor.find_one({'email': user})
+    if details['meet'] == True:
+        return jsonify({'message': 'Doctor is already in a meet'}), 208
+    else:
+        doctor.update_one({'email': user}, {'$set': {'meet': True}})
+        return jsonify({'message': 'Doctor status updated successfully'}), 200
 
 # @app.route('/meet_status', methods=['PUT'])
 # def meet_status():
