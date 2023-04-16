@@ -1,4 +1,142 @@
 
 #landing-page {
-    min-height: 100vh;
+    
+    .intro-section {
+
+        height: 100vh;
+
+        .bg {
+            background-image: url(../../../public/capsules-bg.jpg);
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+        }
+
+        .content {
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+            color: var(--white-color);
+            font-weight: bold;
+            border: 3px solid var(--blue-color-2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            width: 600px;
+            padding: 50px;
+            text-align: center;
+
+            h2 {
+                font-size: 2.5em;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.5em;
+            }
+        }
+    }
+
+
+    .need-section {
+        margin: 5rem 0;
+        display: grid;
+        grid-template-columns: 0.3fr 0.7fr;
+        grid-template-rows: 1fr;
+
+        .qn {
+            background-color: var(--blue-color-9);
+            color: var(--white-color);
+            border-radius: 0 250px 250px 0;
+            padding: 1rem;
+            @include flexbox(center, center);
+        }
+
+        .ans {
+            background-color: var(--white-color);
+            color: var(--blue-color-6);
+            padding: 4rem;
+
+            ul {
+                list-style-type: square;
+
+                li {
+                    margin: 1rem 0;
+                }
+            }
+        }
+    }
+
+    .features-section {
+        margin: 5rem 0;
+        text-align: center;
+
+        h2 {
+            color: var(--blue-color-7);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+
+            .item {
+                padding: 3rem;
+                h3 {
+                    color: var(--blue-color-9);
+                    margin-bottom: 1rem;
+                }
+                p {
+                    color: var(--blue-color-6);
+                }
+            }
+        }
+    }
+
+
+    .benefits-section {
+        padding-top: 7rem;
+        padding-bottom: 10rem;
+        @include flexbox(center, center);
+        color: var(--white-color);
+
+        .main {
+            background-color: var(--blue-color-9);
+            padding: 2rem 6rem;
+            border-radius: 100%;
+            position: relative;
+        }
+
+        .first, .second, .third, .fourth {
+            position: absolute;
+            color: var(--blue-color-7);
+            border: 2px solid var(--blue-color-3);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .first {
+            top: -100px;
+            left: 50px;
+        }
+
+        .second {
+            left: -350px;
+            top: 20px;
+        }
+
+        .third {
+            right: -350px;
+            top: 20px;
+        }
+
+        .fourth {
+            bottom: -100px;
+            left: 50px;
+        }
+    }
 }
