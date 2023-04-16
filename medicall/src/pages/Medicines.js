@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import FeaturedSlider from "../components/medicines/FeaturedProducts";
 import TopProducts from "../components/medicines/TopProducts";
 import useDocTitle from "../hooks/useDocTitle";
 
 const BuyMedicines = () => {
 
+    const navigate = useNavigate();
     useDocTitle("Buy Medicines");
 
     return (
@@ -29,7 +31,7 @@ const BuyMedicines = () => {
                         <span className="home__price">Starting at <b>₹49</b> only</span>
 
                         <div className="home__btns">
-                            <button className="home__button">
+                            <button className="home__button" onClick={() => navigate("/all-medicines")}>
                                 Discover
                             </button>
                         </div>

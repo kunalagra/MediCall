@@ -1,0 +1,534 @@
+#disease-prediction {
+
+    padding-top: 7rem;
+    padding-bottom: 6rem;
+    @include flexbox(center, center);
+
+    #main-content {
+        padding: 2rem 3rem 0 3rem;
+        width: 980px;
+        border: 1px solid var(--grey-color-3);
+        border-radius: 1rem;
+        
+        .first-grid {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 0.3fr 1fr;
+            border-bottom: 1px solid var(--grey-color-3);
+        }
+        
+        .second-grid {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    #ContentDiv {
+        border-radius: 0.5rem;
+        padding-bottom: 3rem;
+    }
+
+    .shoPageSection {
+        height: 55vh;
+        overflow-y: auto;
+        padding-bottom: 4rem;
+    }
+
+    #buttonsSection {
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+            background-color: var(--blue-color-3);
+            border: 1px solid var(--blue-color-5);
+            color: var(--white-color);
+            padding: 10px 12px;
+            border-radius: 5px;
+            margin: 8px 5px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease-in-out;
+            
+            &:hover, &:active, &:disabled {
+                background-color: var(--blue-color-5);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
+    
+    @media (min-width: 64em) {
+        .side-menu-list {
+            list-style-type: none;
+            color: var(--grey-color-3);
+        }
+        
+        .side-menu-list > .list {
+            font-size: 1rem;
+            border-left: 2px solid var(--blue-color-2);
+            color: var(--blue-color-5);
+        }
+    }
+    
+    .side-menu-list {
+        list-style-type: none;
+        line-height: 1.7;
+    }
+    .side-menu-list > li {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    .active {
+        font-weight: bold;
+        color: var(--blue-color-9);
+        border-left: 2px solid var(--blue-color-9);
+    }
+    
+    .done {
+        color: var(--blue-color-8);
+        font-weight: normal;
+        border-left: 2px solid var(--blue-color-9);
+    }
+        
+    @media (max-width: 63.938em) {
+      
+        .shoPageSection {
+          height: 100%;
+          overflow-y: visible;
+        }
+      
+        .side-menu-list > li {
+          float: left;
+          padding: 10px 10px 3px;
+        }
+      
+        #progressbar {
+          border-radius: 13px;
+          padding: 3px;
+          width: 25%;
+          float: right;
+        }
+      
+        .progressbardiv {
+          background-color: var(--blue-color-5);
+          width: 25%;
+          height: 3px;
+          border-radius: 10px;
+        }
+        .progressbardiv25 {
+          background-color: var(--blue-color-5);
+          width: 25%;
+          height: 3px;
+          border-radius: 10px;
+        }
+        .progressbardiv50 {
+          background-color: var(--blue-color-5);
+          width: 50%;
+          height: 3px;
+          border-radius: 10px;
+        }
+        .progressbardiv75 {
+          background-color: var(--blue-color-5);
+          width: 75%;
+          height: 3px;
+          border-radius: 10px;
+        }
+        .progressbardiv100 {
+          background-color: var(--blue-color-5);
+          width: 100%;
+          height: 3px;
+          border-radius: 10px;
+        }
+        .active {
+          border-left: none;
+          border-bottom: 2px solid var(--blue-color-5);
+        }
+      
+        .list {
+          display: none;
+        }
+      
+        .done {
+          border-left: none;
+          border-bottom: 2px solid var(--blue-color-5);
+          display: none;
+        }
+    }
+
+
+    .usa-radio__input {
+        margin: 0 10px;
+    }
+
+    input[type="radio"]::after {
+        width: 1.2em;
+        height: 1.2em;
+        background-color: var(--blue-color-1);
+        content: '';
+        cursor: pointer;
+        border: 2px solid var(--blue-color-1);
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        display: inline-block;
+        visibility: visible;
+    }
+
+    input[type="radio"]:checked::after {
+        background-color: var(--blue-color-9);
+        border: 4px solid var(--blue-color-1);
+    }
+
+
+    #home {
+        line-height: 1.7;
+        max-width: 400px;
+        padding-top: 2rem;
+        
+        p {
+            color: var(--blue-color-6);
+        }
+          
+        ul {
+            color: var(--blue-color-6);
+            
+            li {
+                padding: 0.6rem 0.2rem;
+            }
+        }
+          
+        .TermsCheckbox {
+            font-size: 1rem;
+            color: var(--blue-color-5);
+        }
+
+        .usa-checkbox {
+            @include flexbox(flex-start, center);
+            color: var(--blue-color-8);
+        }
+
+        .usa-checkbox__label {
+            margin-left: 10px;
+        }
+
+        .usa-checkbox__label::before {
+            height: 1rem;
+            width: 1rem;
+        }
+
+        .usa-checkbox__input:checked + .usa-checkbox__label::before {
+            outline: none;
+        }
+    }
+
+
+    #Patient1 {
+        line-height: 1.7;
+        padding-top: 2rem;
+        color: var(--blue-color-6);
+
+        h2 {
+            color: var(--blue-color-9);
+            transition: ease 0.2s;
+        }
+
+        input[type="range"] {
+            width: 15rem;
+        }
+
+    }
+
+    #Patient2 {
+        line-height: 1.7;
+        color: var(--blue-color-6);
+        padding-top: 2rem;
+
+        h2 {
+            color: var(--blue-color-8);
+        }
+        
+        .FormElement {
+            display: flex;
+            justify-content: center;
+            align-items: left;
+        }
+
+        .radioButtonDiv {
+            display: flex;
+            justify-content: space-between;
+            align-items: left;
+            padding: 1rem 2rem 1rem 0;
+
+            h3 {
+                color: var(--blue-color-7);
+            }
+        }
+        
+        @media (max-width: 63.938em) {
+            .radioButtonDiv {
+                display: flex;
+                justify-content: space-between;
+                align-items: left;
+                flex-direction: column;
+            }
+          
+            .FormElement {
+                display: flex;
+                justify-content: center;
+                align-items: left;
+                flex-direction: column;
+            }
+        }
+    }
+
+
+    #Symptoms {
+        line-height: 1.7;
+        padding-top: 2rem;
+
+        .grid-container {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 0.5fr 0.7fr;
+        }
+
+        .searchSymptomsInput {
+            border: none;
+            border-bottom: 1px solid var(--blue-color-6);
+            transition: ease-in-out 0.2s;
+            box-sizing: border-box;
+            padding: 0.5rem;
+            color: var(--blue-color-7);
+            width: 95%;
+        }
+
+        .searchSymptomsInput:focus {
+            outline: none !important;
+            border-bottom: 3px solid var(--blue-color-6);
+            transition: ease-in-out 0.2s;
+        }
+        
+        .symtomsListBox {
+            width: 100%;
+            height: 35vh;
+            overflow-y: scroll;
+            color: var(--grey-color-3);
+        }
+        
+        ul.symtomsListBox {
+            list-style: none;
+            line-height: 1.7rem;
+            padding-left: 0;
+        }
+
+        ul.symtomsListBox > li {
+            padding: 0rem 0.5rem;
+            transition: ease-in-out 0.2s;
+            border-radius: 5px;
+        }
+        
+        ul.symtomsListBox > li > button {
+            padding: 1px 0.5rem;
+        }
+
+        ul.symtomsListBox > li > button:hover {
+            cursor: pointer;
+            background-color: var(--blue-color-1);
+            transition: ease-in-out 0.2s;
+            color: var(--blue-color-9);
+        }
+        
+        ul.symtomsListBox > li > button {
+            border: 0;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            line-height: 2rem;
+        }
+
+        .symtomsListBox > ul > li > button:hover {
+            cursor: pointer;
+        }
+
+        .symtomsListBox > ul > li > button:focus {
+            outline: none;
+        }
+        
+        .UserSymptoms > ul {
+            list-style: none;
+            padding: 1rem;
+        }
+
+        .UserSymptoms > ul > li {
+            background-color: var(--blue-color-9);
+            color: var(--white-color);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            margin: 5px;
+            display: inline-block;
+        }
+        
+        .UserSymptoms > ul > li > button {
+            border: none;
+            background-color: var(--white-color);
+            color: var(--blue-color-9);
+            border-radius: 5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            transition: ease 0.2s;
+        }
+
+        .UserSymptoms > ul > li > button:hover {
+            cursor: pointer;
+            background-color: var(--blue-color-1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .resetButton {
+            @include flexbox(center, center);
+        }
+
+        .usa-button {
+            background-color: var(--blue-color-3);
+            border: 1px solid var(--blue-color-5);
+            color: var(--white-color);
+            padding: 10px 12px;
+            border-radius: 5px;
+            margin: 8px 5px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease-in-out;
+            
+            &:hover, &:active, &:disabled {
+                background-color: var(--blue-color-5);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
+
+
+    #Disease {
+
+        .DiseaseComponent {
+            color: var(--blue-color-7);
+            padding: 0.5rem 1rem;
+            line-height: 1.7;
+        }
+
+        .patientInfo {
+            color: var(--blue-color-9);
+            padding: 1rem 0;
+        }
+        
+        .patientQuestions,
+        .reportDiv {
+            padding: 0.5rem 0rem;
+            border-top: 2px solid var(--blue-color-9);
+        }
+
+        .singleQuestion {
+            padding: 0.5rem 0; 
+        }
+        
+        .singleQuestion:not(:first-child) {
+            border-top: 1px solid var(--white-color);
+        }
+
+        .singleQuestion > p:not(:first-child) {
+            color: var(--blue-color-9);
+        }
+        
+        .DiagnosisReport {
+            padding: 1rem 0;
+            color: var(--blue-color-7);
+        }
+
+        .reportDiv-item {
+            @include flexbox(space-between, center);
+            flex-wrap: wrap;
+            padding: 1rem 0;
+        }
+        
+        .titleReport {
+            @include flexbox(space-between, center);
+            flex-wrap: wrap;
+        }
+
+        .titleReport > h4 {
+            font-size: 1.2rem;
+        }
+
+        .titleReport > a {
+            background-color: var(--blue-color-9);
+            color: var(--white-color);
+            line-height: 1.5rem;
+            padding: 0 0.6rem;
+            border-radius: 2rem;
+            margin-left: 1rem;
+            text-decoration: none;
+        }
+
+        .titleReport > a:focus {
+            outline: none;
+        }
+
+        .Possibility {
+            @include flexbox(space-between, center);
+            flex-wrap: wrap;
+        }
+
+        div.Possibility span {
+            color: var(--blue-color-9);
+            font-weight: 600;
+        }
+
+        .possibilityProgressBar {
+            background-color: #ccc;
+            width: 100px;
+            height: 4px;
+            margin-left: 0.5rem;
+            border-radius: 1rem;
+        }
+
+        .possibilityProgressBar > div {
+            height: 100%;
+            background-color: var(--blue-color-9);
+        }
+        
+        .diseaseSymptoms {
+            border-top: 1px solid var(--white-color);
+            
+            h4 {
+                margin-top: 1rem;
+            }
+        }
+        
+        .diseaseSymptoms > ul {
+            list-style: none;
+        }
+
+        .diseaseSymptoms > ul > li {
+            display: inline-block;
+            padding: 0.6rem 1rem;
+            margin: 0.2rem 0.2rem;
+            border-radius: 0.5rem;
+        }
+
+        .diseaseSymptoms > ul > li.active {
+            border: 1px solid var(--blue-color-9);
+            color: var(--blue-color-9);
+        }
+    }
+
+}

@@ -59,6 +59,7 @@
         border-radius: 5px;
         margin: 8px 5px;
         font-family: 'Montserrat', sans-serif;
+        transition: all 0.3s ease-in-out;
         
         &:hover, &:active, &:disabled {
             background-color: var(--blue-color-5);
