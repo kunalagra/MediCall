@@ -92,12 +92,27 @@ const Doctors = () => {
       })
       //eslint-disable-next-line
     }, [])
-    
 
+    
     const doctorNames = doctors.map(item => "Dr. " + item.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
     const [selectedDoc, setSelectedDoc] = useState(doctorNames[0]);
     const [selectedDocStatus, setSelectedDocStatus] = useState(false);
     const [selectedDocAvailable, setSelectedDocAvailable] = useState(false);
+    const [selectEmail, setSelectEmail] = useState("");
+    const [message, setMessage] = useState("");
+    
+    const handelmeet = () => {
+      httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
+        if(res.status === 200){
+          navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}`);
+        }
+        else{
+          setMessage(res.data.message);
+        }
+      }).catch((res) => {
+        console.log(res)
+      })
+    };
     
     const columns = [
         {field: "id", headerName: "#", headerAlign:"center", align:"center", width: 100},
@@ -165,6 +180,7 @@ const Doctors = () => {
                 return (
                     <div className="appointment-column--cell">
                       <button onClick={() => {
+                        setSelectEmail(params.row.email);
                         setSelectedDoc("Dr. " + params.row.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
                         setMeetModal(true);
                         setSelectedDocStatus(params.row.status==="online");
@@ -203,8 +219,9 @@ const Doctors = () => {
             <div className="meet-details-div">
               <h3>Wanna meet?</h3>
               <div className="meet-details">
-                {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}`)}>Create an Instant meet</div>}
+                {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => handelmeet()}>Create an Instant meet</div>}
                 <div className="create-meet">Schedule a meet</div>
+                { message && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
                 {selectedDocStatus && selectedDocAvailable && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
               </div>
             </div>

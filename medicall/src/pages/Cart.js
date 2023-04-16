@@ -6,6 +6,7 @@ import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
+import httpClient from "../httpClient";
 
 const Cart = () => {
   useDocTitle("Cart");
@@ -26,7 +27,6 @@ const Cart = () => {
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
-
   return (
     <>
       <section id="cart" className="section">
@@ -78,13 +78,16 @@ const Cart = () => {
                     }`}
                     onClick={() => {
                       setIsCheckoutLoading(true);
-                      setTimeout(() => {
-                        setIsCheckoutLoading(false);
-                        setIsAlert(2);
+                      httpClient.get("/checkout").then((res) => {
+                        window.location.href = res.data.url;
                         setTimeout(() => {
-                          setIsAlert(0);
-                        }, 3000);
-                      }, 2000);
+                          setIsCheckoutLoading(false);
+                        }, 2000);
+                      }).catch((err) => {
+                        setIsAlert(1);
+                        setIsCheckoutLoading(false);
+                      });
+                      
                     }}
                   >
                     {isCheckoutLoading ? (
