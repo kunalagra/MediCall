@@ -63,18 +63,20 @@ const Header = () => {
                                 <nav className="nav_actions">
 
                                     <div className="dash_action">
-                                    <span onClick={() => navigate("/home")}>
+                                        <span onClick={() => navigate("/home")}>
                                             <MdDashboard />
                                         </span>
                                         <div className="tooltip">Home</div>
                                     </div>
 
-                                    <div className="doctor_action">
-                                        <span onClick={() => navigate("/doctors")}>
-                                            <TbStethoscope />
-                                        </span>
-                                        <div className="tooltip">Doctors</div>
-                                    </div>
+                                    {localStorage.getItem("usertype")==="patient" && 
+                                        <div className="doctor_action">
+                                            <span onClick={() => navigate("/doctors")}>
+                                                <TbStethoscope />
+                                            </span>
+                                            <div className="tooltip">Doctors</div>
+                                        </div>
+                                    }
 
                                     <div className="model_action">
                                         <span onClick={() => navigate("/disease-prediction")}>

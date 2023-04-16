@@ -192,50 +192,46 @@
                 }
             }
         }
+    }
 
-        // .input_box {
-        //     padding-top: 1rem;
-        //     @include flexbox(center, center);
-        //     flex-wrap: wrap;
+    .schedule-meet-div {
+        padding-bottom: 25px;
 
-        //     select {
-        //         margin-left: 1rem;
-        //         padding: 10px;
-        //         font-family: 'Montserrat', sans-serif;
-        //         border-radius: 6px;
-        //         color: var(--blue-color-9);
-        //         border-color: var(--blue-color-3);
-        //         outline-color: var(--blue-color-3);
+        .schedule-meet {
+            @include flexbox(center, center);
+            padding: 20px;
 
-        //         @include devices(xxs) {
-        //             margin-top: 1rem;
-        //         }
-        //     }
+            input {
+                border: 2px solid var(--blue-color-3);
+                border-radius: 8px;
+                padding: 10px 12px;
+                cursor: pointer;
+            }
 
-        //     label {
-        //         color: var(--blue-color-4);
-        //     }
-        // }
+            input[type="date"] {
+                margin-right: 10px;
+                padding: 11px 12px;
+            }
+        }
 
-        // .start_btn_div {
+        .schedule-btn {
+            @include flexbox(center, center);
 
-        //     margin: 20px 0;
-        //     text-align: center;
-
-        //     .start_btn {
-        //         background-color: var(--blue-color-3);
-        //         text-decoration: none;
-        //         color: var(--white-color);
-        //         transition: all 0.3s ease-in-out;
-        //         cursor: pointer;
-        //         border-radius: 6px;
+            button {
+                background-color: var(--blue-color-3);
+                border: 1px solid var(--blue-color-5);
+                color: var(--white-color);
+                padding: 10px 12px;
+                border-radius: 5px;
+                margin: 8px 5px;
+                font-family: 'Montserrat', sans-serif;
                 
-        //         &:hover, &:active {
-        //             background-color: var(--blue-color-5);
-        //         }
-        //     }
-        // }
+                &:hover, &:active {
+                    background-color: var(--blue-color-5);
+                }
+            }
 
+        }
     }
 
 }

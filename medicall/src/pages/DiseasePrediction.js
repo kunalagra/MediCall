@@ -51,7 +51,6 @@ class DiseasePrediction extends Component {
       case "Patient":
         return this.setState({
           current_page: "Patient-2",
-
           button_name: "Next",
           patient_2_next_button_disabled: true,
         });

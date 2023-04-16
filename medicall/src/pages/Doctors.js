@@ -10,6 +10,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { TbPointFilled } from 'react-icons/tb';
 import { useNavigate } from "react-router-dom";
 import httpClient from "../httpClient";
+import { Alert } from "@mui/material";
 
 const Doctors = () => {
 
@@ -18,6 +19,11 @@ const Doctors = () => {
     const [meetModal, setMeetModal] = useState(false);
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
+    const [isScheduleMeet, setScheduleMeet] = useState(false);
+    // const [isInvDateTime, setInvDateTime] = useState(false);
+    const [isMeetScheduled, setMeetScheduled] = useState(false);
+    const [curDate, setCurDate] = useState(null);
+    const [curTime, setCurTime] = useState(null);
     
     // temporary doctors data
     // const doctors = [
@@ -185,6 +191,7 @@ const Doctors = () => {
                         setMeetModal(true);
                         setSelectedDocStatus(params.row.status==="online");
                         setSelectedDocAvailable(params.row.isInMeet);
+                        setScheduleMeet(false);
                       }}>
                         BOOK
                       </button>
@@ -220,11 +227,35 @@ const Doctors = () => {
               <h3>Wanna meet?</h3>
               <div className="meet-details">
                 {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => handelmeet()}>Create an Instant meet</div>}
-                <div className="create-meet">Schedule a meet</div>
+                <div className="create-meet" onClick={() => {
+                  const d = new Date();
+                  setCurDate(`${d.getFullYear()}-${parseInt(d.getMonth()) < 10? '0' : ''}${d.getMonth()}-${parseInt(d.getDate()) < 10? '0' : ''}${d.getDate()}`);
+                  setCurTime(`${parseInt(d.getHours()) < 10? '0' : ''}${d.getHours()}:${parseInt(d.getMinutes()) < 10 ? '0' : ''}${d.getMinutes()}`);
+                  setScheduleMeet(!isScheduleMeet);
+                }}>Schedule a meet</div>
                 { message && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
                 {selectedDocStatus && selectedDocAvailable && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
               </div>
             </div>
+            {isScheduleMeet && (
+              <div className="schedule-meet-div">
+                <h3>Pick a Date and Time</h3>
+                {isMeetScheduled && <Alert severity="success">Meet scheduled successfully</Alert>}
+                <div className="schedule-meet">
+                  <input type="date" value={curDate} onChange={(e) => console.log(e.target.value)} />
+                  <input type="time" value={curTime} onChange={(e) => console.log(e.target.value)} />
+                </div>
+                <div className="schedule-btn">
+                  <button onClick={() => {
+                    setMeetScheduled(true);
+                    setTimeout(() => {
+                      setMeetScheduled(false);
+                      setMeetModal(false);
+                    }, 2000);
+                  }}>Schedule</button>
+                </div>
+              </div>
+            )}
           </div>
         </Modal>
       </>
