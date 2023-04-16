@@ -1,154 +1,92 @@
 const medicinesData = [
-    {
-        id: 1,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 2,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 69,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 3,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 4,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "Latest Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 5,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 6,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "Top Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 7,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 8,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 9,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "Tada Medicine",
-        price: 59,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 10,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 11,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 12,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 13,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 14,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
-    {
-        id: 15,
-        images: [
-            "/medicines/prod1.jpg"
-        ],
-        title: "New Medicine",
-        price: 79,
-        path: "/",
-        quantity: 0
-    },
+  {
+    id: 3,
+    images: ["/medicines/prod1.jpg"],
+    title: "Benadryl",
+    price: 79,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 5,
+    images: ["/medicines/prod21.jpg"],
+    title: "Farlin Bottle Safety Bag",
+    price: 288,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 6,
+    images: ["/medicines/prod6.jpeg"],
+    title: "Moxikind",
+    price: 150,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 7,
+    images: ["/medicines/prod7.jpg"],
+    title: "Kivokast",
+    price: 88,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 8,
+    images: ["/medicines/prod8.jpg"],
+    title: "Alecensa",
+    price: 100,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 9,
+    images: ["/medicines/prod9.jpg"],
+    title: "Exemestane",
+    price: 111,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 10,
+    images: ["/medicines/prod10.jpg"],
+    title: "Gefinat",
+    price: 800,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 12,
+    images: ["/medicines/prod12.jpg"],
+    title: "Letrozate",
+    price: 689,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 13,
+    images: ["/medicines/prod13.jpg"],
+    title: "Erlonat",
+    price: 579,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 14,
+    images: ["/medicines/prod14.jpg"],
+    title: "B Plasid",
+    price: 729,
+    path: "/",
+    quantity: 0,
+  },
+  {
+    id: 15,
+    images: ["/medicines/prod15.jpg"],
+    title: "Borosil",
+    price: 90,
+    path: "/",
+    quantity: 0,
+  },
 ];
 
 export default medicinesData;
