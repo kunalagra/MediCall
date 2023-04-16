@@ -1,0 +1,13 @@
+flask
+flask-sqlalchemy
+flask-bcrypt
+python-dotenv
+flask-session
+redis
+flask-cors
+flask_pymongo
+flask_jwt_extended
+boto3
+gunicorn
+stripe
+flask_mail
