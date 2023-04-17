@@ -1,0 +1,8 @@
+runtime: python310
+
+env_variables:
+  CLOUD_SQL_USERNAME: root,
+  CLOUD_SQL_PASSWORD: 123456,
+  CLOUD_SQL_DATABASE_NAME: medicall,
+  CLOUD_SQL_CONNECTION_NAME: applied-flag-344105:us-central1:medicall,
+  PASSWORD: rwaorvlmvyqbhney
