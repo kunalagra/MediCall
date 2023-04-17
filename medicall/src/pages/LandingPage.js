@@ -1,5 +1,5 @@
 import useDocTitle from "../hooks/useDocTitle";
-
+import { MdAccountCircle } from "react-icons/md";
 
 
 const LandingPage = () => {
@@ -56,6 +56,28 @@ const LandingPage = () => {
                     <div className="second">Convenience and accessibility</div>
                     <div className="third">Online Appointment Booking</div>
                     <div className="fourth">Competitive advantage</div>
+                </div>
+            </section>
+
+            <section className="team-section">
+                <div><h2>Our Team</h2></div>
+                <div className="team">
+                    <div className="item">
+                        <MdAccountCircle />
+                        <h3>Kunal Agrawal</h3>
+                    </div>
+                    <div className="item">
+                        <MdAccountCircle />
+                        <h3>Ganesh Utla</h3>
+                    </div>
+                    <div className="item">
+                        <MdAccountCircle />
+                        <h3>Deexith Madas</h3>
+                    </div>
+                    <div className="item">
+                        <MdAccountCircle />
+                        <h3>Aman Tiwari</h3>
+                    </div>
                 </div>
             </section>
         </div>

@@ -137,7 +137,6 @@ const Header = () => {
                 </div>
             </header>
 
-            {/* <SearchBar /> */}
             <AccountForm />
         </>
     );
