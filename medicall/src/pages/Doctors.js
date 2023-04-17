@@ -46,28 +46,23 @@ const Doctors = () => {
     };
 
     function checkInvDateTime(date,time) {
-      const now = new Date();
-      const d = date.split('-');
-      const t = time.split(':');
-
-      let hh = now.getHours();
-      let mm = now.getMinutes() + 30;
-      if (mm < 30) hh += 1;
-      console.log(d,t);
-
-      if (parseInt(d[1]) < now.getMonth() || parseInt(d[0]) < now.getFullYear() || parseInt(d[2]) < now.getDate()) {
-        setInvDateTime(true);
-      }
-      else if (parseInt(d[0])===now.getDate() && parseInt(t[0]) < hh) {
-        setInvDateTime(true);
-      }
-      else if (parseInt(t[0])===hh && parseInt(t[1]) < mm) {
-        setInvDateTime(true);
-      }
-      else {
-        setInvDateTime(false);
-      }
+      const now = new Date(new Date().getTime() + 30*60000);
+      const d = new Date(date + ' ' + time);
+      setInvDateTime(now >= d);
     }
+
+   
+    const handleSchedule = (upcomingAppointments = [{date: "2023-04-18", time: "11:50", patient: "Shiva"}, {date: "2023-04-18", time: "06:00", patient: "Aryan"}]) => {
+      for(let i=0; i<upcomingAppointments.length; i++) {
+        const now = new Date(curDate + " " + curTime);
+        const d1 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() - 30*60000);
+        const d2 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() + 30*60000);
+
+        if (d1 < now && now <= d2) 
+            return false;
+      };
+      return true;
+    };
 
 
     const doctorNames = doctors.map(item => "Dr. " + item.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
@@ -207,7 +202,7 @@ const Doctors = () => {
                 {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => handelmeet()}>Create an Instant meet</div>}
                 <div className="create-meet" onClick={() => {
                   const d = new Date();
-                  setCurDate(`${d.getFullYear()}-${parseInt(d.getMonth()) < 10? '0' : ''}${d.getMonth()}-${parseInt(d.getDate()) < 10? '0' : ''}${d.getDate()}`);
+                  setCurDate(`${d.getFullYear()}-${parseInt(d.getMonth()) < 9? '0' : ''}${d.getMonth()+1}-${parseInt(d.getDate()) < 10? '0' : ''}${d.getDate()}`);
                   setCurTime(`${parseInt(d.getHours()) < 10? '0' : ''}${d.getHours()}:${parseInt(d.getMinutes()) < 10 ? '0' : ''}${d.getMinutes()}`);
                   setInvDateTime(true);
                   setScheduleMeet(!isScheduleMeet);
@@ -230,13 +225,24 @@ const Doctors = () => {
                       setMeetScheduling(true);
                       setTimeout(() => {
                         setMeetScheduling(false);
+                        
+                        // TODO: fetch the <<selectedDoc>> doctor data 
+                        // check the doctor availability using <<doctor.upcomingAppointments>>
+                        // now pass the in the <<handleSchedule(doctor.upcomingAppointments)>>
+                        // Note that the <<doctor.upcomingAppointments>> should be an array and it should contain date and time
+                        // <<handleSchedule>> function returns true if slot is available
+                        if(handleSchedule()) {
+                          setScheduleAlert(2);
+                          // TODO: 
+                          // Append the date, time, patient details and meet link to the <<doctor.upcomingAppointments>>
 
-                        setScheduleAlert(1);
+                        } else {
+                          setScheduleAlert(1);
+                        }
 
-                        // check doctor availability
                         setTimeout(() => {
                           setScheduleAlert(0);
-                          setMeetModal(false);
+                          // setMeetModal(false);
                         }, 4000);
                       }, 2000);
                     }}

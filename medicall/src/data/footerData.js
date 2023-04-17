@@ -8,17 +8,17 @@ export const footMenu = [
             {
                 id: 1,
                 link: "Buy Medicines",
-                path: "/"
+                path: "/buy-medicines"
             },
             {
                 id: 2,
                 link: "Disease Prediction",
-                path: "/"
+                path: "/disease-prediction"
             },
             {
                 id: 3,
-                link: "Create Appointment",
-                path: "/"
+                link: "Book an Appointment",
+                path: "/doctors"
             }
         ]
     },

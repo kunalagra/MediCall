@@ -1,5 +1,179 @@
 #home-page {
-    min-height: 60vh;
+    padding-top: 6rem;
+
+    .dis-pred-test-div {
+        border: 2px solid var(--blue-color-2);
+        width: min(1100px, 93vw);
+        position: relative;
+        padding: 3rem 0;
+        transition: all 0.3s ease-in-out;
+        margin: 0 auto;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+        
+        &:hover {
+            width: min(1120px, 95vw);
+            border: 3px solid var(--blue-color-4);
+            padding: 3.5rem 0;
+        }
+
+        .test-bg {
+            background-image: url(../../../public/syringe_bg.png);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(2px);
+            -webkit-filter: blur(2px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+        }
+
+        .main {
+            @include flexbox(space-around, center);
+    
+            .content-div {
+                color: var(--blue-color-8);
+                @include flexbox(flex-start, flex-end);
+                flex-wrap: wrap;
+                p {
+                    font-size: 1.2em;
+                    margin-left: 10px;
+                }
+            }
+    
+            .test-btn > button {
+                background-color: var(--blue-color-8);
+                color: var(--white-color);
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 10px 1px var(--blue-color-2);
+                
+                &:hover, &:active {
+                    background-color: var(--blue-color-9);
+                }
+            }
+        }
+    }
+
+
+    .upcoming-appointments, .past-appointments {
+        width: min(1100px, 93vw);
+        margin: 0 auto;
+        margin-bottom: 4rem;
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--blue-color-8);
+        }
+
+        .main {
+            ul {
+
+                .appt-item {
+                    padding: 0.5rem 1rem;
+                    margin-bottom: 1rem;
+                    border: 1px solid var(--blue-color-4);
+                    background-color: var(--blue-color-2);
+                    transition: all 0.3s ease-in-out;
+                    border-radius: 8px;
+                    @include flexbox(space-between, center);
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    &:hover {
+                        border: 2px solid var(--blue-color-5);
+                        padding: 0.7rem 1rem;
+                    }
+
+                    .content {
+                        color: var(--blue-color-8);
+                        @include flexbox(flex-start, flex-end);
+                        flex-wrap: wrap;
+
+                        p {
+                            &:first-child {
+                                font-size: 1.2em;
+                            }
+                        }
+                    }
+
+                    .join-btn {
+                        background-color: var(--blue-color-8);
+                        color: var(--white-color);
+                        padding: 1rem 2rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        transition: all 0.3s ease-in-out;
+                        box-shadow: 0 0 10px 1px var(--blue-color-2);
+                        
+                        &:hover, &:active, &:disabled {
+                            background-color: var(--blue-color-9);
+                        }
+
+                        &:disabled {
+                            cursor: not-allowed;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+    .todays-tip {
+        width: min(1100px, 93vw);
+        background-color: var(--yellow-color-2);
+        border: 2px solid var(--yellow-color-5);
+        padding: 1.5rem;
+        color: #ff9d33;
+        border-radius: 8px;
+        margin: 0 auto;
+        margin-bottom: 5rem;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            width: min(1130px, 95vw);
+            padding: 2rem;
+            border: 3px solid var(--orange-color-1)
+        }
+
+        .head {
+            @include flexbox(flex-start, center);
+            margin-bottom: 1rem;
+            color: var(--orange-color-1);
+
+            .bulb-icon {
+                font-size: 2em;
+                margin-right: 10px;
+            }
+        }
+
+        .content {
+            padding: 0 1rem;
+            h4 {
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+    }
 }
 
 
