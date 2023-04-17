@@ -5,8 +5,8 @@ export default axios.create({
   credientials: "same-origin",
   headers: {
     "Content-type": "application/json",
-    "Authorization": "Bearer " + localStorage.getItem("token")
+    // "Authorization": "Bearer " + localStorage.getItem("token")
   },
-  baseURL: "http://localhost:5000"
+  baseURL: "https://applied-flag-344105.uc.r.appspot.com"
 });
 
