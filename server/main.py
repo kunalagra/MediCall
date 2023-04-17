@@ -44,7 +44,7 @@ client = pymongo.MongoClient(URI, server_api=ServerApi('1'))
 doctor = client.get_database("MediCall").doctors
 patients = client.get_database("MediCall").patients
 
-YOUR_DOMAIN = 'http://localhost:3000/'
+YOUR_DOMAIN = 'https://gfg-sfi.onrender.com/'
 
 
 @app.before_request
