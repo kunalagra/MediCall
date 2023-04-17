@@ -1,5 +1,5 @@
 import useDocTitle from "../hooks/useDocTitle";
-import { MdAccountCircle } from "react-icons/md";
+// import { MdAccountCircle } from "react-icons/md";
 
 
 const LandingPage = () => {
@@ -59,7 +59,7 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            <section className="team-section">
+            {/* <section className="team-section">
                 <div><h2>Our Team</h2></div>
                 <div className="team">
                     <div className="item">
@@ -79,7 +79,7 @@ const LandingPage = () => {
                         <h3>Aman Tiwari</h3>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </div>
     )
 }

@@ -63,8 +63,8 @@ const Home = () => {
                             {upcomingAppointments.map((item, index) => (
                                 <li className="appt-item" key={index}>
                                     <div className="content">
-                                        <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)}</p>
-                                        <p>, By Dr. {item.doctor}</p>
+                                        <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
+                                        <p> By Dr. {item.doctor}</p>
                                     </div>
                                     <button className="join-btn" disabled={new Date(item.date + " " + item.time) < new Date()} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
                                 </li>
@@ -80,8 +80,8 @@ const Home = () => {
                             {upcomingAppointments.map((item, index) => (
                                 <li className="appt-item" key={index}>
                                     <div className="content">
-                                        <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)}</p>
-                                        <p>, By Dr. {item.doctor}</p>
+                                        <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
+                                        <p> By Dr. {item.doctor}</p>
                                     </div>
                                     <button className="join-btn" onClick={() => {}}>Prescription</button>
                                 </li>
