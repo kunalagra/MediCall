@@ -164,13 +164,14 @@
 }
 
 .backdrop {
-    background-color: rgba($color: var(--black-color-2), $alpha: 0.5);
+    background-color: rgba($color: #000, $alpha: 0.5);
     position: fixed;
-    top: 10px;
+    top: 0px;
     left: 0;
     @include dimension(100%, 100%);
     overflow-x: hidden;
     overflow-y: auto;
+    z-index: 9999;
 }
 
 .modal_centered {
