@@ -131,6 +131,63 @@
         width: min(1200px, 100vw);
         margin: 0 auto;
         color: var(--blue-color-8);
+
+        .heading {
+
+            @include flexbox(center, center);
+
+            .refresh-btn {
+                position: relative;
+                margin-left: 10px;
+
+                span {
+                    background-color: var(--blue-color-5);
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+                    border-radius: 5px;
+                    padding: 0px 5px 3px 5px;
+                    font-size: 1.5em;
+                    color: var(--white-color);
+
+                    &.active {
+                        cursor: not-allowed;
+
+                        .refresh-icon {
+                            animation: loading 0.7s linear infinite;
+                        }
+
+                        @keyframes loading {
+                            0% {
+                                transform: rotate(0deg);
+                            }
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    }
+    
+                    &:hover {
+                        background-color: var(--blue-color-7);
+                    }
+                }
+
+                &:hover {
+                    .refresh-tooltip {
+                        @include toggleVisibility(visible, 1);
+                    }
+                }
+    
+                .refresh-tooltip {
+                    @include toggleVisibility(hidden, 0);
+                    position: absolute;
+                    top: -8px;
+                    left: 50px;
+                    transform: translateX(0);
+                    z-index: 999;
+                }
+            }
+        }
+
         
         .doctor-details-table {
             min-height: 500px;
@@ -226,8 +283,12 @@
                 margin: 8px 5px;
                 font-family: 'Montserrat', sans-serif;
                 
-                &:hover, &:active {
+                &:hover, &:active, &:disabled {
                     background-color: var(--blue-color-5);
+                }
+
+                &:disabled {
+                    cursor: not-allowed;
                 }
             }
 

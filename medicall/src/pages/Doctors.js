@@ -10,7 +10,8 @@ import { AiFillStar } from 'react-icons/ai';
 import { TbPointFilled } from 'react-icons/tb';
 import { useNavigate } from "react-router-dom";
 import httpClient from "../httpClient";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
+import { IoMdRefresh } from "react-icons/io";
 
 const Doctors = () => {
 
@@ -20,86 +21,55 @@ const Doctors = () => {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [isScheduleMeet, setScheduleMeet] = useState(false);
-    // const [isInvDateTime, setInvDateTime] = useState(false);
-    const [isMeetScheduled, setMeetScheduled] = useState(false);
+    const [isInvDateTime, setInvDateTime] = useState(false);
+    const [scheduleAlert, setScheduleAlert] = useState(0);
+    const [meetScheduling, setMeetScheduling] = useState(false);
     const [curDate, setCurDate] = useState(null);
     const [curTime, setCurTime] = useState(null);
-    
-    // temporary doctors data
-    // const doctors = [
-    //     {
-    //         id: 1,
-    //         username: "Ganesh Utla",
-    //         email: "abc@gmail.com",
-    //         gender: "male",
-    //         specialization: "Cancer Surgeon",
-    //         phone: "1234567890",
-    //         status: "online",
-    //         noOfAppointments: 3,
-    //         noOfStars: 13,
-    //         isInMeet: false
-    //     },
-    //     {
-    //         id: 2,
-    //         username: "Deexith Madas",
-    //         email: "def@gmail.com",
-    //         gender: "male",
-    //         specialization: "Heart Surgeon",
-    //         phone: "1234567890",
-    //         status: "offline",
-    //         noOfAppointments: 5,
-    //         noOfStars: 19,
-    //         isInMeet: false
-    //     },
-    //     {
-    //         id: 3,
-    //         username: "Kunal Agrawal",
-    //         email: "ghi@gmail.com",
-    //         gender: "male",
-    //         specialization: "Brain Surgeon",
-    //         phone: "1234567890",
-    //         status: "online",
-    //         noOfAppointments: 2,
-    //         noOfStars: 9,
-    //         isInMeet: true
-    //     },
-    //     {
-    //         id: 4,
-    //         username: "Aman Tiwari",
-    //         email: "jkl@gmail.com",
-    //         gender: "male",
-    //         specialization: "Penis Surgeon",
-    //         phone: "1234567890",
-    //         status: "online",
-    //         noOfAppointments: 3,
-    //         noOfStars: 14,
-    //         isInMeet: false
-    //     },
-    //     {
-    //         id: 5,
-    //         username: "Loda insaan",
-    //         email: "mno@gmail.com",
-    //         gender: "male",
-    //         specialization: "Chutiyapa",
-    //         phone: "1234567890",
-    //         status: "offline",
-    //         noOfAppointments: 4,
-    //         noOfStars: 13,
-    //         isInMeet: false
-    //     },
-    // ];
+    const [fetchingData, setFetchingData] = useState(false);
+
 
     useEffect(() => {
+      fetchDoctors();
+    }, [])
+
+    function fetchDoctors() {
+      setFetchingData(true);
       httpClient.get("/get_status").then((res) => {
         setDoctors(res.data.details);
         // console.log(doctors)
-      }).catch((res) => {
+        setFetchingData(false);
+      }).catch(() => {
         // console.log(res)
-      })
-      //eslint-disable-next-line
-    }, [])
+        setFetchingData(false);
+      });
+    };
 
-    
+    function checkInvDateTime(date,time) {
+      const now = new Date();
+      const d = date.split('-');
+      const t = time.split(':');
+
+      let hh = now.getHours();
+      let mm = now.getMinutes() + 30;
+      if (mm < 30) hh += 1;
+      console.log(d,t);
+
+      if (parseInt(d[1]) < now.getMonth() || parseInt(d[0]) < now.getFullYear() || parseInt(d[2]) < now.getDate()) {
+        setInvDateTime(true);
+      }
+      else if (parseInt(d[0])===now.getDate() && parseInt(t[0]) < hh) {
+        setInvDateTime(true);
+      }
+      else if (parseInt(t[0])===hh && parseInt(t[1]) < mm) {
+        setInvDateTime(true);
+      }
+      else {
+        setInvDateTime(false);
+      }
+    }
+
+
     const doctorNames = doctors.map(item => "Dr. " + item.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
     const [selectedDoc, setSelectedDoc] = useState(doctorNames[0]);
     const [selectedDocStatus, setSelectedDocStatus] = useState(false);
@@ -115,8 +85,8 @@ const Doctors = () => {
         else{
           setMessage(res.data.message);
         }
-      }).catch((res) => {
-        console.log(res)
+      }).catch(() => {
+        // console.log(res)
       })
     };
     
@@ -205,7 +175,15 @@ const Doctors = () => {
       <>
         <div id="doctors-page">
           <div className="doctor-details">
-              <h3>Doctor Details</h3>
+              <div className="heading">
+                <h3>Doctor Details</h3>
+                <div className="refresh-btn" onClick={fetchDoctors}>
+                  <span className={`${fetchingData? "active" : ""}`}>
+                    <IoMdRefresh className="refresh-icon" />
+                  </span>
+                  <div className="refresh-tooltip tooltip">Refresh details</div>
+                </div>
+              </div>
               <DataGrid 
                   className="doctor-details-table"
                   rows={doctors} 
@@ -231,6 +209,7 @@ const Doctors = () => {
                   const d = new Date();
                   setCurDate(`${d.getFullYear()}-${parseInt(d.getMonth()) < 10? '0' : ''}${d.getMonth()}-${parseInt(d.getDate()) < 10? '0' : ''}${d.getDate()}`);
                   setCurTime(`${parseInt(d.getHours()) < 10? '0' : ''}${d.getHours()}:${parseInt(d.getMinutes()) < 10 ? '0' : ''}${d.getMinutes()}`);
+                  setInvDateTime(true);
                   setScheduleMeet(!isScheduleMeet);
                 }}>Schedule a meet</div>
                 { message && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
@@ -240,19 +219,34 @@ const Doctors = () => {
             {isScheduleMeet && (
               <div className="schedule-meet-div">
                 <h3>Pick a Date and Time</h3>
-                {isMeetScheduled && <Alert severity="success">Meet scheduled successfully</Alert>}
+                {isInvDateTime && <Alert severity="error">Pick a future date and time</Alert>}
+                {scheduleAlert!==0 && <Alert severity={`${scheduleAlert===1? "error" : "success"}`}>{scheduleAlert===1? "Doctor isn't available at that time. Please pick up some other time" : "Meet scheduled successfully"}</Alert>}
                 <div className="schedule-meet">
-                  <input type="date" value={curDate} onChange={(e) => console.log(e.target.value)} />
-                  <input type="time" value={curTime} onChange={(e) => console.log(e.target.value)} />
+                  <input type="date" value={curDate} onChange={(e) => {checkInvDateTime(e.target.value, curTime); setCurDate(e.target.value);}} />
+                  <input type="time" value={curTime} onChange={(e) => {checkInvDateTime(curDate, e.target.value); setCurTime(e.target.value);}} />
                 </div>
                 <div className="schedule-btn">
                   <button onClick={() => {
-                    setMeetScheduled(true);
-                    setTimeout(() => {
-                      setMeetScheduled(false);
-                      setMeetModal(false);
-                    }, 2000);
-                  }}>Schedule</button>
+                      setMeetScheduling(true);
+                      setTimeout(() => {
+                        setMeetScheduling(false);
+
+                        setScheduleAlert(1);
+
+                        // check doctor availability
+                        setTimeout(() => {
+                          setScheduleAlert(0);
+                          setMeetModal(false);
+                        }, 4000);
+                      }, 2000);
+                    }}
+                    disabled={isInvDateTime}
+                  >{ meetScheduling? (
+                      <CircularProgress
+                          size={18}
+                          sx={{ color: "#f5f5f5", margin: "0px 30px" }}
+                      />
+                    ) : "Schedule"}</button>
                 </div>
               </div>
             )}

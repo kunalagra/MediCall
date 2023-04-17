@@ -11,10 +11,10 @@ const Home = (props) => {
           <li>🔹 This checkup is for informational purposes and is not a qualified medical opinion.</li>
           <li>🔹 Information that you provide is anonymous and not shared with anyone.</li>
         </ul>
-        <form class="usa-form TermsCheckbox">
-          <div class="usa-checkbox">
-            <input checked={props.isChecked} onChange={props.checked} class="usa-checkbox__input" id="truth" type="checkbox" name="historical-figures-1" value="truth" />
-            <label class="usa-checkbox__label" for="truth">
+        <form className="usa-form TermsCheckbox">
+          <div className="usa-checkbox">
+            <input checked={props.isChecked} onChange={props.checked} className="usa-checkbox__input" id="truth" type="checkbox" name="historical-figures-1" value="truth" />
+            <label className="usa-checkbox__label" htmlFor="truth">
               I agree to the Medicall terms and conditions
             </label>
           </div>
