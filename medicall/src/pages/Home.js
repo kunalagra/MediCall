@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from '@mui/material/Modal';
 import useDocTitle from "../hooks/useDocTitle";
 import { IoMdClose } from "react-icons/io";
@@ -6,6 +6,7 @@ import { Alert } from "@mui/material";
 import { BsEmojiAngry, BsEmojiFrown, BsEmojiExpressionless, BsEmojiSmile, BsEmojiLaughing } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb } from "react-icons/hi";
+import httpClient from "../httpClient";
 
 const Home = () => {
     useDocTitle("Home");
@@ -19,7 +20,15 @@ const Home = () => {
         // TODO: fetch the data of the doctor name = <<localStorage.setItem("lastMeetWith")>>; and 
         // increase the <<noOfAppointments>> by 1 and increase the <<noOfStars>> by <<feedbackRate>>; 
         // then set the <<lastMeetWith>> in localStorage to null;
-        
+
+        httpClient.post('/doctor_app', {
+            email: localStorage.getItem("lastMeetMail"),
+            stars: feedbackRate
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
         localStorage.setItem("lastMeetWith", null);
 
         setFeedbackAlert(true);
@@ -30,8 +39,37 @@ const Home = () => {
     };
     const ratings = ["Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied"];
 
+    const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+    const [pastAppointments, setPastAppointments] = useState([]);
 
-    const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
+    useEffect(() => {
+        const now = new Date();
+        console.log(now);
+        if (localStorage.getItem('usertype') === 'patient') {
+        httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
+            .then((res) => {
+                setUpcomingAppointments(res.data.appointments);
+                setPastAppointments(res.data.appointments);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+        else {
+            httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
+                .then((res) => {
+                    setUpcomingAppointments(res.data.appointments);
+                    setPastAppointments(res.data.appointments);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+    }, []);
+
+
+
+    // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
     
     // const pastAppointments = [{date: "2023-04-17", time: "11:20", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-16", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
 
@@ -64,7 +102,7 @@ const Home = () => {
                                 <li className="appt-item" key={index}>
                                     <div className="content">
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
-                                        <p> By Dr. {item.doctor}</p>
+                                        <p> By {item.doctor}</p>
                                     </div>
                                     <button className="join-btn" disabled={new Date(item.date + " " + item.time) < new Date()} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
                                 </li>
@@ -77,11 +115,11 @@ const Home = () => {
                     <h2>Past Appointments</h2>
                     <div className="main">
                         <ul>
-                            {upcomingAppointments.map((item, index) => (
+                            {pastAppointments.map((item, index) => (
                                 <li className="appt-item" key={index}>
                                     <div className="content">
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
-                                        <p> By Dr. {item.doctor}</p>
+                                        <p> By {item.doctor}</p>
                                     </div>
                                     <button className="join-btn" onClick={() => {}}>Prescription</button>
                                 </li>

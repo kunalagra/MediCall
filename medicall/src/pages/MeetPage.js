@@ -36,6 +36,7 @@ const MeetPage = () => {
   useEffect(() => {
     if (!isDoctor) {
       localStorage.setItem("lastMeetWith", searchparams.get("selectedDoc"));
+      localStorage.setItem("lastMeetMail", searchparams.get("selectedMail"));
     }
     //eslint-disable-next-line
   }, []);
@@ -112,7 +113,11 @@ const MeetPage = () => {
 
   const handleEndMeeting = () => {
     toggleFeedback(true);
-    navigate("/home");
+    httpClient.put('/meet_end', { email: searchparams.get("selectedMail")} ).then((res) => {
+      navigate("/Home");
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   // const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
@@ -341,9 +346,14 @@ const MeetPage = () => {
     pdf.save("Medicall-Invoice.pdf");
 
     let bodyContent = new FormData();
+    bodyContent.append("email", email);
     bodyContent.append("file", "Medicall-Invoice.pdf");
 
-    httpClient.post("mail_file", {bodyContent})
+    httpClient.post("mail_file", {bodyContent}).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
     console.log(email, phone);
     console.log(prescription);
   };

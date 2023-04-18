@@ -14,8 +14,9 @@ from flask_cors import CORS
 import pymongo
 from pymongo.server_api import ServerApi
 from flask_mail import Message
+from dotenv import load_dotenv
 import os
-
+load_dotenv()
 secret_key = secrets.token_hex(16)
 
 app = Flask(__name__)
@@ -26,7 +27,7 @@ SECRET_KEY = "jkajoisjosk"
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USERNAME'] = 'deexithmadas277'
-app.config['MAIL_PASSWORD'] = 'rwaorvlmvyqbhney'
+app.config['MAIL_PASSWORD'] = os.getenv('PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 mail = Mail(app)
 
@@ -82,6 +83,7 @@ def register():
             else:
                 hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
                 data['passwd'] = hashed_password
+                data['upcomingAppointments'] = []
                 del data['specialization']
                 patients.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
@@ -95,6 +97,7 @@ def register():
                 data['meet'] = False
                 data['appointments'] = 0
                 data['stars'] = 0
+                data['upcomingAppointments'] = []
                 del data["age"]
                 doctor.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
@@ -147,12 +150,12 @@ def meet_status():
         doctor.update_one({'email': user}, {'$set': {'meet': True}})
         return jsonify({'message': 'Doctor status updated successfully'}), 200
 
-# @app.route('/meet_status', methods=['PUT'])
-# def meet_status():
-#     data = request.get_json()
-#     user = data['email']
-#     doctor.update_one({'email': user}, {'$set': {'meet': False}})
-#     return jsonify({'message': 'Doctor status updated successfully'}), 200
+@app.route('/meet_end', methods=['PUT'])
+def meet_end():
+    data = request.get_json()
+    user = data['email']
+    doctor.update_one({'email': user}, {'$set': {'meet': False}})
+    return jsonify({'message': 'Doctor status updated successfully'}), 200
 
 @app.route('/get_status', methods=['GET'])
 def get_status():
@@ -166,21 +169,62 @@ def get_status():
 
 @app.route('/mail_file', methods=['POST'])
 def mail_file():
-    data = request.get_json()
+    data = request.form.to_dict()
     user = data['email']
-    details = doctor.find_one({'email': user})
     # customer = details['meet']
     f = request.files['file']
     f.save(f.filename)
     msg = Message("Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
-                  recipients=["amantiwari201608@gmail.com"])
+                  recipients=[user])
     msg.body = "PFA Prescription for today's appointment on MediCall"
     with app.open_resource(f.filename) as fp:
         msg.attach(f.filename, 'application/pdf', fp.read())
     mail.send(msg)
     os.remove(f.filename)
     return jsonify({"messgae": "successfully sent"}), 200
+
+@app.route('/doctor_app', methods=['POST'])
+def doctor_app():
+    data = request.get_json()
+    email = data['email']
+    doctor.update_one({'email': email}, {'$inc': {'appointments': 1, 'stars': data['stars']}})
+    return jsonify({'message': 'Doctor status updated successfully'}), 200
+
+@app.route('/set_appointment', methods=['POST', 'PUT'])
+def set_appointment():
+    data = request.get_json()
+    email = data['email']
+    doc = doctor.find_one({'email': email})
+    if request.method == 'POST':
+        return jsonify({'message': 'Doctor Appointments', 'appointments': doc['upcomingAppointments']}), 200
+    else:
+        doc['upcomingAppointments'].append({
+            "date": data['date'],
+            "time": data['time'],
+            "patient": data['patient'],
+            "meet": data['meet'],
+        })
+        doctor.update_one({'email': email}, {'$set': {'upcomingAppointments': doc['upcomingAppointments']}})
+        return jsonify({'message': 'Doctor status updated successfully'}), 200
+
+@app.route('/patient_apo', methods=['POST', 'PUT'])
+def patient_apo():
+    data = request.get_json()
+    email = data['email']
+    pat = patients.find_one({'email': email})
+
+    if request.method == 'POST':
+        return jsonify({'message': 'Patient Appointments', 'appointments': pat['upcomingAppointments']}), 200
+    else:
+        pat['upcomingAppointments'].append({
+            "date": data['date'],
+            "time": data['time'],
+            "doctor": data['doctor'],
+            "meet": data['meet'],
+        })
+        patients.update_one({'email': email}, {'$set': {'upcomingAppointments': pat['upcomingAppointments']}})
+        return jsonify({'message': 'Patient status updated successfully'}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

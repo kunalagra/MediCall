@@ -7,6 +7,6 @@ export default axios.create({
     "Content-type": "application/json",
     // "Authorization": "Bearer " + localStorage.getItem("token")
   },
-  baseURL: "https://applied-flag-344105.uc.r.appspot.com"
+  baseURL: "http://127.0.0.1:5000"
 });
 

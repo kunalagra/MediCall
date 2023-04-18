@@ -75,7 +75,7 @@ const Doctors = () => {
     const handelmeet = () => {
       httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
         if(res.status === 200){
-          navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}`);
+          navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`);
         }
         else{
           setMessage(res.data.message);
@@ -226,23 +226,39 @@ const Doctors = () => {
                       setTimeout(() => {
                         setMeetScheduling(false);
                         
+                        httpClient.post('/set_appointment', {
+                          email: selectEmail}).then((res) => {
+                            if(handleSchedule(res.data.upcomingAppointments)) {
+                              setScheduleAlert(2);
+                              httpClient.put('/patient_apo', { email: localStorage.getItem('email'), date: curDate, time: curTime, doctor: selectedDoc, meet: "qwerty12345"}).then((res) => {
+                                console.log(res);
+                              }).catch((err) => {
+                                console.log(err);
+                              });
+                              
+                              httpClient.put('/set_appointment', { email: selectEmail, date: curDate, time: curTime, patient: localStorage.getItem('username'), meet: "qwerty12345"}).then((res) => {
+                                console.log(res);
+                              }).catch((err) => {
+                                console.log(err);
+                              });
+                              // TODO: 
+                              // Append the date, time, patient details and meet link to the <<doctor.upcomingAppointments>>
+                            } else {
+                              setScheduleAlert(1);
+                            }
+                          }).catch((err) => {
+                            console.log(err);
+                          });
+
                         // TODO: fetch the <<selectedDoc>> doctor data 
                         // check the doctor availability using <<doctor.upcomingAppointments>>
                         // now pass the in the <<handleSchedule(doctor.upcomingAppointments)>>
                         // Note that the <<doctor.upcomingAppointments>> should be an array and it should contain date and time
                         // <<handleSchedule>> function returns true if slot is available
-                        if(handleSchedule()) {
-                          setScheduleAlert(2);
-                          // TODO: 
-                          // Append the date, time, patient details and meet link to the <<doctor.upcomingAppointments>>
-
-                        } else {
-                          setScheduleAlert(1);
-                        }
 
                         setTimeout(() => {
                           setScheduleAlert(0);
-                          // setMeetModal(false);
+                          setMeetModal(false);
                         }, 4000);
                       }, 2000);
                     }}
