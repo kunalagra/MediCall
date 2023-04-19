@@ -256,6 +256,7 @@
 
         .schedule-meet {
             @include flexbox(center, center);
+            flex-direction: column;
             padding: 20px;
 
             input {
@@ -266,7 +267,7 @@
             }
 
             input[type="date"] {
-                margin-right: 10px;
+                margin-bottom: 10px;
                 padding: 11px 12px;
             }
         }
