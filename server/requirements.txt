@@ -11,3 +11,5 @@ boto3
 gunicorn
 stripe
 flask_mail
+pymongo
+python-dotenv
