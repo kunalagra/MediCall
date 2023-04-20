@@ -1,10 +1,39 @@
 import useDocTitle from "../hooks/useDocTitle";
-// import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle } from "react-icons/md";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import { MdExpandMore } from 'react-icons/md';
+import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai';
+import { IoMdMail } from "react-icons/io";
 
 
 const LandingPage = () => {
 
     useDocTitle();
+
+    const faqs = [
+        {
+            question: "What is Medicall?",
+            answer: "It is the web application that connects patients to the right doctor or allow them to choose a doctor as per their need. It provides information about users, doctors, news, appointments, and prescriptions. It also allows users to create instant meetings with doctors, and buy medicines. It allows users to check their health status by using his/her symptoms."
+        },
+        {
+            question: "Can we get a free account in Medicall and use all its features for free?",
+            answer: "Yes, Ofcourse. You can use all the features provided by Medicall for free."
+        },
+        {
+            question: "Can we book an appointment at any time?",
+            answer: "Yes. You can book an appointment of a doctor if he/she is free at that time."
+        },
+        {
+            question: "Is there a way to test our health?",
+            answer: "Yes. You can test your health by a Model that predicts the disease probability in the future."
+        },
+        {
+            question: "Can we purchase the medicines from here?",
+            answer: "Yes. You can purchase the medicines from Medicall store."
+        },
+    ];
     
     return (
         <div id="landing-page">
@@ -59,27 +88,66 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* <section className="team-section">
-                <div><h2>Our Team</h2></div>
+            <section className="faq-section">
+                <h2 className="head">Frequently Asked Questions</h2>
+                <div className="faqs">
+                    {faqs.map((item, index) => (
+                        <Accordion key={index} className="faq-item">
+                            <AccordionSummary
+                                expandIcon={<MdExpandMore />}
+                                className="expand-icon"
+                            >
+                            <div className="item-qn">{item.question}</div>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className="item-ans">{item.answer}</div>
+                            </AccordionDetails>
+                        </Accordion>
+                    ))}
+                </div>
+            </section>
+
+            <section className="team-section">
+                <div className="head"><h2>Our Team</h2></div>
                 <div className="team">
                     <div className="item">
-                        <MdAccountCircle />
+                        <MdAccountCircle className="img"/>
                         <h3>Kunal Agrawal</h3>
+                        <div className="contact-div">
+                            <div className="contact-icon"><IoMdMail /></div>
+                            <div className="contact-icon"><AiFillGithub /></div>
+                            <div className="contact-icon"><AiFillLinkedin /></div>
+                        </div>
                     </div>
                     <div className="item">
-                        <MdAccountCircle />
+                        <MdAccountCircle className="img" />
                         <h3>Ganesh Utla</h3>
+                        <div className="contact-div">
+                            <div className="contact-icon"><IoMdMail /></div>
+                            <div className="contact-icon"><AiFillGithub /></div>
+                            <div className="contact-icon"><AiFillLinkedin /></div>
+                        </div>
                     </div>
                     <div className="item">
-                        <MdAccountCircle />
+                        <MdAccountCircle className="img" />
                         <h3>Deexith Madas</h3>
+                        <div className="contact-div">
+                            <div className="contact-icon"><IoMdMail /></div>
+                            <div className="contact-icon"><AiFillGithub /></div>
+                            <div className="contact-icon"><AiFillLinkedin /></div>
+                        </div>
                     </div>
                     <div className="item">
-                        <MdAccountCircle />
+                        <MdAccountCircle className="img" />
                         <h3>Aman Tiwari</h3>
+                        <div className="contact-div">
+                            <div className="contact-icon"><IoMdMail /></div>
+                            <div className="contact-icon"><AiFillGithub /></div>
+                            <div className="contact-icon"><AiFillLinkedin /></div>
+                        </div>
                     </div>
                 </div>
-            </section> */}
+            </section>
         </div>
     )
 }

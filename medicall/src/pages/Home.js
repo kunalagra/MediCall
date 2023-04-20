@@ -43,11 +43,12 @@ const Home = () => {
     const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
-        const now = new Date();
-        console.log(now);
+        // const now = new Date();
+        // console.log(now);
         if (localStorage.getItem('usertype') === 'patient') {
         httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
             .then((res) => {
+                console.log(res.data);
                 setUpcomingAppointments(res.data.appointments);
                 setPastAppointments(res.data.appointments);
             })
@@ -135,7 +136,7 @@ const Home = () => {
                         <h2>Healthy Tip of the Day</h2>
                     </div>
                     <div className="content">
-                        <h4>Eat lots of fruit and veg</h4>
+                        <h3>Eat lots of fruit and veg</h3>
                         <p>It's recommended that you eat at least 5 portions of a variety of fruit and veg every day. They can be fresh, frozen, canned, dried or juiced.</p>
                         <p>A portion of fresh, canned or frozen fruit and vegetables is 80g. A portion of dried fruit (which should be kept to mealtimes) is 30g.</p>
                         <p>A 150ml glass of fruit juice, vegetable juice or smoothie also counts as 1 portion, but limit the amount you have to no more than 1 glass a day as these drinks are sugary and can damage your teeth.</p>

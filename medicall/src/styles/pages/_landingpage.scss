@@ -139,4 +139,97 @@
             left: 50px;
         }
     }
+
+
+    .team-section {
+        margin: 5rem 0;
+        text-align: center;
+
+        .head {
+            h2 {
+                color: var(--blue-color-7);
+                margin-bottom: 2rem;
+            }
+        }
+
+        .team {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
+            .item {
+                margin: 2rem;
+                position: relative;
+
+                &:hover {
+                    .contact-div {
+                        @include toggleVisibility(visible, 1);
+                        bottom: 60px;
+                    }
+                }
+
+                .img {
+                    width: 250px;
+                    height: 250px;
+                    border: 1px solid var(--blue-color-6);
+                    border-radius: 40px;
+                }
+                h3 {
+                    color: var(--blue-color-9);
+                    margin: 1rem 0;
+                }
+
+                .contact-div {
+                    position: absolute;
+                    bottom: 30px;
+                    font-size: 30px;
+                    @include toggleVisibility(hidden, 0);
+                    @include flexbox(center, center);
+                    transform: translateX(-50%);
+                    left: 50%;
+                    transition: all 0.5s ease-in-out;
+                    
+                    .contact-icon {
+                        background-color: var(--blue-color-9);
+                        color: var(--white-color);
+                        padding: 0px 5px 5px 5px;
+                        border-radius: 6px;
+                        margin: 7px;
+                        cursor: pointer;
+                        transition: all 0.3s ease-in-out;
+
+                        &:hover {
+                            background-color: var(--blue-color-8);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .faq-section {
+        margin: 3rem 0;
+        text-align: center;
+
+        h2 {
+            color: var(--blue-color-7);
+            margin-bottom: 2rem;
+        }
+
+        .faqs {
+            width: min(1000px, 95vw);
+            margin: 0 auto;
+
+            .faq-item {
+                background-color: var(--blue-color-2);
+                color: var(--blue-color-8);
+
+                .item-ans {
+                    color: var(--blue-color-9);
+                    text-align: left;
+                }
+            }
+        }
+    }
+
 }
