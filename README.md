@@ -1,6 +1,6 @@
 # GFG SFI
 
-Quad's Team repo for GFG's Soliving for India 
+Quad's Team repo for GFG's Solving for India
 
 We have successfully implemented
 
@@ -9,7 +9,7 @@ We have successfully implemented
 - Patient Dashboard -> Create an Appointment, Latest News posted by Doctor
 - Doctor's tab
 - Prescription & Invoice after video call
-- Epharmacy
+- E Pharmacy
 
 Additional Features :
 
@@ -27,6 +27,7 @@ Backend:
 - MongoDB
 
 Google Cloud:
+
 - Backend Hosting
 - MongoDB Atlas Cluster
 
