@@ -6,7 +6,8 @@ import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
-import httpClient from "../httpClient";
+// import httpClient from "../httpClient";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   useDocTitle("Cart");
@@ -27,6 +28,7 @@ const Cart = () => {
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
+  const navigate = useNavigate();
   return (
     <>
       <section id="cart" className="section">
@@ -78,15 +80,12 @@ const Cart = () => {
                     }`}
                     onClick={() => {
                       setIsCheckoutLoading(true);
-                      httpClient.get("/checkout").then((res) => {
-                        window.location.href = res.data.url;
-                        setTimeout(() => {
-                          setIsCheckoutLoading(false);
-                        }, 2000);
-                      }).catch((err) => {
-                        setIsAlert(1);
+                      setTimeout(() => {
+                        localStorage.setItem("totalPrice", cartTotal);
+                        navigate("/checkout");
                         setIsCheckoutLoading(false);
-                      });
+                        setIsAlert(2);
+                      }, 2000);
                       
                     }}
                   >

@@ -12,6 +12,7 @@ import MeetPage from "../pages/MeetPage";
 import Success from "../pages/Success";
 import Failed from "../pages/Failed";
 import DiseasePrediction from "../pages/DiseasePrediction";
+import Checkout from "../pages/Checkout";
 
 const RouterRoutes = () => {
   useScrollRestore();
@@ -32,6 +33,7 @@ const RouterRoutes = () => {
         <Route path="/instant-meet" element={<MeetPage />} />
         <Route path="/success" element={<Success />} />
         <Route path="/failed" element={<Failed />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
         
       </Routes>

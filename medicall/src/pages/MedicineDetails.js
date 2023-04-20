@@ -128,6 +128,10 @@ const MedicineDetails = () => {
                                 <button
                                     type="button"
                                     className="btn"
+                                    onClick={() => {
+                                        localStorage.setItem("totalPrice", price);
+                                        navigate("/checkout");
+                                    }}
                                 >
                                     Buy now
                                 </button>
