@@ -1,11 +1,11 @@
 #home-page {
     padding-top: 6rem;
 
-    .dis-pred-test-div {
+    .is-meet-div {
         border: 2px solid var(--blue-color-2);
         width: min(1100px, 93vw);
         position: relative;
-        padding: 3rem 0;
+        padding: 3rem 10px;
         transition: all 0.3s ease-in-out;
         margin: 0 auto;
         border-radius: 8px;
@@ -15,6 +15,78 @@
             width: min(1120px, 95vw);
             border: 3px solid var(--blue-color-4);
             padding: 3.5rem 0;
+
+            @include devices(xs) {
+                padding: 3.5rem 10px;
+            }
+        }
+
+        .meet-bg {
+            background-image: url(../../../public/search_patients.png);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(1px);
+            -webkit-filter: blur(1px);
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+        }
+
+        .main {
+            @include flexbox(space-around, center);
+    
+            .content-div {
+                color: var(--blue-color-8);
+                @include flexbox(flex-start, flex-end);
+                flex-wrap: wrap;
+
+                h2 {
+                    margin-right: 10px;
+                }
+
+                p {
+                    font-size: 1.2em;
+                }
+            }
+    
+            .test-btn > button {
+                background-color: var(--blue-color-8);
+                color: var(--white-color);
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 0 10px 1px var(--blue-color-2);
+                
+                &:hover, &:active {
+                    background-color: var(--blue-color-9);
+                }
+            }
+        }
+    }
+
+
+    .dis-pred-test-div {
+        border: 2px solid var(--blue-color-2);
+        width: min(1100px, 93vw);
+        position: relative;
+        padding: 3rem 10px;
+        transition: all 0.3s ease-in-out;
+        margin: 0 auto;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+        
+        &:hover {
+            width: min(1120px, 95vw);
+            border: 3px solid var(--blue-color-4);
+            padding: 3.5rem 0;
+            @include devices(xs) {
+                padding: 3.5rem 10px;
+            }
         }
 
         .test-bg {
@@ -39,9 +111,11 @@
                 color: var(--blue-color-8);
                 @include flexbox(flex-start, flex-end);
                 flex-wrap: wrap;
+                h2 {
+                    margin-right: 10px;
+                }
                 p {
                     font-size: 1.2em;
-                    margin-left: 10px;
                 }
             }
     
@@ -257,6 +331,144 @@
 
     .doctor-feedback {
         padding-bottom: 1.5rem;
+    }
+
+}
+
+
+
+#search-patient-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(500px, 90vw);
+    padding: 14px 20px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+    text-align: center;
+
+    .close_btn_div {
+        text-align: right;
+        color: var(--blue-color-5);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--blue-color-8);
+        }
+    }
+
+    .searching-div {
+        padding: 1rem 10px;
+        text-align: center;
+        @include flexbox(center, center);
+        flex-direction: column;
+
+        .search-div {
+            position: relative;
+            padding: 1rem;
+            margin-bottom: 2rem;
+
+            .patients-icon {
+                width: min(70vw, 200px);
+                height: min(70vw, 200px);
+                color: var(--blue-color-5);
+            }
+
+            .done-icon-div {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                width: min(100px, 50vw);
+                height: min(100px, 50vw);
+                border-radius: 100%;
+                background-color: var(--white-color);
+                border: 5px solid var(--whatsapp-color);
+                padding: 10px;
+                color: var(--whatsapp-color);
+                @include flexbox(center, center);
+                
+                .done-icon {
+                    width: min(90px, 45vw);
+                    height: min(90px, 45vw);
+                }
+            }
+
+            .circle {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                width: min(100px, 50vw);
+                height: min(100px, 50vw);
+                border-radius: 100%;
+                animation: rotate 2s ease-in-out infinite;
+
+                .search-img-div {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: min(150px, 40vw);
+                    height: min(150px, 40vw);
+                    animation: maintain 2s ease-in-out infinite;
+    
+                    .search-img {
+                        width: inherit;
+                        height: inherit;
+                    }
+                }
+            }
+
+
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0);
+                }
+            
+                100% {
+                    transform: rotate(-360deg);
+                }
+            }
+
+            @keyframes maintain {
+                0% {
+                    transform: rotate(0);
+                }
+            
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+
+        .connect-details {
+            padding-top: 1rem;
+            @include flexbox(center, center);
+            flex-direction: column;
+
+            .connect-div {
+                padding: 1rem 0;
+                color: var(--white-color);
+
+                button {
+                    background-color: var(--blue-color-3);
+                    border: 1px solid var(--blue-color-5);
+                    color: var(--white-color);
+                    padding: 10px 12px;
+                    border-radius: 5px;
+                    margin: 8px 5px;
+                    font-family: 'Montserrat', sans-serif;
+                    transition: all 0.3s ease-in-out;
+                    
+                    &:hover, &:active, &:disabled {
+                        background-color: var(--blue-color-5);
+                    }
+                }
+            }
+        }
     }
 
 }

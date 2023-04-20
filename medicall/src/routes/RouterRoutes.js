@@ -12,6 +12,7 @@ import MeetPage from "../pages/MeetPage";
 import Success from "../pages/Success";
 import Failed from "../pages/Failed";
 import DiseasePrediction from "../pages/DiseasePrediction";
+import ErrorPage from "../pages/ErrorPage";
 
 const RouterRoutes = () => {
   useScrollRestore();
@@ -34,6 +35,7 @@ const RouterRoutes = () => {
         <Route path="/failed" element={<Failed />} />
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
         
+        <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </>
   );

@@ -30,6 +30,10 @@
     h2 {
         text-align: center;
     }
+
+    .foot_logo_div {
+        @include flexbox(center, center);
+    }
 }
 
 .foot_subs {

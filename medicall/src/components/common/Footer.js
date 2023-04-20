@@ -35,6 +35,11 @@ const Footer = () => {
                                                 );
                                             })
                                         }
+                                        {localStorage.getItem("usertype")==="patient" && title==="Shop & More" &&  (
+                                            <li>
+                                                <Link to="/doctors">Book an Appointment</Link>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
                             );

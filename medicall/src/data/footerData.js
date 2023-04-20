@@ -14,11 +14,6 @@ export const footMenu = [
                 id: 2,
                 link: "Disease Prediction",
                 path: "/disease-prediction"
-            },
-            {
-                id: 3,
-                link: "Book an Appointment",
-                path: "/doctors"
             }
         ]
     },

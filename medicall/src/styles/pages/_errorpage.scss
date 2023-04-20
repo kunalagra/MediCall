@@ -1,0 +1,42 @@
+#error-page {
+    @include flexbox(center, center);
+    flex-direction: column;
+    padding: 4rem 10px;
+    padding-bottom: 6rem;
+    width: min(600px, 100vw);
+    margin: 0 auto;
+    text-align: center;
+
+    .err-img {
+        width: min(600px, 95vw);
+        height: min(600px, 95vw);
+
+        img {
+            width: inherit;
+            height: inherit;
+        }
+    }
+
+    h2 {
+        color: var(--blue-color-7);
+        margin-bottom: 2rem;
+    }
+
+    .err-content {
+        color: var(--blue-color-6);
+        margin-bottom: 2rem;
+    }
+
+    .back-btn {
+        background-color: var(--blue-color-4);
+        color: var(--white-color);
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        
+        &:hover, &:active {
+            background-color: var(--blue-color-6);
+        }
+    }
+}

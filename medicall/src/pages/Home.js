@@ -2,17 +2,22 @@ import { useState, useEffect } from "react";
 import Modal from '@mui/material/Modal';
 import useDocTitle from "../hooks/useDocTitle";
 import { IoMdClose } from "react-icons/io";
+import { IoCheckmarkDone } from "react-icons/io5";
 import { Alert } from "@mui/material";
 import { BsEmojiAngry, BsEmojiFrown, BsEmojiExpressionless, BsEmojiSmile, BsEmojiLaughing } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineLightBulb } from "react-icons/hi";
+import { HiOutlineLightBulb, HiUserGroup } from "react-icons/hi";
+import { FaVideo } from "react-icons/fa";
 import httpClient from "../httpClient";
 
 const Home = () => {
     useDocTitle("Home");
-    const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!=="null");
+    const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
     const [feedbackAlert, setFeedbackAlert] = useState(false);
+    const [searchPatient, setSearchPatient] = useState(false);
+    // eslint-disable-next-line
+    const [searching, setSearching] = useState(0); 
     const navigate = useNavigate();
 
 
@@ -30,6 +35,7 @@ const Home = () => {
             console.log(err);
         });
         localStorage.setItem("lastMeetWith", null);
+        setHasLastMeet(false);
 
         setFeedbackAlert(true);
         setTimeout(() => {
@@ -78,6 +84,23 @@ const Home = () => {
     return (
         <>
             <div id="home-page">
+
+                {localStorage.getItem("usertype")==="doctor" && (
+                    <div className="is-meet-div">
+                        <div className="meet-bg"></div>
+                        <div className="main">
+                            <div className="content-div">
+                                <h2>Is there any patient waiting?</h2>
+                                <p>Search for a patient now</p>
+                            </div>
+                            <div className="test-btn">
+                                <button onClick={() => setSearchPatient(!searchPatient)}>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="dis-pred-test-div">
                     <div className="test-bg"></div>
@@ -189,6 +212,51 @@ const Home = () => {
                             Thank you, {localStorage.getItem("username")}!!<br /> You just threated one more life!
                         </div>
                     </div>
+                </div>
+            </Modal>
+            <Modal
+                open={searchPatient}
+                onClose={() => setSearchPatient(false)}
+                >
+                <div id="search-patient-modal">
+                    <div className="close_btn_div">
+                        <IoMdClose onClick={() => setSearchPatient(false)} />
+                    </div>
+                    {searching===0 && (
+                        <div className="searching-div">
+                            <div className="search-div">
+                                <HiUserGroup className="patients-icon" />
+                                <div className="circle">
+                                    <div className="search-img-div">
+                                        <img className="search-img" src="search-img.png" alt="searching" />
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Searching...</h3>
+                        </div>
+                    )}
+                    {searching===1 && (
+                        <div className="searching-div">
+                            <div className="search-div">
+                                <HiUserGroup className="patients-icon" />
+                                <div className="done-icon-div">
+                                    <IoCheckmarkDone className="done-icon" />
+                                </div>
+                            </div>
+                            <h3>No Patients Found!</h3>
+                        </div>
+                    )}
+                    {searching===2 && (
+                        <div className="searching-div">
+                            <h3>Patient Found!</h3>
+                            <div className="connect-details">
+                                <div>Name: Ganesh Utla</div>
+                                <div className="connect-div">
+                                    <button>Connect now <FaVideo /></button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </Modal>
         </>
