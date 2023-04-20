@@ -33,6 +33,7 @@ const RouterRoutes = () => {
         <Route path="/instant-meet" element={<MeetPage />} />
         <Route path="/success" element={<Success />} />
         <Route path="/failed" element={<Failed />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
         
         <Route path="/*" element={<ErrorPage />} />

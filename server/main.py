@@ -16,6 +16,8 @@ from pymongo.server_api import ServerApi
 from flask_mail import Message
 from dotenv import load_dotenv
 import os
+import json
+import stripe
 load_dotenv()
 secret_key = secrets.token_hex(16)
 
@@ -31,7 +33,7 @@ app.config['MAIL_PASSWORD'] = os.getenv('PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 mail = Mail(app)
 
-stripe.api_key = "sk_test_51MxOxySAmG5gMbbMNX2Ma2lglF9BU7oQSVgoe9DdMUMTNo5YNERsuCCkMw286968PwCXCrSCpT3PeOI4MXU5uTgA00M1fUeEjJ"
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 jwt = JWTManager(app)
 
 CORS(app, supports_credentials=True)
@@ -71,6 +73,22 @@ def create_checkout_session():
         return str(e)
  
     return jsonify({'url': checkout_session.url})
+
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment():
+    try:
+        data = json.loads(request.data)
+        # Create a PaymentIntent with the order amount and currency
+        intent = stripe.PaymentIntent.create(
+            amount=data['amount'],
+            currency='inr',
+            payment_method_types=['card'],
+        )
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
 
 @app.route('/register', methods=['POST'])
 def register():
