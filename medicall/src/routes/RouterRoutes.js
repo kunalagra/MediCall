@@ -13,6 +13,7 @@ import Success from "../pages/Success";
 import Failed from "../pages/Failed";
 import DiseasePrediction from "../pages/DiseasePrediction";
 import ErrorPage from "../pages/ErrorPage";
+import Checkout from "../pages/Checkout"
 
 const RouterRoutes = () => {
   useScrollRestore();
