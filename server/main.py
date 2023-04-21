@@ -243,6 +243,25 @@ def patient_apo():
         })
         patients.update_one({'email': email}, {'$set': {'upcomingAppointments': pat['upcomingAppointments']}})
         return jsonify({'message': 'Patient status updated successfully'}), 200
+    
+@app.route('/make_meet', methods=['POST', 'PUT'])
+def make_meet():
+    data = request.get_json()
+    email = data['email']
+    if request.method == 'PUT':
+        print(data['link'])
+        doctor.update_one({'email': email}, {'$set': {'link': {'link': data['link'], "name": data['patient']}}})
+        return jsonify({'message': 'Meet link created successfully'}), 200
+    else:
+        doc = doctor.find_one({'email': email})
+        return jsonify({'message': 'Meet link', 'link': doc.get('link', None)}), 200
+    
+@app.route('/delete_meet', methods=['PUT'])
+def delete_meet():
+    data = request.get_json()
+    email = data['email']
+    doctor.update_one({'email': email}, {'$unset': {'link': None}})
+    return jsonify({'message': 'Meet link deleted successfully'}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

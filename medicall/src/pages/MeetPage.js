@@ -34,10 +34,8 @@ const MeetPage = () => {
   useDocTitle("Meet");
 
   useEffect(() => {
-    if (!isDoctor) {
       localStorage.setItem("lastMeetWith", searchparams.get("selectedDoc"));
       localStorage.setItem("lastMeetMail", searchparams.get("selectedMail"));
-    }
     //eslint-disable-next-line
   }, []);
 
@@ -113,6 +111,7 @@ const MeetPage = () => {
 
   const handleEndMeeting = () => {
     toggleFeedback(true);
+    httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} )
     httpClient.put('/meet_end', { email: searchparams.get("selectedMail")} ).then((res) => {
       navigate("/Home");
     }).catch((err) => {
