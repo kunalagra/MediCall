@@ -84,7 +84,13 @@ const Doctors = () => {
     const handelmeet = () => {
       httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
         if(res.status === 200){
-          navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`);
+          httpClient.put("/make_meet",{"email":selectEmail, 
+          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`, 
+          "patient": localStorage.getItem("username")}).then((res) => {
+            navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`);
+          }).catch(() => {
+            // console.log(res)
+          })
         }
         else{
           setMessage(res.data.message);

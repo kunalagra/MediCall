@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import cartContext from '../../contexts/cart/cartContext';
 import useActive from '../../hooks/useActive';
+import { useNavigate } from 'react-router-dom';
 
 
 const ProductCard = (props) => {
@@ -10,6 +11,7 @@ const ProductCard = (props) => {
 
     const { addItem } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
+    const navigate = useNavigate();
 
 
     // handling Add-to-cart
@@ -44,6 +46,10 @@ const ProductCard = (props) => {
                     <button
                         type="button"
                         className="btn products_btn"
+                        onClick={() => {
+                            localStorage.setItem("totalPrice", price);
+                            navigate("/checkout");
+                        }}
                     >
                         Buy now
                     </button>

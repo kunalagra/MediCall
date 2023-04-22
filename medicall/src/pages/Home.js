@@ -23,6 +23,8 @@ const Home = () => {
     const isDoctor = localStorage.getItem("usertype")==="doctor";
     // eslint-disable-next-line
     const [searching, setSearching] = useState(0); 
+    const [patient_name, setPatient_name] = useState("");
+    const [meetlink, setMeetlink] = useState("");
     const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
 
 
@@ -86,6 +88,29 @@ const Home = () => {
         // eslint-disable-next-line
     }, []);
 
+    const searchmeet = () => {
+        setSearchPatient(true);
+        setSearching(0);
+        httpClient.post('make_meet', { email: localStorage.getItem('email') })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.link===null) {
+                    setTimeout(() => {
+                        setSearching(1);
+                    }, 1000);
+                }
+                else {
+                    setPatient_name(res.data.link['name']);
+                    setMeetlink(res.data.link['link']);
+                    setTimeout(() => {
+                        setSearching(2);
+                    }, 2000);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
 
     // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
@@ -106,7 +131,7 @@ const Home = () => {
                                 <p>Search for a patient now</p>
                             </div>
                             <div className="test-btn">
-                                <button onClick={() => setSearchPatient(!searchPatient)}>
+                                <button onClick={() => searchmeet()}>
                                     Search
                                 </button>
                             </div>
@@ -138,7 +163,7 @@ const Home = () => {
                                 <li className="appt-item" key={index}>
                                     <div className="content">
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
-                                        <p> By {item.doctor}</p>
+                                        <p> By {item.doctor ? item.doctor : item.patient}</p>
                                     </div>
                                     <button className="join-btn" disabled={!((new Date(item.date)===new Date()) && (new Date(item.date + " " + item.time)<=new Date()))} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
                                 </li>
@@ -156,7 +181,7 @@ const Home = () => {
                                 <li className="appt-item" key={index}>
                                     <div className="content">
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
-                                        <p> By {item.doctor}</p>
+                                        <p> By {item.doctor ? item.doctor : item.patient}</p>
                                     </div>
                                     {!isDoctor && <button className="join-btn" onClick={() => {}}>Prescription</button>}
                                 </li>
@@ -214,11 +239,17 @@ const Home = () => {
             </Modal>
             <Modal
                 open={haslastMeet && isDoctor}
-                onClose={() => setHasLastMeet(false)}
+                onClose={() => {
+                    localStorage.setItem("lastMeetWith", null);
+                    setHasLastMeet(false);
+                }}
                 >
                 <div id="feedback-modal">
                     <div className="close_btn_div">
-                        <IoMdClose onClick={() => setHasLastMeet(false)} />
+                        <IoMdClose onClick={() => {
+                            localStorage.setItem("lastMeetWith", null);
+                            setHasLastMeet(false);
+                        }} />
                     </div>
                     <div className="doctor-feedback">
                         <h3>Thank You <BsEmojiSmile /> </h3>
@@ -264,9 +295,14 @@ const Home = () => {
                         <div className="searching-div">
                             <h3>Patient Found!</h3>
                             <div className="connect-details">
-                                <div>Name: Ganesh Utla</div>
+                                <div>Name: {patient_name}</div>
                                 <div className="connect-div">
-                                    <button>Connect now <FaVideo /></button>
+                                    <button
+                                     onClick={() => {
+                                        setSearchPatient(false);
+                                        navigate(`${meetlink}`);
+                                        }}
+                                    >Connect now <FaVideo /></button>
                                 </div>
                             </div>
                         </div>
