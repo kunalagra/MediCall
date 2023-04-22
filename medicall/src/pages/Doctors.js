@@ -90,20 +90,20 @@ const Doctors = () => {
     
     const handlemeet = () => {
           httpClient.put("/make_meet",{"email":selectEmail, 
-          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}}`, 
+          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`, 
           "patient": localStorage.getItem("username")}).then((res) => {
             httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
               if(res.status === 200){
                 setTimeout(() => {httpClient.post("/currently_in_meet",{"email":selectEmail}).then((res) => {
                   if(res.data.curmeet){
                     setConnecting(false);
-                    navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}}`)
+                    navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`)
                   }
                   else{
                     setConnecting(false);
                     setMessage(res.data.message);
                   }
-                })}, 10000);
+                })}, 30000);
               }
               else{
                 setConnecting(false);
