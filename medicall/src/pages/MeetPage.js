@@ -404,7 +404,7 @@ const MeetPage = () => {
     pdf.setFontSize(15);
     const name = searchparams.get("name")? searchparams.get("name") : "Mr. ABC DEF";
     const age = searchparams.get("age")? searchparams.get("age") : "NA";
-    const gender = searchparams.get("gander")? searchparams.get("gander") : "NA";
+    const gender = searchparams.get("gender")? searchparams.get("gender")[0].toUpperCase() + searchparams.get("gender").slice(1).toLowerCase() : "NA";
     const d = new Date();
     const date = (d.getDate() < 10? '0' + d.getDate() : d.getDate()) + '/' + (d.getMonth() < 10? '0' + d.getMonth() : d.getMonth()) + '/' + d.getFullYear();
     const selectedDoc = searchparams.get("selectedDoc")? searchparams.get("selectedDoc") : "Doctor_Name";
@@ -461,7 +461,7 @@ const MeetPage = () => {
       }
     });
 
-    y += (30 * prescription.length) + 30;
+    y += (30 * prescription.length) + 40;
 
     pdf.setFont("Times New Roman", "bold");
     pdf.text("Fee Details", pdf.internal.pageSize.width/2 - (pdf.getStringUnitWidth("Fee Details")/2) * (pdf.internal.getFontSize()/2), y);
