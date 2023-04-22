@@ -3,6 +3,11 @@
     color: var(--blue-color-8);
     text-align: center;
 
+    @include devices(md) {
+        padding: 1rem;
+        padding-top: 6rem;
+    }
+
     .meet-header {
         span {
             color: var(--blue-color-2);
@@ -31,13 +36,25 @@
         margin: 1rem auto;
     }
 
+    .renderButtons {
+        @include devices(md) {
+            flex-direction: column;
+        }
+    }
+
     .prescription-items {
         @include flexbox(flex-start, center);
         flex-wrap: wrap;
         margin: 1rem auto;
+        margin-bottom: 2rem;
         border: 2px solid var(--blue-color-2);
         padding: 1rem;
         border-radius: 8px;
+
+        @include devices(md) {
+            padding: 0;
+            width: 90vw;
+        }
         
 
         .item {
@@ -60,12 +77,11 @@
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     overflow: hidden;
-                    max-width: 200px;
-                }
+                    max-width: min(800px, 90vw);
 
-                &:hover {
-                    .tooltip {
-                        @include toggleVisibility(visible, 1);
+                    @include devices(md) {
+                        white-space: break-spaces;
+                        overflow: visible;
                     }
                 }
             }
@@ -83,16 +99,66 @@
     .new_prescription {
 
         @include flexbox(center, center);
+        flex-direction: column;
         margin-top: 1rem;
 
+        .input_boxes {
+            width: min(500px, 95vw);
+        }
+
         .input_box {
-            width: 500px;
+            width: inherit;
+            margin-bottom: 1rem;
+
+            .box {
+                @include flexbox(center, center);
+                flex-wrap: wrap;
+                margin-bottom: 1rem;
+                width: min(500px, 95vw);
+
+                .input_field {
+                    width: min(250px, 95vw);
+                    margin: 5px 10px;
+
+                    @include devices(xs) {
+                        width: 100%;
+                    }
+                }
+
+                select {
+                    padding: 0.65rem 0.55rem;
+                    outline: 1px solid var(--blue-color-1);
+                    border: 1px solid var(--blue-color-1);
+                    color: var(--blue-color-8);
+                    font-family: 'Montserrat', sans-serif;
+                    border-radius: 3px;
+                    width: min(200px, 95vw);
+                    text-align: center;
+                    @include devices(xs) {
+                        width: 100%;
+                        margin: 0 10px;
+                    }
+
+                    &:focus {
+                        outline-color: var(--blue-color-2);
+                        border-color: var(--blue-color-2);
+                        box-shadow: 0 0 6px 3px var(--blue-color-1);
+                    }
+                }
+
+            }
 
             .input_field {
+                text-align: center;
                 background-color: var(--white-color);
                 outline: 1px solid var(--blue-color-1);
                 border: 1px solid var(--blue-color-1);
                 color: var(--blue-color-8);
+                width: min(500px, 95vw);
+                @include devices(xs) {
+                    width: 90vw;
+                    margin: 0 10px;
+                }
                 
                 &:focus {
                     outline-color: var(--blue-color-2);
@@ -102,6 +168,12 @@
             }
         }
 
+        .add-btn {
+            @include flexbox(center, center);
+            flex-direction: column;
+            width: min(300px, 90vw);
+        }
+
         button {
             margin-left: 1rem;
             padding: 0.7rem 1rem;
@@ -109,6 +181,7 @@
             color: var(--white-color);
             transition: all 0.3s ease;
             background-color: var(--blue-color-4);
+            width: 100%;
 
             &:hover, &:active {
                 background-color: var(--blue-color-6);
