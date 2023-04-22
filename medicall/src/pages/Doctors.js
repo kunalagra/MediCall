@@ -89,32 +89,33 @@ const Doctors = () => {
     const {handleActive, activeClass} = useActive(-1);
     
     const handlemeet = () => {
+      httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
+        if(res.status === 200){
           httpClient.put("/make_meet",{"email":selectEmail, 
           "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`, 
           "patient": localStorage.getItem("username")}).then((res) => {
-            httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
-              if(res.status === 200){
                 setTimeout(() => {httpClient.post("/currently_in_meet",{"email":selectEmail}).then((res) => {
                   if(res.data.curmeet){
                     setConnecting(false);
                     navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`)
                   }
                   else{
+                    httpClient.put('/delete_meet', {"email":selectEmail})
                     setConnecting(false);
                     setMessage(res.data.message);
                   }
                 })}, 30000);
-              }
-              else{
-                setConnecting(false);
-                setMessage(res.data.message);
-              }
-            }).catch(() => {
-              // console.log(res)
-            })
-          }).catch(() => {
+              }).catch(() => {
+                // console.log(res)
+              })
+        }
+        else{
+          setConnecting(false);
+          setMessage(res.data.message);
+        }
+        }).catch(() => {
             // console.log(res)
-          })
+        })
         
     };
     
