@@ -88,23 +88,34 @@ const Doctors = () => {
     const timings = [{time:"08:00", available: true},{time:"09:00", available: true},{time:"10:00", available: true},{time:"11:00", available: false},{time:"12:00", available: true},{time:"15:00", available: false},{time:"16:00", available: true},{time:"17:00", available: true},{time:"18:00", available: true}];
     const {handleActive, activeClass} = useActive(-1);
     
-    const handelmeet = () => {
-      httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
-        if(res.status === 200){
+    const handlemeet = () => {
           httpClient.put("/make_meet",{"email":selectEmail, 
-          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`, 
+          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}}`, 
           "patient": localStorage.getItem("username")}).then((res) => {
-            navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}`);
+            httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
+              if(res.status === 200){
+                setTimeout(() => {httpClient.post("/currently_in_meet",{"email":selectEmail}).then((res) => {
+                  if(res.data.curmeet){
+                    setConnecting(false);
+                    navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}}`)
+                  }
+                  else{
+                    setConnecting(false);
+                    setMessage(res.data.message);
+                  }
+                })}, 10000);
+              }
+              else{
+                setConnecting(false);
+                setMessage(res.data.message);
+              }
+            }).catch(() => {
+              // console.log(res)
+            })
           }).catch(() => {
             // console.log(res)
           })
-        }
-        else{
-          setMessage(res.data.message);
-        }
-      }).catch(() => {
-        // console.log(res)
-      })
+        
     };
     
     const columns = [
@@ -214,13 +225,17 @@ const Doctors = () => {
         <Modal
           open={meetModal}
           onClose={() => {
+            setMessage("")
             setMeetModal(false);
             setConnecting(false);
           }}
         >
           <div id="meet-modal" style={{width: `${!selectedDocAvailable && selectedDocStatus? "min(570px, 90vw)" : "min(400px, 90vw)"}`}}>
             <div className="close_btn_div">
-              <IoMdClose onClick={() => setMeetModal(false)} />
+              <IoMdClose onClick={() => {
+                setMessage("")
+                setMeetModal(false)
+                setConnecting(false)}} />
             </div>
             <div className="meet-details-div">
               <h3>Wanna meet?</h3>
@@ -265,9 +280,10 @@ const Doctors = () => {
                 <div className="instant-meet-div">
                   <button onClick={() => {
                     setConnecting(true);
-                    setTimeout(() => {
-                      handelmeet();
-                    }, 3000);
+                    handlemeet();
+                    // setTimeout(() => {
+                    //   handlemeet();
+                    // }, 3000);
                   }}>Connect <FaVideo /></button>
                 </div>
               )

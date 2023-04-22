@@ -44,6 +44,7 @@ const MeetPage = () => {
   useDocTitle("Meet");
 
   useEffect(() => {
+    // console.log(searchparams.get("name"))
       localStorage.setItem("lastMeetWith", searchparams.get("selectedDoc"));
       localStorage.setItem("lastMeetMail", searchparams.get("selectedMail"));
     //eslint-disable-next-line
@@ -122,6 +123,7 @@ const MeetPage = () => {
   const handleEndMeeting = () => {
     toggleFeedback(true);
     httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} )
+    httpClient.put("delete_currently_in_meet", { email: searchparams.get("selectedMail")} )
     httpClient.put('/meet_end', { email: searchparams.get("selectedMail")} ).then((res) => {
       navigate("/Home");
     }).catch((err) => {
@@ -266,9 +268,9 @@ const MeetPage = () => {
 
     y += 50;
     pdf.setFontSize(15);
-    const name = localStorage.getItem("username")? localStorage.getItem("username") : "Mr. ABC DEF";
-    const age = localStorage.getItem("age")? localStorage.getItem("age") : "NA";
-    const gender = localStorage.getItem("gender")? localStorage.getItem("gender") : "NA";
+    const name = searchparams.get("name")? searchparams.get("name") : "Mr. ABC DEF";
+    const age = searchparams.get("age")? searchparams.get("age") : "NA";
+    const gender = searchparams.get("gander")? searchparams.get("gander") : "NA";
     const d = new Date();
     const date = (d.getDate() < 10? '0' + d.getDate() : d.getDate()) + '/' + (d.getMonth() < 10? '0' + d.getMonth() : d.getMonth()) + '/' + d.getFullYear();
     const selectedDoc = searchparams.get("selectedDoc");
@@ -397,9 +399,9 @@ const MeetPage = () => {
 
     y += 50;
     pdf.setFontSize(15);
-    const name = localStorage.getItem("username")? localStorage.getItem("username") : "Mr. ABC DEF";
-    const age = localStorage.getItem("age")? localStorage.getItem("age") : "NA";
-    const gender = localStorage.getItem("gender")? localStorage.getItem("gender") : "NA";
+    const name = searchparams.get("name")? searchparams.get("name") : "Mr. ABC DEF";
+    const age = searchparams.get("age")? searchparams.get("age") : "NA";
+    const gender = searchparams.get("gander")? searchparams.get("gander") : "NA";
     const d = new Date();
     const date = (d.getDate() < 10? '0' + d.getDate() : d.getDate()) + '/' + (d.getMonth() < 10? '0' + d.getMonth() : d.getMonth()) + '/' + d.getFullYear();
     const selectedDoc = searchparams.get("selectedDoc");

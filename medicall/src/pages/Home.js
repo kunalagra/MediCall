@@ -129,7 +129,9 @@ const Home = () => {
                                 <p>Search for a patient now</p>
                             </div>
                             <div className="test-btn">
-                                <button onClick={() => searchmeet()}>
+                                <button onClick={() => {
+                                    httpClient.put("/meet_end", {"email": localStorage.getItem("email")})
+                                    searchmeet()}}>
                                     Search
                                 </button>
                             </div>
@@ -259,11 +261,16 @@ const Home = () => {
             </Modal>
             <Modal
                 open={searchPatient}
-                onClose={() => setSearchPatient(false)}
+                onClose={() => {
+                    httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
+                    setSearchPatient(false)
+                }}
                 >
                 <div id="search-patient-modal">
                     <div className="close_btn_div">
-                        <IoMdClose onClick={() => setSearchPatient(false)} />
+                        <IoMdClose onClick={() => {
+                            httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
+                            setSearchPatient(false)}} />
                     </div>
                     {searching===0 && (
                         <div className="searching-div">
@@ -297,8 +304,15 @@ const Home = () => {
                                 <div className="connect-div">
                                     <button
                                      onClick={() => {
-                                        setSearchPatient(false);
-                                        navigate(`${meetlink}`);
+                                        httpClient.post("meet_status", {email: localStorage.getItem("email")})
+                                        httpClient.put("/currently_in_meet", {email: localStorage.getItem("email")})
+                                        .then(res => {
+                                            setSearchPatient(false);
+                                            navigate(`${meetlink}`);
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        })
                                         }}
                                     >Connect now <FaVideo /></button>
                                 </div>

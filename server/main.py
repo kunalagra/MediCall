@@ -95,6 +95,8 @@ def register():
     if request.is_json:
         data = request.get_json()
         if data['registerer'] == 'patient':
+            if doctor.objects.filter(email=data['email']).exists():
+                return jsonify({'message': 'User already exists'}), 400
             user = patients.find_one({'email': data['email']})
             if user:
                 return jsonify({'message': 'User already exists'}), 400
@@ -106,6 +108,8 @@ def register():
                 patients.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
         elif data['registerer'] == 'doctor':
+            if patients.objects.filter(email=data['email']).exists():
+                return jsonify({'message': 'User already exists'}), 400
             user = doctor.find_one({'email': data['email']})
             if user:
                 return jsonify({'message': 'User already exists'}), 400
@@ -262,6 +266,26 @@ def delete_meet():
     email = data['email']
     doctor.update_one({'email': email}, {'$unset': {'link': None}})
     return jsonify({'message': 'Meet link deleted successfully'}), 200
+
+@app.route('/currently_in_meet', methods=['POST', 'PUT'])
+def currently_in_meet():
+    data = request.get_json()
+    email = data['email']
+    if request.method == 'PUT':
+        doctor.update_one({'email': email}, {'$set': {'currentlyInMeet': True}})
+        return jsonify({'message': 'Currently in meet'}), 200
+    else:
+        doc = doctor.find_one({'email': email})
+        return jsonify({'message': 'Currently in meet', 'curmeet': doc.get('currentlyInMeet', False)}), 200
+    
+@app.route('/delete_currently_in_meet', methods=['PUT'])
+def delete_currently_in_meet():
+    data = request.get_json()
+    email = data['email']
+    doctor.update_one({'email': email}, {'$unset': {'currentlyInMeet': None}})
+    return jsonify({'message': 'Currently in meet'}), 200
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
