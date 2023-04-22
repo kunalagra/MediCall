@@ -11,17 +11,6 @@ import env from "../env";
 const stripePromise = loadStripe(`${env.PUBLICATION_KEY}`);
 
 export default function Checkout() {
-
-  // const navigate = useNavigate(); 
-  // const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
-
-  // useEffect(() => {
-  //     if(userNotExists) {
-  //         navigate("/");
-  //     }
-  //     //eslint-disable-next-line
-  // }, []);
-
   const [clientSecret, setClientSecret] = useState("");
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
