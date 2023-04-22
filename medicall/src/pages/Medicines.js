@@ -2,11 +2,21 @@ import { useNavigate } from "react-router-dom";
 import FeaturedSlider from "../components/medicines/FeaturedProducts";
 import TopProducts from "../components/medicines/TopProducts";
 import useDocTitle from "../hooks/useDocTitle";
+import { useEffect } from "react";
 
 const BuyMedicines = () => {
 
-    const navigate = useNavigate();
     useDocTitle("Buy Medicines");
+    
+    const navigate = useNavigate(); 
+    const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+
+    useEffect(() => {
+        if(userNotExists) {
+            navigate("/");
+        }
+        //eslint-disable-next-line
+    }, []);
 
     return (
         <div id="buy-medicines">

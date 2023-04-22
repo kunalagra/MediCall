@@ -12,13 +12,18 @@ import httpClient from "../httpClient";
 
 const Home = () => {
     useDocTitle("Home");
+    const navigate = useNavigate();
+
+    
+
     const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
     const [feedbackAlert, setFeedbackAlert] = useState(false);
     const [searchPatient, setSearchPatient] = useState(false);
+    const isDoctor = localStorage.getItem("usertype")==="doctor";
     // eslint-disable-next-line
     const [searching, setSearching] = useState(0); 
-    const navigate = useNavigate();
+    const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
 
 
     const handleFeedbackClose = () => {
@@ -51,27 +56,34 @@ const Home = () => {
     useEffect(() => {
         // const now = new Date();
         // console.log(now);
-        if (localStorage.getItem('usertype') === 'patient') {
-        httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
-            .then((res) => {
-                console.log(res.data);
-                setUpcomingAppointments(res.data.appointments);
-                setPastAppointments(res.data.appointments);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        if(userNotExists) {
+            navigate("/");
         }
-        else {
-            httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
+
+        if(!userNotExists) {
+            if (!isDoctor) {
+            httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
+                    // console.log(res.data);
                     setUpcomingAppointments(res.data.appointments);
                     setPastAppointments(res.data.appointments);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+            }
+            else {
+                httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
+                    .then((res) => {
+                        setUpcomingAppointments(res.data.appointments);
+                        setPastAppointments(res.data.appointments);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
         }
+        // eslint-disable-next-line
     }, []);
 
 
@@ -85,7 +97,7 @@ const Home = () => {
         <>
             <div id="home-page">
 
-                {localStorage.getItem("usertype")==="doctor" && (
+                {isDoctor && (
                     <div className="is-meet-div">
                         <div className="meet-bg"></div>
                         <div className="main">
@@ -128,9 +140,10 @@ const Home = () => {
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
                                         <p> By {item.doctor}</p>
                                     </div>
-                                    <button className="join-btn" disabled={new Date(item.date + " " + item.time) < new Date()} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
+                                    <button className="join-btn" disabled={!((new Date(item.date)===new Date()) && (new Date(item.date + " " + item.time)<=new Date()))} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
                                 </li>
                             ))}
+                            {upcomingAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div>{!isDoctor && <button className="join-btn" onClick={() => navigate('/doctors')}>Book</button>}</li>}
                         </ul>
                     </div>
                 </div>
@@ -145,9 +158,10 @@ const Home = () => {
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
                                         <p> By {item.doctor}</p>
                                     </div>
-                                    <button className="join-btn" onClick={() => {}}>Prescription</button>
+                                    {!isDoctor && <button className="join-btn" onClick={() => {}}>Prescription</button>}
                                 </li>
                             ))}
+                            {pastAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div></li>}
                         </ul>
                     </div>
                 </div>
@@ -169,7 +183,7 @@ const Home = () => {
 
             </div>
             <Modal
-                open={haslastMeet && (localStorage.getItem("usertype")==="patient")}
+                open={haslastMeet && (!isDoctor)}
                 onClose={handleFeedbackClose}
                 >
                 <div id="feedback-modal">
@@ -199,7 +213,7 @@ const Home = () => {
                 </div>
             </Modal>
             <Modal
-                open={haslastMeet && (localStorage.getItem("usertype")==="doctor")}
+                open={haslastMeet && isDoctor}
                 onClose={() => setHasLastMeet(false)}
                 >
                 <div id="feedback-modal">

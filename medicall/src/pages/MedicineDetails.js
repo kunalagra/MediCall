@@ -13,6 +13,8 @@ const MedicineDetails = () => {
 
     useDocTitle('Medicine Details');
 
+    const navigate = useNavigate(); 
+
     const { handleActive, activeClass } = useActive(0);
 
     const { addItem } = useContext(cartContext);
@@ -36,8 +38,6 @@ const MedicineDetails = () => {
             allImages.push(images[0]);
         }
     }
-
-    const navigate = useNavigate();
 
     const [btnActive, setBtnActive] = useState(false);
 

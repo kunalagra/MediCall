@@ -14,13 +14,23 @@ import commonContext from "../contexts/common/commonContext";
 import httpClient from "../httpClient";
 
 const MeetPage = () => {
+
+  const navigate = useNavigate(); 
+  const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+
+  useEffect(() => {
+      if(userNotExists) {
+          navigate("/");
+      }
+      //eslint-disable-next-line
+  }, []);
+
   const apiRef = useRef();
   //eslint-disable-next-line
   const [logItems, updateLog] = useState([]);
   const [knockingParticipants, updateKnockingParticipants] = useState([]);
   const [searchparams] = useSearchParams();
   const meetId = searchparams.get("meetId");
-  const navigate = useNavigate();
 
   const { toggleFeedback } = useContext(commonContext);
 
@@ -478,6 +488,9 @@ const MeetPage = () => {
 
   }
 
+  if(userNotExists) {
+    return <></>;
+  }
   return (
     <div id="meet-page">
       <h2 className="meet-header">Video Meet {`(Meet ID: ${meetId})`} <span className="copy-icon" onClick={() => {

@@ -1,22 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 // import { BsCartX } from 'react-icons/bs';
 import useDocTitle from "../hooks/useDocTitle";
 import cartContext from "../contexts/cart/cartContext";
 import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 // import httpClient from "../httpClient";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   useDocTitle("Cart");
 
+  const navigate = useNavigate(); 
+  const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+
+  useEffect(() => {
+      if(userNotExists) {
+          navigate("/");
+      }
+      //eslint-disable-next-line
+  }, []);
+
   const { cartItems, clearCart } = useContext(cartContext);
   // eslint-disable-next-line
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  );
+  // const stripePromise = loadStripe(
+  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  // );
   const cartQuantity = cartItems.length;
 
   // total original price
@@ -28,7 +38,7 @@ const Cart = () => {
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
-  const navigate = useNavigate();
+  
   return (
     <>
       <section id="cart" className="section">

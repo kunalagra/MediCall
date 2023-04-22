@@ -18,7 +18,6 @@ const Doctors = () => {
     useDocTitle("Doctors");
 
     const [meetModal, setMeetModal] = useState(false);
-    const navigate = useNavigate();
     const [doctors, setDoctors] = useState([]);
     const [isScheduleMeet, setScheduleMeet] = useState(false);
     const [isInvDateTime, setInvDateTime] = useState(false);
@@ -28,6 +27,16 @@ const Doctors = () => {
     const [curTime, setCurTime] = useState(null);
     const [fetchingData, setFetchingData] = useState(false);
 
+    
+    const navigate = useNavigate(); 
+    const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+
+    useEffect(() => {
+        if(userNotExists) {
+            navigate("/");
+        }
+        //eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
       fetchDoctors();

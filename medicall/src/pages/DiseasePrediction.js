@@ -220,6 +220,7 @@ class DiseasePrediction extends Component {
 
   render() {
     const { tab_progress, button_is_disabled, patient_2_next_button_disabled, user_symptom_length, current_page } = this.state;
+
     return (
       <div id="disease-prediction">
         <main id="main-content">

@@ -3,7 +3,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import httpClient from "../httpClient";
 import CheckoutForm from "./CheckoutForm";
-import "./App.css";
+import "./App.css"
+// import { useNavigate } from "react-router-dom";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -11,6 +12,17 @@ import "./App.css";
 const stripePromise = loadStripe("pk_test_51MxOxySAmG5gMbbM0U78jniwo9rFBwRrxBRj4OGrlwX1aAmjGbqVYycpyPNICF1atzJvk8nyYtoqpB4gDgvxCFg300VEv53s8l");
 
 export default function Checkout() {
+
+  // const navigate = useNavigate(); 
+  // const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+
+  // useEffect(() => {
+  //     if(userNotExists) {
+  //         navigate("/");
+  //     }
+  //     //eslint-disable-next-line
+  // }, []);
+
   const [clientSecret, setClientSecret] = useState("");
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -40,6 +52,7 @@ export default function Checkout() {
   };
 
   return (
+    // <div id="checkout">
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
