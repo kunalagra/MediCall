@@ -251,6 +251,76 @@
         }
     }
 
+    .instant-meet-div {
+        padding-bottom: 25px;
+        text-align: center;
+
+        button {
+            background-color: var(--blue-color-3);
+            padding: 0.7rem 1rem;
+            border-radius: 4px;
+            color: var(--white-color);
+            transition: all 0.3s ease;
+            
+            &:hover, &:active {
+                background-color: var(--blue-color-5);
+            }
+        }
+
+        .loader {
+            @include flexbox(center, center);
+
+            .wave {
+              width: 5px;
+              height: 100px;
+              background: linear-gradient(45deg, red, #f5f5f5);
+              margin: 10px;
+              animation: wave 1s linear infinite;
+              border-radius: 20px;
+            }
+            .wave:nth-child(2) {
+              animation-delay: 0.1s;
+            }
+            .wave:nth-child(3) {
+              animation-delay: 0.2s;
+            }
+            .wave:nth-child(4) {
+              animation-delay: 0.3s;
+            }
+            .wave:nth-child(5) {
+              animation-delay: 0.4s;
+            }
+            .wave:nth-child(6) {
+              animation-delay: 0.5s;
+            }
+            .wave:nth-child(7) {
+              animation-delay: 0.6s;
+            }
+            .wave:nth-child(8) {
+              animation-delay: 0.7s;
+            }
+            .wave:nth-child(9) {
+              animation-delay: 0.8s;
+            }
+            .wave:nth-child(10) {
+              animation-delay: 0.9s;
+            }
+            
+            @keyframes wave {
+              0% {
+                transform: scale(0);
+              }
+              50% {
+                transform: scale(1);
+              }
+              100% {
+                transform: scale(0);
+              }
+            }
+        }
+
+    }
+
     .schedule-meet-div {
         padding-bottom: 25px;
 
@@ -264,11 +334,47 @@
                 border-radius: 8px;
                 padding: 10px 12px;
                 cursor: pointer;
-            }
-
-            input[type="date"] {
                 margin-bottom: 10px;
                 padding: 11px 12px;
+            }
+
+            .timings {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                width: min(360px, 90vw);
+                border: 2px solid var(--blue-color-3);
+                border-radius: 8px;
+                padding: 5px;
+                gap: 5px;
+                
+                .timing-slot {
+                    border: 2px solid var(--blue-color-3);
+                    border-radius: 8px;
+                    cursor: pointer;
+                    @include flexbox(center, center);
+                    padding: 10px 5px;
+
+                    .slot {
+                        font-size: 1em;
+                        color: var(--whatsapp-color);
+                    }
+
+                    &.not-avail {
+                        cursor: not-allowed;
+                        background-color: var(--blue-color-2);
+                        .slot {
+                            color: rgb(255,0,0);
+                        }
+                    }
+
+                    &.active {
+                        background-color: var(--blue-color-1);
+                    }
+
+                    .time {
+                        margin: 0 10px;
+                    }
+                }
             }
         }
 

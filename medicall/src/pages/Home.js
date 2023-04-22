@@ -14,8 +14,6 @@ const Home = () => {
     useDocTitle("Home");
     const navigate = useNavigate();
 
-    
-
     const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
     const [feedbackAlert, setFeedbackAlert] = useState(false);

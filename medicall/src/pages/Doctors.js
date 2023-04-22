@@ -6,12 +6,15 @@ import { RiWhatsappFill } from "react-icons/ri";
 import Modal from '@mui/material/Modal';
 import { IoMdClose } from "react-icons/io";
 import useDocTitle from "../hooks/useDocTitle";
-import { AiFillStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlineClockCircle } from 'react-icons/ai';
 import { TbPointFilled } from 'react-icons/tb';
 import { useNavigate } from "react-router-dom";
 import httpClient from "../httpClient";
 import { Alert, CircularProgress } from "@mui/material";
 import { IoMdRefresh } from "react-icons/io";
+import useActive from "../hooks/useActive";
+import { FaVideo } from "react-icons/fa";
+
 
 const Doctors = () => {
 
@@ -19,6 +22,8 @@ const Doctors = () => {
 
     const [meetModal, setMeetModal] = useState(false);
     const [doctors, setDoctors] = useState([]);
+    const [isInstantMeet, setInstantMeet] = useState(false);
+    const [isConnecting, setConnecting] = useState(false);
     const [isScheduleMeet, setScheduleMeet] = useState(false);
     const [isInvDateTime, setInvDateTime] = useState(false);
     const [scheduleAlert, setScheduleAlert] = useState(0);
@@ -80,6 +85,8 @@ const Doctors = () => {
     const [selectedDocAvailable, setSelectedDocAvailable] = useState(false);
     const [selectEmail, setSelectEmail] = useState("");
     const [message, setMessage] = useState("");
+    const timings = [{time:"08:00", available: true},{time:"09:00", available: true},{time:"10:00", available: true},{time:"11:00", available: false},{time:"12:00", available: true},{time:"15:00", available: false},{time:"16:00", available: true},{time:"17:00", available: true},{time:"18:00", available: true}];
+    const {handleActive, activeClass} = useActive(-1);
     
     const handelmeet = () => {
       httpClient.post("/meet_status",{"email":selectEmail}).then((res) => {
@@ -172,6 +179,7 @@ const Doctors = () => {
                         setSelectedDocStatus(params.row.status==="online");
                         setSelectedDocAvailable(params.row.isInMeet);
                         setScheduleMeet(false);
+                        setInstantMeet(false);
                       }}>
                         BOOK
                       </button>
@@ -205,7 +213,10 @@ const Doctors = () => {
         </div>
         <Modal
           open={meetModal}
-          onClose={() => setMeetModal(false)}
+          onClose={() => {
+            setMeetModal(false);
+            setConnecting(false);
+          }}
         >
           <div id="meet-modal" style={{width: `${!selectedDocAvailable && selectedDocStatus? "min(570px, 90vw)" : "min(400px, 90vw)"}`}}>
             <div className="close_btn_div">
@@ -214,18 +225,54 @@ const Doctors = () => {
             <div className="meet-details-div">
               <h3>Wanna meet?</h3>
               <div className="meet-details">
-                {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => handelmeet()}>Create an Instant meet</div>}
+                {selectedDocStatus && !selectedDocAvailable && <div className="create-meet" onClick={() => {
+                  setScheduleMeet(false);
+                  setInstantMeet(!isInstantMeet);
+                  setConnecting(false);
+                }}>Create an Instant meet</div>}
                 <div className="create-meet" onClick={() => {
                   const d = new Date();
                   setCurDate(`${d.getFullYear()}-${parseInt(d.getMonth()) < 9? '0' : ''}${d.getMonth()+1}-${parseInt(d.getDate()) < 10? '0' : ''}${d.getDate()}`);
                   setCurTime(`${parseInt(d.getHours()) < 10? '0' : ''}${d.getHours()}:${parseInt(d.getMinutes()) < 10 ? '0' : ''}${d.getMinutes()}`);
                   setInvDateTime(true);
                   setScheduleMeet(!isScheduleMeet);
+                  setInstantMeet(false);
+                  setConnecting(false);
                 }}>Schedule a meet</div>
                 { message && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
                 {selectedDocStatus && selectedDocAvailable && <div className="not-available-note">Oops! {selectedDoc} is currently in another meet, you can wait a few minutes or else schedule your meet. </div>}
               </div>
             </div>
+
+            {isInstantMeet && (
+              isConnecting ? (
+                <div className="instant-meet-div">
+                  <div className="loader">
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                  </div>
+                  <div>Connecting...</div>
+                </div>
+              ) : (
+                <div className="instant-meet-div">
+                  <button onClick={() => {
+                    setConnecting(true);
+                    setTimeout(() => {
+                      handelmeet();
+                    }, 3000);
+                  }}>Connect <FaVideo /></button>
+                </div>
+              )
+            )}
+
             {isScheduleMeet && (
               <div className="schedule-meet-div">
                 <h3>Pick a Date and Time</h3>
@@ -233,7 +280,16 @@ const Doctors = () => {
                 {scheduleAlert!==0 && <Alert severity={`${scheduleAlert===1? "error" : "success"}`}>{scheduleAlert===1? "Doctor isn't available at that time. Please pick up some other time" : "Meet scheduled successfully"}</Alert>}
                 <div className="schedule-meet">
                   <input type="date" value={curDate} onChange={(e) => {checkInvDateTime(e.target.value, curTime); setCurDate(e.target.value);}} />
-                  <input type="time" value={curTime} onChange={(e) => {checkInvDateTime(curDate, e.target.value); setCurTime(e.target.value);}} />
+                  <div className="timings">
+                    {timings.map((item, index) => (
+                      <div className={`timing-slot ${!item.available && "not-avail"} ${activeClass(index)}`} onClick={() => {handleActive(index); checkInvDateTime(curDate, item.time); setCurTime(item.time)}} key={index}>
+                        <div className="slot"><TbPointFilled /></div>
+                        <div className="time">{item.time}</div>
+                        <div className="clock-icon"><AiOutlineClockCircle /></div>
+                      </div>
+                    ))}
+                  </div>
+
                 </div>
                 <div className="schedule-btn">
                   <button onClick={() => {
