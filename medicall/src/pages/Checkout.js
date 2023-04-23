@@ -3,18 +3,18 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import httpClient from "../httpClient";
 import CheckoutForm from "./CheckoutForm";
-import env from "../env";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
-const stripePromise = loadStripe(`${env.PUBLICATION_KEY}`);
+const stripePromise = loadStripe(`${process.env.REACT_APP_PUBLICATION_KEY}`);
 
 export default function Checkout() {
   const [clientSecret, setClientSecret] = useState("");
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    console.log(`${env.PUBLICATION_KEY}`)
+    // console.log(process.env.NODE_ENV)
+    // console.log(`${process.env.REACT_APP_TITLE}`)
     httpClient.post("/create-payment-intent", {
       amount: localStorage.getItem("totalPrice"),
       headers: { 

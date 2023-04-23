@@ -112,7 +112,7 @@ const AccountForm = () => {
                 .catch(err => {
                     console.log(err);
                     setIsAlert("error");
-                    setAlertCont("Signup Failed");
+                    setAlertCont("User already exists");
                     setTimeout(() => {
                         setIsAlert("");
                     }, 1500);

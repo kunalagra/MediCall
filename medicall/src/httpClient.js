@@ -1,4 +1,6 @@
 import axios from "axios";
+const url = (process.env.NODE_ENV === 'development' ? "http://127.0.0.1:5000" : "https://gfg-medicall-backend.onrender.com");
+
 export default axios.create({
   withCredentials: true,
   accessControlAllowCredentials: true,
@@ -7,6 +9,6 @@ export default axios.create({
     "Content-type": "application/json",
     // "Authorization": "Bearer " + localStorage.getItem("token")
   },
-  baseURL: "http://127.0.0.1:5000"
+  baseURL: url
 });
 

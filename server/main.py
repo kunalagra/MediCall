@@ -95,7 +95,7 @@ def register():
     if request.is_json:
         data = request.get_json()
         if data['registerer'] == 'patient':
-            if doctor.objects.filter(email=data['email']).exists():
+            if doctor.find_one({'email': data['email']}):
                 return jsonify({'message': 'User already exists'}), 400
             user = patients.find_one({'email': data['email']})
             if user:
@@ -108,7 +108,7 @@ def register():
                 patients.insert_one(data)
                 return jsonify({'message': 'User created successfully'}), 200
         elif data['registerer'] == 'doctor':
-            if patients.objects.filter(email=data['email']).exists():
+            if patients.find_one({'email': data['email']}):
                 return jsonify({'message': 'User already exists'}), 400
             user = doctor.find_one({'email': data['email']})
             if user:
