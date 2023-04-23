@@ -11,6 +11,7 @@ import cartContext from '../../contexts/cart/cartContext';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import httpClient from '../../httpClient';
+import { RiFileList3Line } from "react-icons/ri";
 
 
 const Header = () => {
@@ -119,6 +120,10 @@ const Header = () => {
                                                     <AiOutlineShoppingCart className='cart-icon' />
                                                     <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My cart</Link>
                                                     <span className='cart_badge'>{cartItems.length}</span>
+                                                </li>
+                                                <li>
+                                                    <RiFileList3Line className='cart-icon' />
+                                                    <Link to="/my-orders" onClick={() => setShowDropdown(false)}>My Orders</Link>
                                                 </li>
                                             </ul>
                                         </div>

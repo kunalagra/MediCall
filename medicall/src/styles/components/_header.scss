@@ -177,7 +177,7 @@
 
         li {
             &:not(:last-child) {
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.7rem;
             }
 
             .cart-icon {
@@ -205,8 +205,4 @@
 
         }
     }
-
-    // &:hover .dropdown_menu, &:active .dropdown_menu {
-    //     @include toggleVisibility(visible, 1);
-    // }
 }
