@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
@@ -36,9 +35,6 @@ function Chatbot() {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-
-    // Initial system message to determine ChatGPT functionality
-    // How it responds, how it talks, etc.
     setIsTyping(true);
     await processMessageToChatGPT(newMessages);
   };
@@ -84,7 +80,7 @@ function Chatbot() {
   }
 
   return (
-    <div className="App">
+    <div className="chatbot">
       <div style={{ position: "relative", height: "800px", width: "700px" }}>
         <MainContainer>
           <ChatContainer>
