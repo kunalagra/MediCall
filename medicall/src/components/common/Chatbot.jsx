@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -9,7 +10,8 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+// const API_KEY = process.env.REACT_APP_API_KEY;
+const API_KEY = import.meta.env.VITE_API_KEY;
 const systemMessage = {
   role: "system",
   content: "Explain like a doctor to his/her patient.",
@@ -54,7 +56,7 @@ function Chatbot() {
       model: "gpt-3.5-turbo",
       messages: [systemMessage, ...apiMessages],
     };
-
+    
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -67,7 +69,7 @@ function Chatbot() {
         return data.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setMessages([
           ...chatMessages,
           {
@@ -88,12 +90,12 @@ function Chatbot() {
               scrollBehavior="smooth"
               typingIndicator={
                 isTyping ? (
-                  <TypingIndicator content="ChatGPT is typing" />
+                  <TypingIndicator content="MediBot is typing" />
                 ) : null
               }
             >
               {messages.map((message, i) => {
-                console.log(message);
+                // console.log(message);
                 return <Message key={i} model={message} />;
               })}
             </MessageList>

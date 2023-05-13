@@ -1,3 +1,4 @@
+import React from "react";
 import { CommonProvider } from "./contexts/common/commonContext";
 import { CartProvider } from "./contexts/cart/cartContext";
 import { FiltersProvider } from "./contexts/filters/filterContext";

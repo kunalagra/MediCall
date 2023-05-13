@@ -14,7 +14,6 @@ import Failed from "../pages/Failed";
 import DiseasePrediction from "../pages/DiseasePrediction";
 import ErrorPage from "../pages/ErrorPage";
 import Checkout from "../pages/Checkout";
-import Chatbot from "../components/common/Chatbot.js";
 
 const RouterRoutes = () => {
   useScrollRestore();
@@ -36,7 +35,6 @@ const RouterRoutes = () => {
         <Route path="/success" element={<Success />} />
         <Route path="/failed" element={<Failed />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
 
         <Route path="/*" element={<ErrorPage />} />

@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import Modal from '@mui/material/Modal';
 import useDocTitle from "../hooks/useDocTitle";

@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import FeaturedSlider from "../components/medicines/FeaturedProducts";
 import TopProducts from "../components/medicines/TopProducts";

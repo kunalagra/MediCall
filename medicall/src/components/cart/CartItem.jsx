@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { TbTrash } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import cartContext from '../../contexts/cart/cartContext';
-import QuantityBox from '../../components/cart/QuantityBox';
+import QuantityBox from './QuantityBox';
 
 
 const CartItem = (props) => {

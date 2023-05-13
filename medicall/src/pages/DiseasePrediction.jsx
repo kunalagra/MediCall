@@ -15,7 +15,7 @@ class DiseasePrediction extends Component {
       tab_progress: 25,
       button_is_disabled: true, // Next button disabled if not agreed to terms
       home_button_checked: false, //Check if terms are agreed
-      age: "18", //Patient Default Age
+      age: localStorage.getItem("age")? localStorage.getItem("age") : "18", //Patient Default Age
       button_name: "Next", //Button name retry or next
       gender: "Male", //Default gender
       male: true, // patient checkbox

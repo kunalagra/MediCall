@@ -136,7 +136,7 @@ class Symptom extends Component {
         <div className="grid-container">
             <div>
             <input
-                class="usa-input searchSymptomsInput"
+                className="usa-input searchSymptomsInput"
                 onKeyDown={this.keyDownEvent}
                 onChange={this.getInputSymptoms}
                 placeholder="Search Symptoms"
