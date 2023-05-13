@@ -84,6 +84,12 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <div id="amount">
+          <h1 id="amo">Payment</h1>
+          <div id='price'>
+            Amount : {localStorage.getItem('totalPrice')}.00 $
+          </div>
+      </div>
       <LinkAuthenticationElement
         id="link-authentication-element"
       />

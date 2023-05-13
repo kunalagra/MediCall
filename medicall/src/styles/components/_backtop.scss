@@ -32,18 +32,30 @@
     border-radius: 50%;
 }
 
-#chatbot-modal {
-    position: fixed;
-    bottom: 13vh;
-    right: 1.5vw;
-    z-index: 99;
-    width: min(95%, 500px);
-    padding: 10px;
-    box-shadow: 0 0 10px 1px var(--blue-color-2);
-    border: 2px solid var(--blue-color-2);
-    background-color: var(--white-color);
-    border-radius: 8px;
-    color: var(--blue-color-7);
-    text-align: center;
-    z-index: 300;
+.chatbot {
+  position: fixed;
+  bottom: 1%;
+  right: 5%;
+  height: 70%;
+  background-color: white;
+  border: 3px solid #f1f1f1;
+  border-radius: 10px;
+  z-index: 9;
+  .chat {
+    max-width: 100%;
+    height:98%;
+  background-color: white;
+}
+
+.chatbot_close {
+    color: red;
+    background-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+    .Close {
+        font-size: 15px;
+        float: right;
+    }
+}
 }

@@ -66,8 +66,18 @@ const Home = () => {
             httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
                     // console.log(res.data);
-                    setUpcomingAppointments(res.data.appointments);
-                    setPastAppointments(res.data.appointments);
+                    const upcoming = [];
+                    const past = [];
+                    res.data.appointments.forEach((appointment) => {
+                        if (new Date(appointment.date) > now) {
+                            upcoming.push(appointment);
+                        }
+                        else {
+                            past.push(appointment);
+                        }
+                    });
+                    setUpcomingAppointments(upcoming);
+                    setPastAppointments(past);
                 })
                 .catch((err) => {
                     console.log(err);

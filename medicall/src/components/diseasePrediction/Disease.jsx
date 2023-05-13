@@ -69,8 +69,8 @@ class Disease extends Component {
       <>
         <div className="grid-row width-full DiseaseComponent">
           <div className="col-12 tablet:grid-col-12 patientInfo">
-            <h3>Patient gender: Male</h3>
-            <h3>Patient age: 71</h3>
+            <h3>Patient gender: {this.props.gender}</h3>
+            <h3>Patient age: {this.props.age}</h3>
           </div>
           <p> Cannot determine possible diseases due to lack of symptoms. Please retry the analysis with actual symptoms or call your local hospital if it is an emergency.</p>
         </div>
