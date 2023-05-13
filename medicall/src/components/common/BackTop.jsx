@@ -21,8 +21,23 @@ const BackTop = () => {
   };
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [chatModal, setChatModal] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () =>
+      window.scrollY >= 100 ? setIsVisible(true) : setIsVisible(false);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  // back-to-top functionality
+  const handleBackTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const [messages, setMessages] = useState([
     {
@@ -87,47 +102,20 @@ const BackTop = () => {
       });
   }
 
-  // back-to-top visibility toggling
-  
-
-  // back-to-top functionality
-  const handleBackTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const openChatbot = () => {
-    setOpen(true); 
-  };
 
   return (
-    <div id="back-top-div">
-      {
-        chatModal? (
-          <div id="chatbot-modal">
-            <Chatbot />
-          </div>
-        ) : (
-          <div
-            className={`back_top ${isVisible ? "popped" : ""}`}
-            title="Back to top"
-            onClick={handleBackTop}
-          >
-            <FaChevronUp />
-          </div>
-        )
-      }
+    <>
+      {!open && (
+        <div
+          className={`back_top ${isVisible ? "popped" : ""}`}
+          title="Back to top"
+          onClick={handleBackTop}
+        >
+          <FaChevronUp />
+        </div>
+      )}
       <div
-        className={`back_top ${isVisible ? "popped" : ""}`}
-        title="Back to top"
-        onClick={handleBackTop}
-      >
-        <FaChevronUp />
-      </div>
-      <div
-        onClick={() => {openChatbot(),console.log("clicked")}} 
+        onClick={() => setOpen(!open)} 
         className="back_top popped chat_icon"
         title="Wanna Chat?"
       >
@@ -135,32 +123,29 @@ const BackTop = () => {
       </div>
       {open && (
         <div className="chatbot">
-          <div className="chatbot_close" onClick={() => setOpen(false)}>
-            <span className="Close">x</span>
+          <div className="chat">
+            <MainContainer
+            style={{border: 0, borderRadius: 10}}
+            >
+              <ChatContainer>
+                <MessageList
+                  scrollBehavior="smooth"
+                  typingIndicator={
+                    isTyping ? (
+                      <TypingIndicator content="MediBot is typing" />
+                    ) : null
+                  }
+                >
+                  {messages.map((message, i) => {
+                    // console.log(message);
+                    return <Message key={i} model={message} />;
+                  })}
+                </MessageList>
+                <MessageInput placeholder="Type message here" onSend={handleSend} />
+              </ChatContainer>
+            </MainContainer>
           </div>
-        <div className="chat">
-          <MainContainer
-          style={{border: 0, borderRadius: 10}}
-          >
-            <ChatContainer>
-              <MessageList
-                scrollBehavior="smooth"
-                typingIndicator={
-                  isTyping ? (
-                    <TypingIndicator content="MediBot is typing" />
-                  ) : null
-                }
-              >
-                {messages.map((message, i) => {
-                  // console.log(message);
-                  return <Message key={i} model={message} />;
-                })}
-              </MessageList>
-              <MessageInput placeholder="Type message here" onSend={handleSend} />
-            </ChatContainer>
-          </MainContainer>
         </div>
-      </div>
       )}
     </>
   );

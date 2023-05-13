@@ -34,28 +34,24 @@
 
 .chatbot {
   position: fixed;
-  bottom: 1%;
-  right: 5%;
-  height: 70%;
+  bottom: 13vh;
+  right: 1.5vw;
+  height: 450px;
+  width: 300px;
   background-color: white;
-  border: 3px solid #f1f1f1;
+  z-index: 300;
+  box-shadow: 0 0 10px 1px var(--blue-color-2);
+  border: 2px solid var(--blue-color-2);  
   border-radius: 10px;
-  z-index: 9;
+  padding-top: 1rem;
+  transition: all 0.3s ease-in-out;
+  
+  
   .chat {
-    max-width: 100%;
-    height:98%;
-  background-color: white;
-}
-
-.chatbot_close {
-    color: red;
-    background-color: white;
-    border-radius: 10px;
-    margin: 5px;
-    cursor: pointer;
-    .Close {
-        font-size: 15px;
-        float: right;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        overflow: auto;
+        border-radius: 10px;
     }
-}
 }
