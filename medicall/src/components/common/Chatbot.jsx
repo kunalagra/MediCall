@@ -82,8 +82,8 @@ function Chatbot() {
   }
 
   return (
-    <div className="chatbot">
-      <div style={{ position: "relative", height: "800px", width: "700px" }}>
+    <div className="chatbot" style={{overflow: "auto", height: "500px"}}>
+      <div className="chat-container">
         <MainContainer>
           <ChatContainer>
             <MessageList

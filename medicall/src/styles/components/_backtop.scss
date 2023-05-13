@@ -31,3 +31,19 @@
     right: 1.3vw;
     border-radius: 50%;
 }
+
+#chatbot-modal {
+    position: fixed;
+    bottom: 13vh;
+    right: 1.5vw;
+    z-index: 99;
+    width: min(95%, 500px);
+    padding: 10px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+    text-align: center;
+    z-index: 300;
+}
