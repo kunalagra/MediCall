@@ -14,7 +14,7 @@ import {
 const API_KEY = import.meta.env.VITE_API_KEY;
 const systemMessage = {
   role: "system",
-  content: "Explain like a doctor to his/her patient and do not mention you are chatgpt and developed by OPEN AI.",
+  content: "Explain like a doctor to his/her patient developed  by Medical and team and answer only health related questions only and do not answer any other question on o mention you are related to chatgpt or open ai",
 };
 
 function Chatbot() {

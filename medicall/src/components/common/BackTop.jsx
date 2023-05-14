@@ -17,7 +17,7 @@ const BackTop = () => {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const systemMessage = {
     role: "system",
-    content: "Explain like a doctor to his/her patient and developed  by Medical and team and only answer health related questions and reject questions from other domains and do not mention you are related to chatgpt or open ai",
+    content: "Only answer health related questions and do not mention anything about chatgpt and open ai",
   };
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -39,6 +39,38 @@ const BackTop = () => {
     });
   };
 
+  const HEALTH_KEYWORDS = ["health", "medicine", "doctor", "hospital", "symptom", "colour blindness","myopia","hypermetropia","bronchitis","cough",
+  "cold","tuberculosis","TB","dry eyes","eye","chalization","appendictius","dysepia","food poison","food poisoning","gastritis",
+  "ibs","peptic ulcer","ulcer","coitis","allergy","kidney","kidney failure","kidney stone","stone","appendix", "food allergy"];
+
+const handleSend = async (message) => {
+  const newMessage = {
+    message,
+    direction: "outgoing",
+    sender: "user",
+  };
+  
+  const containsHealthKeywords = HEALTH_KEYWORDS.some(keyword => message.toLowerCase().includes(keyword));
+  
+  if (!containsHealthKeywords) {
+    setMessages([
+      ...messages,
+      {
+        message: "I'm sorry, I can only answer health-related questions.",
+        sender: "ChatGPT",
+      },
+    ]);
+    return;
+  }
+
+  const newMessages = [...messages, newMessage];
+
+  setMessages(newMessages);
+  setIsTyping(true);
+  await processMessageToChatGPT(newMessages);
+};
+
+
   const [messages, setMessages] = useState([
     {
       message: "Hello, This is MediBot! Ask me anything!",
@@ -48,19 +80,19 @@ const BackTop = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = async (message) => {
-    const newMessage = {
-      message,
-      direction: "outgoing",
-      sender: "user",
-    };
+  // const handleSend = async (message) => {
+  //   const newMessage = {
+  //     message,
+  //     direction: "outgoing",
+  //     sender: "user",
+  //   };
 
-    const newMessages = [...messages, newMessage];
+  //   const newMessages = [...messages, newMessage];
 
-    setMessages(newMessages);
-    setIsTyping(true);
-    await processMessageToChatGPT(newMessages);
-  };
+  //   setMessages(newMessages);
+  //   setIsTyping(true);
+  //   await processMessageToChatGPT(newMessages);
+  // };
 
   async function processMessageToChatGPT(chatMessages) {
     let apiMessages = chatMessages.map((messageObject) => {
