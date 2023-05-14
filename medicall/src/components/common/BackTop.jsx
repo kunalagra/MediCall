@@ -121,32 +121,30 @@ const BackTop = () => {
       >
         <AiFillWechat />
       </div>
-      {open && (
-        <div className="chatbot">
-          <div className="chat">
-            <MainContainer
-            style={{border: 0, borderRadius: 10}}
-            >
-              <ChatContainer>
-                <MessageList
-                  scrollBehavior="smooth"
-                  typingIndicator={
-                    isTyping ? (
-                      <TypingIndicator content="MediBot is typing" />
-                    ) : null
-                  }
-                >
-                  {messages.map((message, i) => {
-                    // console.log(message);
-                    return <Message key={i} model={message} />;
-                  })}
-                </MessageList>
-                <MessageInput placeholder="Type message here" onSend={handleSend} />
-              </ChatContainer>
-            </MainContainer>
-          </div>
+      <div className={`chatbot ${open && "opened"}`}>
+        <div className="chat">
+          <MainContainer
+          style={{border: 0, borderRadius: 10}}
+          >
+            <ChatContainer>
+              <MessageList
+                scrollBehavior="smooth"
+                typingIndicator={
+                  isTyping ? (
+                    <TypingIndicator content="MediBot is typing" />
+                  ) : null
+                }
+              >
+                {messages.map((message, i) => {
+                  // console.log(message);
+                  return <Message key={i} model={message} />;
+                })}
+              </MessageList>
+              <MessageInput placeholder="Type message here" onSend={handleSend} />
+            </ChatContainer>
+          </MainContainer>
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -34,10 +34,7 @@
 
 .chatbot {
   position: fixed;
-  bottom: 13vh;
   right: 1.5vw;
-  height: 450px;
-  width: 300px;
   background-color: white;
   z-index: 300;
   box-shadow: 0 0 10px 1px var(--blue-color-2);
@@ -45,6 +42,19 @@
   border-radius: 10px;
   padding-top: 1rem;
   transition: all 0.3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+  width: 0;
+  bottom: 10vh;
+  height: 0;
+
+  &.opened {
+    bottom: 13vh;
+    width: 300px;
+    visibility: visible;
+    opacity: 1;
+    height: 450px;
+  }
   
   
   .chat {
