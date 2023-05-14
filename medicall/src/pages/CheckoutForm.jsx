@@ -87,7 +87,7 @@ export default function CheckoutForm() {
       <div id="amount">
           <h1 id="amo">Payment</h1>
           <div id='price'>
-            Amount : {localStorage.getItem('totalPrice')}.00 $
+            Amount : {localStorage.getItem('totalPrice')}.00 ₹
           </div>
       </div>
       <LinkAuthenticationElement

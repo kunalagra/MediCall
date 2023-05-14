@@ -17,7 +17,7 @@ const BackTop = () => {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const systemMessage = {
     role: "system",
-    content: "Explain like a doctor to his/her patient.",
+    content: "Explain like a doctor to his/her patient and do not mention you are chatgpt and developed  by OPEN AI and dont mention you use chatgpt as your backend or any api too.",
   };
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
