@@ -55,7 +55,7 @@ const Home = () => {
     const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
-        // const now = new Date();
+        const now = new Date();
         // console.log(now);
         if(userNotExists) {
             navigate("/");
@@ -66,10 +66,10 @@ const Home = () => {
             httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
                     // console.log(res.data);
-                    const upcoming = [];
-                    const past = [];
-                    res.data.appointments.forEach((appointment) => {
-                        if (new Date(appointment.date) > now) {
+                    let upcoming = [];
+                    let past = [];
+                    res.data.appointments.sort().reverse().forEach((appointment) => {
+                        if (appointment.date > now) {
                             upcoming.push(appointment);
                         }
                         else {
@@ -86,8 +86,18 @@ const Home = () => {
             else {
                 httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
                     .then((res) => {
-                        setUpcomingAppointments(res.data.appointments);
-                        setPastAppointments(res.data.appointments);
+                        let upcoming = [];
+                        let past = [];
+                        res.data.appointments.sort().reverse().forEach((appointment) => {
+                            if(appointment.date>now){
+                                upcoming.push(appointment);
+                            }
+                            else{
+                                past.push(appointment);
+                            }
+                        });
+                        setUpcomingAppointments(upcoming)
+                        setPastAppointments(past)
                     })
                     .catch((err) => {
                         console.log(err);

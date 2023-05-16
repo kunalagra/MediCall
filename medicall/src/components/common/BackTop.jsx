@@ -41,7 +41,7 @@ const BackTop = () => {
 
   const HEALTH_KEYWORDS = ["health", "medicine", "doctor", "hospital", "symptom", "colour blindness","myopia","hypermetropia","bronchitis","cough",
   "cold","tuberculosis","TB","dry eyes","eye","chalization","appendictius","dysepia","food poison","food poisoning","gastritis",
-  "ibs","peptic ulcer","ulcer","coitis","allergy","kidney","kidney failure","kidney stone","stone","appendix", "food allergy"];
+  "ibs","peptic ulcer","ulcer","coitis","allergy","kidney","kidney failure","kidney stone","stone","appendix", "food allergy", "pain"];
 
 const handleSend = async (message) => {
   const newMessage = {
