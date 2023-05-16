@@ -56,6 +56,7 @@ const Home = () => {
 
     useEffect(() => {
         const now = new Date();
+
         // console.log(now);
         if(userNotExists) {
             navigate("/");
@@ -69,7 +70,7 @@ const Home = () => {
                     let upcoming = [];
                     let past = [];
                     res.data.appointments.sort().reverse().forEach((appointment) => {
-                        if (appointment.date > now) {
+                        if (new Date(appointment.date) > now) {
                             upcoming.push(appointment);
                         }
                         else {
@@ -89,7 +90,7 @@ const Home = () => {
                         let upcoming = [];
                         let past = [];
                         res.data.appointments.sort().reverse().forEach((appointment) => {
-                            if(appointment.date>now){
+                            if(new Date(appointment.date) > now){
                                 upcoming.push(appointment);
                             }
                             else{
