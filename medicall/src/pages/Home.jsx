@@ -276,7 +276,7 @@ const Home = () => {
                     <div className="doctor-feedback">
                         <h3>Thank You <BsEmojiSmile /> </h3>
                         <div className="thankyou-note">
-                            Thank you, {localStorage.getItem("username")}!!<br /> You just threated one more life!
+                            Thank you, {localStorage.getItem("username")}!!<br /> You just treated one more life!
                         </div>
                     </div>
                 </div>
