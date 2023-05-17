@@ -225,7 +225,8 @@ def set_appointment():
             "date": data['date'],
             "time": data['time'],
             "patient": data['patient'],
-            "meet": data['meet'],
+            "pemail": data['pemail'],
+            "link": data['link'],
         })
         doctor.update_one({'email': email}, {'$set': {'upcomingAppointments': doc['upcomingAppointments']}})
         return jsonify({'message': 'Doctor status updated successfully'}), 200
@@ -243,7 +244,8 @@ def patient_apo():
             "date": data['date'],
             "time": data['time'],
             "doctor": data['doctor'],
-            "meet": data['meet'],
+            "demail": data['demail'],
+            "link": data['link'],
         })
         patients.update_one({'email': email}, {'$set': {'upcomingAppointments': pat['upcomingAppointments']}})
         return jsonify({'message': 'Patient status updated successfully'}), 200
@@ -285,6 +287,12 @@ def delete_currently_in_meet():
     doctor.update_one({'email': email}, {'$unset': {'currentlyInMeet': None}})
     return jsonify({'message': 'Currently in meet'}), 200
     
+@app.route("/doctor_avilability", methods=['PUT'])
+def doctor_avilability():
+    data = request.get_json()
+    user = data['email']
+    doctor.update_one({'email': user}, {'$set': {'status': 'online'}})
+    return jsonify({'message': 'Doctor status updated successfully'}), 200
 
 
 if __name__ == "__main__":

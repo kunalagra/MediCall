@@ -259,6 +259,69 @@
         }
 
     }
+    .make-available {
+        z-index: 200;
+        position:fixed;
+        bottom: 40px;
+        left:20px;
+        padding:10px;
+        border-radius: 10px;
+        background-color: var(--blue-color-9);
+        color:white;
+        cursor: pointer;
+        @include transition($duration: 0.3s);
+        &:hover {
+            background-color: var(--blue-color-8),
+        }
+        .avilability_alert {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            color: #000;
+        }
+    }
+}
+
+#avilable-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // width: min(570px, 90vw);
+    padding: 14px 20px;
+    box-shadow: 0 0 10px 1px var(--blue-color-2);
+    border: 2px solid var(--blue-color-2);
+    background-color: var(--white-color);
+    border-radius: 8px;
+    color: var(--blue-color-7);
+    text-align: center;
+    .close_btn_div {
+        text-align: right;
+        color: var(--blue-color-5);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        margin-bottom: 5px;
+        &:hover {
+            color: var(--blue-color-8);
+        }
+    }
+    .avilable-details {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        color: #fff;
+        .note {
+            background-color: var(--blue-color-9);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            @include transition($duration: 0.3s);
+            &:hover {
+                background-color: var(--blue-color-8);
+            }
+        }
+    }
 }
 
 

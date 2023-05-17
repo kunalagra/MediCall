@@ -25,6 +25,15 @@ const Home = () => {
     const [patient_name, setPatient_name] = useState("");
     const [meetlink, setMeetlink] = useState("");
     const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+    const [joinmeet, setJoinmeet] = useState(false);
+    const [message, setMessage] = useState("");
+    const [joinlink, setJoinlink] = useState("");
+    const [doctormail, setDoctorMail] = useState("");
+    const [doctorname, setDoctorName] = useState("");
+    const [isConnecting, setIsConnecting] = useState(false);
+    const [isAlert, setIsAlert] = useState("");
+    const [availablemodal, setAvailablemodal] = useState(false);
+    const [alertmessage, setAlertmessage] = useState("");
 
 
     const handleFeedbackClose = () => {
@@ -132,6 +141,83 @@ const Home = () => {
             })
     }
 
+    const handleappointmentmeet = (doc, demail, link) => {
+        if(doc){
+            setJoinlink(link);
+            setDoctorMail(demail);
+            setDoctorName(doc);
+            setJoinmeet(true);
+        }
+        else{
+            httpClient.post("meet_status", {email: localStorage.getItem("email")})
+            httpClient.put("/currently_in_meet", {email: localStorage.getItem("email")})
+            .then(res => {
+                setSearchPatient(false);
+                navigate(link);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
+
+    const handlemeet = () => {
+        httpClient.post("/meet_status", { "email": doctormail }).then((res) => {
+            if (res.status === 200) {
+              httpClient.put("/make_meet", {
+                "email": doctormail,
+                "link": joinlink,
+                "patient": localStorage.getItem("username")
+              }).then((res) => {
+                setTimeout(() => {
+                  httpClient.post("/currently_in_meet", { "email": doctormail }).then((res) => {
+                    if (res.data.curmeet) {
+                      setIsConnecting(false);
+                      navigate(joinlink)
+                    }
+                    else {
+                      httpClient.put('/delete_meet', { "email": doctormail })
+                      httpClient.put("delete_currently_in_meet", { email: doctormail} )
+                      httpClient.put("meet_end", { email: doctormail})
+                      setIsConnecting(false);
+                      setMessage(res.data.message);
+                    }
+                  })
+                }, 30000);
+              }).catch(() => {
+                // console.log(res)
+              })
+            }
+            else {
+              setIsConnecting(false);
+              setMessage(res.data.message);
+            }
+          }).catch(() => {
+            // console.log(res)
+          })
+    }
+
+    const iamavilable = () => {
+        setIsAlert("success");
+        setAlertmessage("You are now available to meet with patients")
+        setAvailablemodal(false);
+        setTimeout(() => {
+            httpClient.put("/doctor_avilability", { "email": localStorage.getItem("email") })
+            setIsAlert("");
+            setAlertmessage("");
+        }, 1000);
+    }
+
+    const iamnotavilable = () => {
+        setIsAlert("error");
+        setAlertmessage("You are now not available to meet with patients")
+        setAvailablemodal(false);
+        setTimeout(() => {
+            httpClient.put("/doc_status", { "email": localStorage.getItem("email") })
+            setIsAlert("");
+            setAlertmessage("");
+        }, 1000);
+    }
 
     // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
     
@@ -187,7 +273,7 @@ const Home = () => {
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
                                         <p> By {item.doctor ? item.doctor : item.patient}</p>
                                     </div>
-                                    <button className="join-btn" disabled={!((new Date(item.date)===new Date()) && (new Date(item.date + " " + item.time)<=new Date()))} onClick={() => navigate(`/instant-meet/?meetId=${item.meet}&selectedDoc=${item.doctor}`)}>Join</button>
+                                    <button className="join-btn" disabled={!((new Date(item.date)===new Date()) && (new Date(item.date + " " + item.time)<=new Date()))} onClick={() => handleappointmentmeet(item.doctor,item.demail,item.link)}>Join</button>
                                 </li>
                             ))}
                             {upcomingAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div>{!isDoctor && <button className="join-btn" onClick={() => navigate('/doctors')}>Book</button>}</li>}
@@ -227,7 +313,14 @@ const Home = () => {
                     </div>
                 </div>
 
-
+                {
+                    isDoctor && (
+                        <div className="make-available" onClick={() => setAvailablemodal(true)}>
+                            { isAlert!=="" && <Alert severity={isAlert} className='avilability_alert'>{alertmessage}</Alert> }
+                            Set your availability
+                        </div>
+                    )      
+                }
             </div>
             <Modal
                 open={haslastMeet && (!isDoctor)}
@@ -343,6 +436,87 @@ const Home = () => {
                     )}
                 </div>
             </Modal>
+            <Modal
+            open={joinmeet}
+            onClose={() => {
+                setJoinmeet(false);
+                setIsConnecting(false);
+                setMessage(false);
+            setDoctorMail("");
+            setDoctorName("");
+            setJoinlink("");
+            }}
+            >
+                <div id="meet-modal">
+                <div className="close_btn_div">
+                    <IoMdClose onClick={() => {
+                    setJoinmeet(false);
+                    setIsConnecting(false);
+                    setMessage(false);
+                setDoctorMail("");
+                setDoctorName("");
+                setJoinlink("");
+
+                    httpClient.put('/delete_meet', { "email": doctormail })
+                      httpClient.put("delete_currently_in_meet", { email: doctormail} )
+                      httpClient.put("meet_end", { email: doctormail})
+                    }} />
+                </div>
+                <div className="meet-details">
+                    {message && <div className="not-available-note">Oops! {doctorname} is currently in another meet, you can wait a few minutes or else try againg. </div>}
+                </div>
+                    {
+                isConnecting ? (
+                <div className="instant-meet-div">
+                    <div className="loader">
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    <div className="wave"></div>
+                    </div>
+                    <div>Connecting...</div>
+                </div>
+                ) : (
+                <div className="instant-meet-div">
+                    <button onClick={() => {
+                    setIsConnecting(true);
+                    handlemeet();
+                    // setTimeout(() => {
+                    //   handlemeet();
+                    // }, 3000);
+                    }}>Connect <FaVideo /></button>
+                </div>
+                )
+            }
+            </div>
+            </Modal>
+            <Modal
+            open={availablemodal}
+            onClose={() => {
+                setAvailablemodal(false);
+            }}
+            >
+                <div id="avilable-modal">
+                    <div className="close_btn_div">
+                        <IoMdClose onClick={() => {
+                        setAvailablemodal(false);
+                        }} />
+                    </div>
+                    <div className="avilable-details">
+                        <div className="note" onClick={()=>iamavilable()}>Yes, I am available!</div>
+                        <div className="note"onClick={()=>iamnotavilable()}>No, I am not available!</div>
+                    </div>
+                </div>
+
+
+            </Modal>
+
         </>
     );
 };

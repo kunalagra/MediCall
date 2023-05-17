@@ -119,21 +119,25 @@ const Doctors = () => {
   const { handleActive, activeClass } = useActive(-1);
 
   const handlemeet = () => {
+    const time = new Date().getTime();
+    console.log(time)
     httpClient.post("/meet_status", { "email": selectEmail }).then((res) => {
       if (res.status === 200) {
         httpClient.put("/make_meet", {
           "email": selectEmail,
-          "link": `/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`,
+          "link": `/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`,
           "patient": localStorage.getItem("username")
         }).then((res) => {
           setTimeout(() => {
             httpClient.post("/currently_in_meet", { "email": selectEmail }).then((res) => {
               if (res.data.curmeet) {
                 setConnecting(false);
-                navigate(`/instant-meet?meetId=qwerty12345&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`)
+                navigate(`/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`)
               }
               else {
                 httpClient.put('/delete_meet', { "email": selectEmail })
+                httpClient.put("delete_currently_in_meet", { email: selectEmail} )
+                httpClient.put("meet_end", { email: selectEmail})
                 setConnecting(false);
                 setMessage(res.data.message);
               }
@@ -274,6 +278,9 @@ const Doctors = () => {
               setMessage("")
               setMeetModal(false)
               setConnecting(false)
+              httpClient.put('/delete_meet', { email: selectEmail} )
+              httpClient.put("delete_currently_in_meet", { email: selectEmail} )
+              httpClient.put("meet_end", { email: selectEmail})
             }} />
           </div>
           <div className="meet-details-div">
@@ -365,13 +372,15 @@ const Doctors = () => {
                       // console.log(res.data);
                       if (handleSchedule(res.data.appointments)) {
                         setScheduleAlert(2);
-                        httpClient.put('/patient_apo', { email: localStorage.getItem('email'), date: curDate, time: curTime, doctor: selectedDoc, meet: "qwerty12345" }).then((res) => {
+                        const datetime = `${curDate}${curTime}`;
+                        const link = `/instant-meet?meetId=${datetime}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}`
+                        httpClient.put('/patient_apo', { email: localStorage.getItem('email'), date: curDate, time: curTime, doctor: selectedDoc, demail: selectEmail, link: link }).then((res) => {
                           console.log(res);
                         }).catch((err) => {
                           console.log(err);
                         });
 
-                        httpClient.put('/set_appointment', { email: selectEmail, date: curDate, time: curTime, patient: localStorage.getItem('username'), meet: "qwerty12345" }).then((res) => {
+                        httpClient.put('/set_appointment', { email: selectEmail, date: curDate, time: curTime, patient: localStorage.getItem('username'), pemail: localStorage.getItem("email"), link: link }).then((res) => {
                           console.log(res);
                         }).catch((err) => {
                           console.log(err);
