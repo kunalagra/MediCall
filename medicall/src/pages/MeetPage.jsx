@@ -125,98 +125,103 @@ const MeetPage = () => {
   const handleEndMeeting = () => {
     toggleFeedback(true);
     httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} )
-    httpClient.put("delete_currently_in_meet", { email: searchparams.get("selectedMail")} )
-    httpClient.put('/meet_end', { email: searchparams.get("selectedMail")} ).then((res) => {
+    .then((res) => {
       navigate("/Home");
     }).catch((err) => {
       console.log(err);
     });
   };
 
-  // const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
-  const generateRoomName = () => meetId;
+  const handleDocEndMeeting = () => {
+    toggleFeedback(true);
+    httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} )
 
-  const renderButtons = () => (
-    <div style={{ margin: "15px 0" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-        className="renderButtons"
-      >
-        <button
-          type="text"
-          title="Click to execute toggle raise hand command"
-          style={{
-            border: 0,
-            borderRadius: "6px",
-            fontSize: "14px",
-            background: "#f8ae1a",
-            color: "#040404",
-            padding: "12px 46px",
-            margin: "2px 2px",
-          }}
-          onClick={() => apiRef.current.executeCommand("toggleRaiseHand")}
-        >
-          Raise hand
-        </button>
-        <button
-          type="text"
-          title="Click to approve/reject knocking participant"
-          style={{
-            border: 0,
-            borderRadius: "6px",
-            fontSize: "14px",
-            background: "#0056E0",
-            color: "white",
-            padding: "12px 46px",
-            margin: "2px 2px",
-          }}
-          onClick={() =>
-            resolveKnockingParticipants(({ name }) => !name.includes("test"))
-          }
-        >
-          Resolve lobby
-        </button>
-        <button
-          type="text"
-          title="Click to execute subject command"
-          style={{
-            border: 0,
-            borderRadius: "6px",
-            fontSize: "14px",
-            background: "#3D3D3D",
-            color: "white",
-            padding: "12px 46px",
-            margin: "2px 2px",
-          }}
-          onClick={() =>
-            apiRef.current.executeCommand("subject", "New Subject")
-          }
-        >
-          Change subject
-        </button>
-        <button
-          type="text"
-          title="Click to end the meeting"
-          style={{
-            border: 0,
-            borderRadius: "6px",
-            fontSize: "14px",
-            background: "#df486f",
-            color: "white",
-            padding: "12px 46px",
-            margin: "2px 2px",
-          }}
-          onClick={handleEndMeeting}
-          disabled={prescription.length > 0}
-        >
-          End Meeting
-        </button>
-      </div>
-    </div>
-  );
+  };
+
+  // const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
+  // const generateRoomName = () => meetId;
+
+  // const renderButtons = () => (
+  //   <div style={{ margin: "15px 0" }}>
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //       }}
+  //       className="renderButtons"
+  //     >
+  //       <button
+  //         type="text"
+  //         title="Click to execute toggle raise hand command"
+  //         style={{
+  //           border: 0,
+  //           borderRadius: "6px",
+  //           fontSize: "14px",
+  //           background: "#f8ae1a",
+  //           color: "#040404",
+  //           padding: "12px 46px",
+  //           margin: "2px 2px",
+  //         }}
+  //         onClick={() => apiRef.current.executeCommand("toggleRaiseHand")}
+  //       >
+  //         Raise hand
+  //       </button>
+  //       <button
+  //         type="text"
+  //         title="Click to approve/reject knocking participant"
+  //         style={{
+  //           border: 0,
+  //           borderRadius: "6px",
+  //           fontSize: "14px",
+  //           background: "#0056E0",
+  //           color: "white",
+  //           padding: "12px 46px",
+  //           margin: "2px 2px",
+  //         }}
+  //         onClick={() =>
+  //           resolveKnockingParticipants(({ name }) => !name.includes("test"))
+  //         }
+  //       >
+  //         Resolve lobby
+  //       </button>
+  //       <button
+  //         type="text"
+  //         title="Click to execute subject command"
+  //         style={{
+  //           border: 0,
+  //           borderRadius: "6px",
+  //           fontSize: "14px",
+  //           background: "#3D3D3D",
+  //           color: "white",
+  //           padding: "12px 46px",
+  //           margin: "2px 2px",
+  //         }}
+  //         onClick={() =>
+  //           apiRef.current.executeCommand("subject", "New Subject")
+  //         }
+  //       >
+  //         Change subject
+  //       </button>
+  //       <button
+  //         type="text"
+  //         title="Click to end the meeting"
+  //         style={{
+  //           border: 0,
+  //           borderRadius: "6px",
+  //           fontSize: "14px",
+  //           background: "#df486f",
+  //           color: "white",
+  //           padding: "12px 46px",
+  //           margin: "2px 2px",
+  //         }}
+  //         onClick={handleEndMeeting}
+  //         disabled={prescription.length > 0}
+  //       >
+  //         End Meeting
+  //       </button>
+  //     </div>
+  //   </div>
+  // );
 
   const renderSpinner = () => (
     <div
@@ -366,6 +371,7 @@ const MeetPage = () => {
 
     httpClient.post("mail_file", {bodyContent}).then((res) => {
       console.log(res);
+      navigate("/Home");
     }).catch((err) => {
       console.log(err);
     });
@@ -523,7 +529,7 @@ const MeetPage = () => {
   }
   return (
     <div id="meet-page">
-      <h2 className="meet-header">Video Meet {`(Meet ID: ${meetId})`} <span className="copy-icon" onClick={() => {
+      <h2 className="meet-header">Live Meet  <span className="copy-icon" onClick={() => {
         setCopyAlert(true);
         navigator.clipboard.writeText(`https://meet.jit.si/${meetId}`);
         setTimeout(() => setCopyAlert(false), 2000);
@@ -538,30 +544,33 @@ const MeetPage = () => {
       </h2>
       <div className="jitsi-component-div">
         <JitsiMeeting
-            // domain="http://localhost:8000/"
-            roomName={generateRoomName()}
+            roomName={meetId}
             spinner={renderSpinner}
             configOverwrite={{
-              subject: "XYZ",
-              hideConferenceSubject: false,
+              subject: "Video Call",
+              hideConferenceSubject: true,
               startWithAudioMuted: true,
               disableModeratorIndicator: true,
-              startScreenSharing: true,
-              enableEmailInStats: false
+              startScreenSharing: false,
+              enableEmailInStats: false,
+              enableClosePage: false
+
             }}
             onApiReady={(externalApi) => handleApiReady(externalApi)}
-            onReadyToClose={handleReadyToClose}
+            onReadyToClose={isDoctor ? handleDocEndMeeting : handleEndMeeting}
             getIFrameRef={handleJitsiIFrameRef1}
             interfaceConfigOverwrite = {{
-                DISABLE_JOIN_LEAVE_NOTIFICATIONS: true
+                DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+                SHOW_PROMOTIONAL_CLOSE_PAGE: false,
+                SHOW_JITSI_WATERMARK: false
             }}
             userInfo = {{
-                displayName: 'ABCD'
+                displayName: isDoctor ? searchparams.get("selectedDoc") : searchparams.get("name")
             }}
         />
       </div>
 
-      {renderButtons()}
+      {/* {renderButtons()} */}
 
       {isDoctor && (
 

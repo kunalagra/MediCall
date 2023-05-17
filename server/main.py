@@ -172,12 +172,12 @@ def meet_status():
         doctor.update_one({'email': user}, {'$set': {'meet': True}})
         return jsonify({'message': 'Doctor status updated successfully'}), 200
 
-@app.route('/meet_end', methods=['PUT'])
-def meet_end():
-    data = request.get_json()
-    user = data['email']
-    doctor.update_one({'email': user}, {'$set': {'meet': False}})
-    return jsonify({'message': 'Doctor status updated successfully'}), 200
+# @app.route('/meet_end', methods=['PUT'])
+# def meet_end():
+#     data = request.get_json()
+#     user = data['email']
+#     doctor.update_one({'email': user}, {'$set': {'meet': False}})
+#     return jsonify({'message': 'Doctor status updated successfully'}), 200
 
 @app.route('/get_status', methods=['GET'])
 def get_status():
@@ -266,7 +266,9 @@ def make_meet():
 def delete_meet():
     data = request.get_json()
     email = data['email']
-    doctor.update_one({'email': email}, {'$unset': {'link': None}})
+    doctor.update_one({'email': email}, {'$unset': {'link': None, 'currentlyInMeet': None}})
+    doctor.update_one({'email': email}, {'$set': {'meet': False}})
+
     return jsonify({'message': 'Meet link deleted successfully'}), 200
 
 @app.route('/currently_in_meet', methods=['POST', 'PUT'])
@@ -280,12 +282,11 @@ def currently_in_meet():
         doc = doctor.find_one({'email': email})
         return jsonify({'message': 'Currently in meet', 'curmeet': doc.get('currentlyInMeet', False)}), 200
     
-@app.route('/delete_currently_in_meet', methods=['PUT'])
-def delete_currently_in_meet():
-    data = request.get_json()
-    email = data['email']
-    doctor.update_one({'email': email}, {'$unset': {'currentlyInMeet': None}})
-    return jsonify({'message': 'Currently in meet'}), 200
+# @app.route('/delete_currently_in_meet', methods=['PUT'])
+# def delete_currently_in_meet():
+#     data = request.get_json()
+#     email = data['email']
+#     return jsonify({'message': 'Not Currently in meet'}), 200
     
 @app.route("/doctor_avilability", methods=['PUT'])
 def doctor_avilability():
