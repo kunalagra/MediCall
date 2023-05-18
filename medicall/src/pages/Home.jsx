@@ -20,7 +20,6 @@ const Home = () => {
     const [feedbackAlert, setFeedbackAlert] = useState(false);
     const [searchPatient, setSearchPatient] = useState(false);
     const isDoctor = localStorage.getItem("usertype")==="doctor";
-    // eslint-disable-next-line
     const [searching, setSearching] = useState(0); 
     const [patient_name, setPatient_name] = useState("");
     const [meetlink, setMeetlink] = useState("");
@@ -197,26 +196,26 @@ const Home = () => {
           })
     }
 
-    const iamavilable = () => {
+    const iamavailable = () => {
         setIsAlert("success");
-        setAlertmessage("You are now available to meet with patients")
+        setAlertmessage("Now, patients can meet you")
         setAvailablemodal(false);
         setTimeout(() => {
             httpClient.put("/doctor_avilability", { "email": localStorage.getItem("email") })
             setIsAlert("");
             setAlertmessage("");
-        }, 1000);
+        }, 3000);
     }
 
-    const iamnotavilable = () => {
+    const iamnotavailable = () => {
         setIsAlert("error");
-        setAlertmessage("You are now not available to meet with patients")
+        setAlertmessage("Now, patients can't meet you")
         setAvailablemodal(false);
         setTimeout(() => {
             httpClient.put("/doc_status", { "email": localStorage.getItem("email") })
             setIsAlert("");
             setAlertmessage("");
-        }, 1000);
+        }, 3000);
     }
 
     // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
@@ -247,20 +246,22 @@ const Home = () => {
                     </div>
                 )}
 
-                <div className="dis-pred-test-div">
-                    <div className="test-bg"></div>
-                    <div className="main">
-                        <div className="content-div">
-                            <h2>Feeling Dizzy?</h2>
-                            <p>Test your health now</p>
-                        </div>
-                        <div className="test-btn">
-                            <button onClick={() => navigate('/disease-prediction')}>
-                                Test now
-                            </button>
+                { !isDoctor && (
+                    <div className="dis-pred-test-div">
+                        <div className="test-bg"></div>
+                        <div className="main">
+                            <div className="content-div">
+                                <h2>Feeling Dizzy?</h2>
+                                <p>Test your health now</p>
+                            </div>
+                            <div className="test-btn">
+                                <button onClick={() => navigate('/disease-prediction')}>
+                                    Test now
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
 
 
                 <div className="upcoming-appointments">
@@ -497,20 +498,20 @@ const Home = () => {
             </div>
             </Modal>
             <Modal
-            open={availablemodal}
-            onClose={() => {
-                setAvailablemodal(false);
-            }}
+                open={availablemodal}
+                onClose={() => {
+                    setAvailablemodal(false);
+                }}
             >
-                <div id="avilable-modal">
+                <div id="available-modal">
                     <div className="close_btn_div">
                         <IoMdClose onClick={() => {
                         setAvailablemodal(false);
                         }} />
                     </div>
-                    <div className="avilable-details">
-                        <div className="note" onClick={()=>iamavilable()}>Yes, I am available!</div>
-                        <div className="note"onClick={()=>iamnotavilable()}>No, I am not available!</div>
+                    <div className="available-details">
+                        <div className="note" onClick={()=>iamavailable()}>Yes, I am available!</div>
+                        <div className="note"onClick={()=>iamnotavailable()}>No, I am not available!</div>
                     </div>
                 </div>
 

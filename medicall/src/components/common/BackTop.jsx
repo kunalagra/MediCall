@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronUp } from "react-icons/fa";
 import { AiFillWechat } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { MdClear } from "react-icons/md"; 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
@@ -13,7 +13,6 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 const BackTop = () => {
-  // const API_KEY = process.env.REACT_APP_API_KEY;
   const API_KEY = import.meta.env.VITE_API_KEY;
   const systemMessage = {
     role: "system",
@@ -21,7 +20,6 @@ const BackTop = () => {
   };
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () =>
@@ -31,6 +29,7 @@ const BackTop = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   // back-to-top functionality
   const handleBackTop = () => {
     window.scrollTo({
@@ -122,7 +121,6 @@ const handleSend = async (message) => {
         return data.json();
       })
       .then((data) => {
-        // console.log(data);
         setMessages([
           ...chatMessages,
           {
@@ -151,7 +149,7 @@ const handleSend = async (message) => {
         className="back_top popped chat_icon"
         title="Wanna Chat?"
       >
-        <AiFillWechat />
+        {open? <MdClear /> : <AiFillWechat />}
       </div>
       <div className={`chatbot ${open && "opened"}`}>
         <div className="chat">
@@ -168,7 +166,6 @@ const handleSend = async (message) => {
                 }
               >
                 {messages.map((message, i) => {
-                  // console.log(message);
                   return <Message key={i} model={message} />;
                 })}
               </MessageList>
