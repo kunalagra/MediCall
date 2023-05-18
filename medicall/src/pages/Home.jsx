@@ -64,7 +64,7 @@ const Home = () => {
     const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
-        const now = new Date();
+        const now = new Date(new Date().getTime() - 1*60000);
 
         // console.log(now);
         if(userNotExists) {
@@ -79,7 +79,7 @@ const Home = () => {
                     let upcoming = [];
                     let past = [];
                     res.data.appointments.sort().reverse().forEach((appointment) => {
-                        if (new Date(appointment.date) > now) {
+                        if (new Date(appointment.date+" " + appointment.time) >= now) {
                             upcoming.push(appointment);
                         }
                         else {
@@ -99,7 +99,7 @@ const Home = () => {
                         let upcoming = [];
                         let past = [];
                         res.data.appointments.sort().reverse().forEach((appointment) => {
-                            if(new Date(appointment.date) > now){
+                            if(new Date(appointment.date+" "+appointment.time) >= now){
                                 upcoming.push(appointment);
                             }
                             else{
@@ -177,8 +177,6 @@ const Home = () => {
                     }
                     else {
                       httpClient.put('/delete_meet', { "email": doctormail })
-                      httpClient.put("delete_currently_in_meet", { email: doctormail} )
-                      httpClient.put("meet_end", { email: doctormail})
                       setIsConnecting(false);
                       setMessage(res.data.message);
                     }
@@ -238,7 +236,7 @@ const Home = () => {
                             </div>
                             <div className="test-btn">
                                 <button onClick={() => {
-                                    httpClient.put("/meet_end", {"email": localStorage.getItem("email")})
+                                    // httpClient.put("/meet_end", {"email": localStorage.getItem("email")})
                                     searchmeet()}}>
                                     Search
                                 </button>
@@ -273,7 +271,7 @@ const Home = () => {
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
                                         <p> By {item.doctor ? item.doctor : item.patient}</p>
                                     </div>
-                                    <button className="join-btn" disabled={!((new Date(item.date)===new Date()) && (new Date(item.date + " " + item.time)<=new Date()))} onClick={() => handleappointmentmeet(item.doctor,item.demail,item.link)}>Join</button>
+                                    <button className="join-btn" disabled={new Date(item.date+" "+item.time) < new Date()} onClick={() => handleappointmentmeet(item.doctor,item.demail,item.link)}>Join</button>
                                 </li>
                             ))}
                             {upcomingAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div>{!isDoctor && <button className="join-btn" onClick={() => navigate('/doctors')}>Book</button>}</li>}
@@ -363,6 +361,7 @@ const Home = () => {
                     <div className="close_btn_div">
                         <IoMdClose onClick={() => {
                             localStorage.setItem("lastMeetWith", null);
+                            httpClient.put('/delete_meet', { "email": doctormail })
                             setHasLastMeet(false);
                         }} />
                     </div>
@@ -458,8 +457,6 @@ const Home = () => {
                 setJoinlink("");
 
                     httpClient.put('/delete_meet', { "email": doctormail })
-                      httpClient.put("delete_currently_in_meet", { email: doctormail} )
-                      httpClient.put("meet_end", { email: doctormail})
                     }} />
                 </div>
                 <div className="meet-details">

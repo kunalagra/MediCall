@@ -191,8 +191,9 @@ def get_status():
 
 @app.route('/mail_file', methods=['POST'])
 def mail_file():
-    data = request.form.to_dict()
-    user = data['email']
+    # get form data
+    print(request.form.get("email"))
+    user = request.form.get("email")
     # customer = details['meet']
     f = request.files['file']
     f.save(f.filename)
@@ -200,8 +201,8 @@ def mail_file():
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])
     msg.body = "PFA Prescription for today's appointment on MediCall"
-    with app.open_resource(f.filename) as fp:
-        msg.attach(f.filename, 'application/pdf', fp.read())
+    with open(f.filename, 'rb') as fp:
+        msg.attach(f.filename, "application/pdf", fp.read())
     mail.send(msg)
     os.remove(f.filename)
     return jsonify({"messgae": "successfully sent"}), 200
