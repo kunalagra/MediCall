@@ -12,11 +12,12 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import httpClient from '../../httpClient';
 import { RiFileList3Line } from "react-icons/ri";
+import Profile from './Profile';
 
 
 const Header = () => {
 
-    const { toggleForm, userLogout } = useContext(commonContext);
+    const { toggleForm, userLogout, toggleProfile } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
@@ -103,7 +104,7 @@ const Header = () => {
                                             <p>Have a great health!!</p>
                                             <button type="button" className='profile_btn' onClick={() => {
                                                 setShowDropdown(false);
-                                                console.log(localStorage);
+                                                toggleProfile(true);
                                             }}>
                                                 Profile
                                             </button>
@@ -143,6 +144,7 @@ const Header = () => {
             </header>
 
             <AccountForm />
+            <Profile />
         </>
     );
 };

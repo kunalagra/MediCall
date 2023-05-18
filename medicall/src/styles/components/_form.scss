@@ -55,6 +55,19 @@
     gap: 1.5rem;
     @include margin-y(2rem, 0rem);
 
+    .check_box {
+        @include flexbox(flex-start, center);
+
+        .check_field {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .radio_input_label {
+            cursor: pointer;
+        }
+    }
+
     .input_label {
         position: absolute;
         top: 50%;
@@ -79,10 +92,15 @@
         padding: 0.95rem 0.85rem;
         color: var(--white-color);
 
+        &:disabled ~ .input_label,
         &:focus-within ~ .input_label,
         &:valid ~ .input_label {
             transform: scale(0.85) translateY(-185%);
             color: var(--blue-color-1);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
         }
     }
 

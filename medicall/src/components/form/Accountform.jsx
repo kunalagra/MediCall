@@ -76,18 +76,7 @@ const AccountForm = () => {
 
         // Sample loader for fetching the data --> TODO: replace it with actual fetcher
         setTimeout(() => {
-            setIsSuccessLoading(false);
-            
-            // localStorage.clear();
-            // localStorage.setItem("username", username);
-            // localStorage.setItem("usertype", usertype);
-            // localStorage.setItem("gender", gender);
-            // localStorage.setItem("phone", phone);
-            // localStorage.setItem("email", email);
-            // localStorage.setItem("passwd", passwd);
-            // localStorage.setItem("specialization", specialization);
-            // console.log(username, usertype, gender, phone, email, passwd);
-            
+            setIsSuccessLoading(false);            
             
             if (isSignupVisible) {
                 httpClient.post("/register", {
@@ -320,6 +309,7 @@ const AccountForm = () => {
                                                     setPasswd(e.target.value);
                                                 }}
                                                 required
+                                                autoComplete=''
                                             />
                                             <label className="input_label">Password</label>
                                         </div>

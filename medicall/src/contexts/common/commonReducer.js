@@ -13,6 +13,12 @@ const commonReducer = (state, action) => {
                 isFeedbackOpen: action.payload.toggle
             };
 
+        case 'TOGGLE_PROFILE':
+            return {
+                ...state,
+                isProfileOpen: action.payload.toggle
+            };
+
 
         case 'SET_FORM_USER_INFO':
             localStorage.setItem("username", action.payload.info.username);

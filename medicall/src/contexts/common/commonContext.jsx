@@ -9,7 +9,8 @@ const commonContext = createContext();
 const initialState = {
     isFormOpen: false,
     searchResults: [],
-    isFeedbackOpen: false
+    isFeedbackOpen: false,
+    isProfileOpen: false
 };
 
 // Common-Provider Component
@@ -21,6 +22,13 @@ const CommonProvider = ({ children }) => {
     const toggleForm = (toggle) => {
         return dispatch({
             type: 'TOGGLE_FORM',
+            payload: { toggle }
+        });
+    };
+
+    const toggleProfile = (toggle) => {
+        return dispatch({
+            type: 'TOGGLE_PROFILE',
             payload: { toggle }
         });
     };
@@ -59,7 +67,8 @@ const CommonProvider = ({ children }) => {
         setFormUserInfo,
         userLogout,
         setSearchResults,
-        toggleFeedback
+        toggleFeedback,
+        toggleProfile
     };
 
     return (
