@@ -15,14 +15,14 @@ const CartItem = (props) => {
         <>
             <div className="cart_item">
                 <figure className="cart_item_img">
-                    <Link to={`/all-products/medicine-details/${id}`}>
+                    <Link to={`/all-medicines/medicine-details/${id}`}>
                         <img src={images[0]} alt="product-img" />
                     </Link>
                 </figure>
                 <div className="cart_item_info">
                     <div className="cart_item_head">
                         <h4 className="cart_item_title">
-                            <Link to={`/all-products/medicine-details/${id}`}><span>{title}</span> <br /> BLABLABLA</Link>
+                            <Link to={`/all-medicines/medicine-details/${id}`}><span>{title}</span> <br />Pharmaceuticals</Link>
                         </h4>
                         <div className="cart_item_del">
                             <span onClick={() => removeItem(id)}>

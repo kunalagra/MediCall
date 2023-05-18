@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-// import { BsCartX } from 'react-icons/bs';
 import useDocTitle from "../hooks/useDocTitle";
 import cartContext from "../contexts/cart/cartContext";
 import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
-// import { loadStripe } from "@stripe/stripe-js";
-// import httpClient from "../httpClient";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -23,10 +20,7 @@ const Cart = () => {
   }, []);
 
   const { cartItems, clearCart } = useContext(cartContext);
-  // eslint-disable-next-line
-  // const stripePromise = loadStripe(
-  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  // );
+  
   const cartQuantity = cartItems.length;
 
   // total original price

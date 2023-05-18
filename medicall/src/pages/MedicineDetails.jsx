@@ -105,7 +105,7 @@ const MedicineDetails = () => {
                         {/*=== Product Details Right-content ===*/}
                         <div className="prod_details_right_col">
                             <h1 className="prod_details_title">{title}</h1>
-                            <h4 className="prod_details_info">BLABLABLA</h4>
+                            <h4 className="prod_details_info">Pharmaceuticals</h4>
 
                             <div className="separator"></div>
 

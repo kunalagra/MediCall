@@ -1,0 +1,119 @@
+#orders {
+    @include padding-y(8rem, 8rem);
+    color: var(--blue-color-8);
+}
+
+.orders_wrapper {
+    width: min(95%, 600px);
+    margin: 0 auto;
+
+    .view_all {
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        text-align: right;
+        margin-top: 1rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.orders_head {
+    margin-bottom: 1rem;
+}
+
+.ordered_items {
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.ordered_item {
+    display: grid;
+    grid-template-columns: 0.25fr 0.75fr;
+    gap: 3rem;
+    padding: 2rem;
+    border-radius: 12px;
+    border-bottom: 2px solid rgba($color: #666666, $alpha: 0.6);
+
+    @include devices(sm) {
+        grid-template-columns: 0.3fr 0.7fr;
+        gap: 2rem;
+        @include padding-y(2rem, 2rem);
+    }
+}
+
+.ordered_item_img {
+    img {
+        border-radius: 12px;
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+.ordered_item_head {
+    @include flexbox(space-between);
+    gap: 1.4rem;
+}
+
+.ordered_item_title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+
+    @include devices(sm) {
+        font-size: 0.8rem;
+    }
+
+    span {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+}
+
+.ordered_item_price {
+    font-size: 1.3rem;
+    color: var(--blue-color-7);
+    @include margin-y(1rem, 1rem);
+
+    @include devices(sm) {
+        font-size: 0.95rem;
+        @include margin-y(1rem, 1rem);
+    }
+}
+
+.ordered_item_detail {
+    font-size: 1rem;
+    color: var(--blue-color-7);
+    line-height: 1.5;
+
+    &:first-child {
+        margin-bottom: 0.5rem;
+    }
+
+    @include devices(sm) {
+        font-size: 0.95rem;
+    }
+
+}
+
+.back_to_home_btn {
+
+    text-align: center;
+    margin-top: 3rem;
+
+    button {
+        background-color: var(--blue-color-9);
+        color: var(--white-color);
+        padding: 1rem 1.5rem;
+        margin: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        
+        &:hover, &:active {
+            background-color: var(--blue-color-7);
+        }
+    }
+}

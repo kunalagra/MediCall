@@ -39,15 +39,15 @@ const MedicineSummary = (props) => {
                                     <ul>
                                         <li>
                                             <span>Brand</span>
-                                            <span>ABC</span>
+                                            <span>Cipla</span>
                                         </li>
                                         <li>
                                             <span>Model</span>
                                             <span>{title}</span>
                                         </li>
-                                        <li>
+                                        <li>    
                                             <span>Generic Name</span>
-                                            <span>BLABLABLA</span>
+                                            <span>Pharmaceuticals</span>
                                         </li>
                                     </ul>
                                 </div>

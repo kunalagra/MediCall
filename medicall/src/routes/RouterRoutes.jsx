@@ -15,6 +15,7 @@ import DiseasePrediction from "../pages/DiseasePrediction";
 import ErrorPage from "../pages/ErrorPage";
 import Checkout from "../pages/Checkout";
 import Chatbot from "../components/common/Chatbot";
+import MyOrders from "../pages/MyOrders";
 
 
 const RouterRoutes = () => {
@@ -39,6 +40,7 @@ const RouterRoutes = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
         <Route path="/chatbot" element={<Chatbot />} />
+        <Route path="/my-orders" element={<MyOrders />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Routes>

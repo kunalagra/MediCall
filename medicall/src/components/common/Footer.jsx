@@ -14,7 +14,7 @@ const Footer = () => {
                             <Link to="/">Medicall</Link>
                         </h2>
                         <div className='foot_logo_div'>
-                            <img src='logo512.png' alt='footer-logo' width="150px" height="150px" />
+                            <img src='/logo512.png' alt='footer-logo' width="150px" height="150px" />
                         </div>
                     </div>
 

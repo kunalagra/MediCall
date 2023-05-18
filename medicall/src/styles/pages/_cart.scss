@@ -50,7 +50,7 @@
     border-radius: 12px;
 
     &:not(:last-child) {
-        border-bottom: 1px solid rgba($color: #666666, $alpha: 0.6);
+        border-bottom: 2px solid rgba($color: #666666, $alpha: 0.6);
     }
 
     @include devices(sm) {
