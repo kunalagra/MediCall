@@ -35,7 +35,7 @@ const MeetPage = () => {
   const { toggleFeedback } = useContext(commonContext);
 
   const isDoctor = localStorage.getItem("usertype")==="doctor";
-  const email = localStorage.getItem("email");
+  const email = searchparams.get("pemail");
   const phone = localStorage.getItem("phone");
   const [prescription, setPrescription] = useState([]);
   const [newPrescription, setNewPrescription] = useState({name: "", dosage: "", duration: "", durationUnit: "day(s)", dosageTime: "Before Food"});
@@ -362,16 +362,21 @@ const MeetPage = () => {
     pdf.setTextColor(150);
     pdf.text("2023 @MediCall | All Rights Reserved", pdf.internal.pageSize.width - 40 - pdf.getStringUnitWidth("2023 @MediCall | All Rights Reserved") * pdf.internal.getFontSize(), pdf.internal.pageSize.height - 30);
 
-
-    pdf.save("Medicall-Invoice.pdf");
-
+    
+    var file = pdf.output('blob');
+    console.log(file);
     let bodyContent = new FormData();
     bodyContent.append("email", email);
-    bodyContent.append("file", "Medicall-Invoice.pdf");
+    bodyContent.append("file", file);
 
-    httpClient.post("mail_file", {bodyContent}).then((res) => {
+    httpClient.post("mail_file", bodyContent , {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((res) => {
       console.log(res);
-      navigate("/Home");
+      httpClient.put('/delete_meet', { "email": searchparams.get("selectedMail") })
+      navigate("/");
     }).catch((err) => {
       console.log(err);
     });
