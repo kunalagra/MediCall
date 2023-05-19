@@ -12,6 +12,7 @@ const Profile = () => {
     const [gender, setGender] = useState(localStorage.getItem("gender")? localStorage.getItem("gender") : "");
     const [phone, setPhone] = useState(localStorage.getItem("phone")? localStorage.getItem("phone") : "");
     const [specialization, setSpecialization] = useState(localStorage.getItem("specialization")? localStorage.getItem("specialization") : "");
+    const [fee, setFee] = useState(localStorage.getItem("fee")? localStorage.getItem("fee") : 199);
     const email = localStorage.getItem("email")? localStorage.getItem("email") : "";
     const [isChPasswd, setChPasswd] = useState(false);
     const [passwd, setPasswd] = useState("");
@@ -51,16 +52,17 @@ const Profile = () => {
         setIsSuccessLoading(true);
 
         httpClient.put('/update_details', {
-            "email": email,
-            "username": username,
-            "usertype": isDoctor? "doctor" : "patient",
-            "age": age,
-            "specialization": specialization,
-            "gender": gender,
-            "phone": phone,
-            "passwd": passwd
+            email: email,
+            username: username,
+            usertype: isDoctor? "doctor" : "patient",
+            age: age,
+            specialization: specialization,
+            gender: gender,
+            phone: phone,
+            passwd: passwd,
+            fee: fee
         })
-        .then((res) => {
+        .then(() => {
             setIsSuccessLoading(false);
             setIsAlert("success");
             setAlertCont("Successfully updated");
@@ -70,7 +72,7 @@ const Profile = () => {
                 setAlertCont("");
             }, 2000);
         })
-        .catch((err) => {
+        .catch(() => {
             setIsSuccessLoading(false);
             setIsAlert("error");
             setAlertCont("Something went wrong. Please try again later");
@@ -188,6 +190,21 @@ const Profile = () => {
                                             />
                                             <label className="input_label">Phone</label>
                                         </div>
+
+                                        { isDoctor && 
+                                        <div className="input_box">
+                                            <input
+                                                type="number"
+                                                name="fee"
+                                                className="input_field"
+                                                value={fee}
+                                                onChange={(e) => setFee(e.target.value)}
+                                                min="1"
+                                                required
+                                            />
+                                            <label className="input_label">Fee</label>
+                                        </div>
+                                        }
                                     </>
 
                                     <div>

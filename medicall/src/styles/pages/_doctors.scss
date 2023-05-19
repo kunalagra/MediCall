@@ -1,6 +1,6 @@
 .MuiDataGrid-root {
 
-    width: min(1200px, 90vw);
+    width: min(1300px, 95vw);
     border: none;
 
     .MuiDataGrid-cell {
@@ -128,7 +128,7 @@
     .doctor-details {
         min-height: 600px;
         padding: 10px;
-        width: min(1200px, 100vw);
+        width: min(1300px, 100vw);
         margin: 0 auto;
         color: var(--blue-color-8);
 
@@ -194,7 +194,7 @@
             max-height: 500px;
             box-shadow: 0 0 10px 1px var(--blue-color-2);
             border-radius: 8px;
-            margin: 20px 0;
+            margin: 20px auto;
         }
 
     }

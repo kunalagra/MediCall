@@ -175,6 +175,13 @@ const Doctors = () => {
       }
     },
     { field: "specialization", headerName: "Specialization", headerAlign: "center", align: "center", width: 150, },
+    { field: "fee", headerName: "Fee", headerAlign: "center", align: "center", width: 100,
+      renderCell: (params) => {
+        return (
+          <div>₹ {localStorage.getItem("fee")? localStorage.getItem("fee") : "199"}</div>
+        )
+      }
+     },
     {
       field: "contact", headerName: "Contact", headerAlign: "center", align: "center", width: 150,
       renderCell: (params) => {
