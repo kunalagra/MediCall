@@ -308,7 +308,7 @@ def add_order():
         orders = var.get('orders', [])
         for i in data["orders"]:
             i['key'] = str(uuid.uuid4())
-            i['Ordered on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            i['Ordered_on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             orders.append(i)
         patients.update_one({'email': email}, {'$set': {'orders': orders}})
         return jsonify({'message': 'Order added successfully'}), 200
@@ -317,7 +317,7 @@ def add_order():
         orders = var.get('orders', [])
         for i in data["orders"]:
             i['key'] = str(uuid.uuid4())
-            i['Ordered on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            i['Ordered_on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             orders.append(i)
         doctor.update_one({'email': email}, {'$set': {'orders': orders}})
         return jsonify({'message': 'Order added successfully'}), 200
@@ -333,6 +333,27 @@ def get_orders():
         var = doctor.find_one({'email': email})
         return jsonify({'message': 'Orders', 'orders': var['orders']}), 200
 
+@app.route('/update_details', methods=['POST'])
+def update_details():
+    data = request.get_json()
+    usertype = data['usertype']
+    email = data['email']
+    if usertype == 'doctor':
+        if data['passwd'] == '':
+            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'gender': data['gender']}})
+        else:
+            hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
+            data['passwd'] = hashed_password
+            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'passwd': data['passwd'], 'gender': data['gender']}})
+        return jsonify({'message': 'Doctor details updated successfully'}), 200
+    else:
+        if data['passwd'] == '':
+            patients.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'age': data['age'], 'gender': data['gender']}})
+        else:
+            hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
+            data['passwd'] = hashed_password
+            patients.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'],  'passwd': data['passwd'], 'age': data['age'], 'gender': data['gender']}})
+        return jsonify({'message': 'Patient details updated successfully'}), 200
 
 
 if __name__ == "__main__":

@@ -50,8 +50,17 @@ const Profile = () => {
 
         setIsSuccessLoading(true);
 
-        // TODO: update profile info
-        setTimeout(() => {
+        httpClient.put('/update_details', {
+            "email": email,
+            "username": username,
+            "usertype": isDoctor? "doctor" : "patient",
+            "age": age,
+            "specialization": specialization,
+            "gender": gender,
+            "phone": phone,
+            "passwd": passwd
+        })
+        .then((res) => {
             setIsSuccessLoading(false);
             setIsAlert("success");
             setAlertCont("Successfully updated");
@@ -60,8 +69,17 @@ const Profile = () => {
                 setIsAlert("");
                 setAlertCont("");
             }, 2000);
-        }, 2000)
-
+        })
+        .catch((err) => {
+            setIsSuccessLoading(false);
+            setIsAlert("error");
+            setAlertCont("Something went wrong. Please try again later");
+            
+            setTimeout(() => {
+                setIsAlert("");
+                setAlertCont("");
+            }, 2000);
+        });
     }
 
 

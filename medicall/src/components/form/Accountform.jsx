@@ -95,6 +95,7 @@ const AccountForm = () => {
                     setAlertCont("Signup Successful");
                     setTimeout(() => {
                         setIsAlert("");
+                        setFormUserInfo({ username: username, usertype: usertype, gender: gender, phone: phone, email: email, passwd: passwd, specialization: specialization, age: age });
                         setIsSignupVisible(false);
                     }, 1500);
                 })

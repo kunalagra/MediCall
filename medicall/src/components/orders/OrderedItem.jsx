@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 
 const OrderedItem = (props) => {
 
-    const { id, images, title, price, quantity } = props;
-
-    const d = new Date();
-
+    const { id, images, title, price, quantity,Ordered_on } = props;
     return (
         <>
             <div className="ordered_item">
@@ -28,7 +25,7 @@ const OrderedItem = (props) => {
                     </h2>
 
                     <h3 className='ordered_item_detail'>Quantity: {quantity}</h3>
-                    <h3 className='ordered_item_detail'>Ordered on: {`${d.getDate()}-${d.getMonth()}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`}</h3>
+                    <h3 className='ordered_item_detail'>Ordered on: {Ordered_on}</h3>
                 </div>
             </div>
         </>

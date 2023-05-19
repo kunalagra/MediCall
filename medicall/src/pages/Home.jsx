@@ -63,7 +63,7 @@ const Home = () => {
     const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
-        const now = new Date(new Date().getTime() - 1*60000);
+        const now = new Date(new Date().getTime() - 10*60000);
 
         // console.log(now);
         if(userNotExists) {
@@ -272,7 +272,7 @@ const Home = () => {
                                         <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
                                         <p> By {item.doctor ? item.doctor : item.patient}</p>
                                     </div>
-                                    <button className="join-btn" disabled={new Date(item.date+" "+item.time) < new Date()} onClick={() => handleappointmentmeet(item.doctor,item.demail,item.link)}>Join</button>
+                                    <button className="join-btn" disabled={new Date(item.date+" "+item.time) > new Date()} onClick={() => handleappointmentmeet(item.doctor,item.demail,item.link)}>Join</button>
                                 </li>
                             ))}
                             {upcomingAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div>{!isDoctor && <button className="join-btn" onClick={() => navigate('/doctors')}>Book</button>}</li>}
