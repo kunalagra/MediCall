@@ -1,3 +1,5 @@
+import datetime
+import uuid
 from flask import Flask, request, Response, redirect
 from flask_jwt_extended import JWTManager
 import secrets
@@ -295,6 +297,42 @@ def doctor_avilability():
     user = data['email']
     doctor.update_one({'email': user}, {'$set': {'status': 'online'}})
     return jsonify({'message': 'Doctor status updated successfully'}), 200
+
+@app.route("/add_order", methods=['POST'])
+def add_order():
+    data = request.get_json()
+    email = data['email']
+    print(data)
+    var = patients.find_one({'email': email})
+    if var:
+        orders = var.get('orders', [])
+        for i in data["orders"]:
+            i['key'] = str(uuid.uuid4())
+            i['Ordered on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            orders.append(i)
+        patients.update_one({'email': email}, {'$set': {'orders': orders}})
+        return jsonify({'message': 'Order added successfully'}), 200
+    else:
+        var = doctor.find_one({"email":email})
+        orders = var.get('orders', [])
+        for i in data["orders"]:
+            i['key'] = str(uuid.uuid4())
+            i['Ordered on'] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            orders.append(i)
+        doctor.update_one({'email': email}, {'$set': {'orders': orders}})
+        return jsonify({'message': 'Order added successfully'}), 200
+    
+@app.route("/get_orders", methods=['POST'])
+def get_orders():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email':email})
+    if var:
+        return jsonify({'message': 'Orders', 'orders': var['orders']}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        return jsonify({'message': 'Orders', 'orders': var['orders']}), 200
+
 
 
 if __name__ == "__main__":

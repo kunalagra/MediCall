@@ -19,7 +19,7 @@ const Cart = () => {
       //eslint-disable-next-line
   }, []);
 
-  const { cartItems, clearCart } = useContext(cartContext);
+  const { cartItems, clearCart, placeOrder } = useContext(cartContext);
   
   const cartQuantity = cartItems.length;
 
@@ -86,6 +86,9 @@ const Cart = () => {
                       setIsCheckoutLoading(true);
                       setTimeout(() => {
                         localStorage.setItem("totalPrice", cartTotal);
+                        cartItems.forEach((item) => {
+                          placeOrder(item);
+                        });
                         navigate("/checkout");
                         setIsCheckoutLoading(false);
                         setIsAlert(2);

@@ -6,7 +6,8 @@ const cartContext = createContext();
 
 // Initial State
 const initialState = {
-    cartItems: []
+    cartItems: [],
+    orders: [],
 };
 
 // Cart-Provider Component
@@ -49,6 +50,19 @@ const CartProvider = ({ children }) => {
         })
     }
 
+    const placeOrder = (order) => {
+        return dispatch({
+            type: 'PLACE_ORDER',
+            payload: { order }
+        });
+    };
+
+    const clearOrders = () => {
+        return dispatch({
+            type: 'CLEAR_ORDERS'
+        });
+    };
+
     // Context values
     const values = {
         ...state,
@@ -56,7 +70,9 @@ const CartProvider = ({ children }) => {
         removeItem,
         incrementItem,
         decrementItem,
-        clearCart
+        clearCart,
+        placeOrder,
+        clearOrders,
     };
 
     return (

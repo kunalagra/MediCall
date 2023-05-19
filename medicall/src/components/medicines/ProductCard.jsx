@@ -9,7 +9,7 @@ const ProductCard = (props) => {
 
     const { id, images, title, price } = props;
 
-    const { addItem } = useContext(cartContext);
+    const { addItem, placeOrder } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
     const navigate = useNavigate();
 
@@ -48,6 +48,8 @@ const ProductCard = (props) => {
                         className="btn products_btn"
                         onClick={() => {
                             localStorage.setItem("totalPrice", price);
+                            const order = { ...props, quantity: 1 };
+                            placeOrder(order);
                             navigate("/checkout");
                         }}
                     >

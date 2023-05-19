@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import httpClient from "../httpClient";
 
 const Success = () => {
 
@@ -13,6 +14,7 @@ const Success = () => {
     setTimeout(() => {
       setActive(true);
       setTimeout(() => {
+        httpClient.post('/add_order', {orders: JSON.parse(localStorage.getItem("orders")), email: localStorage.getItem("email")})
         navigate("/my-orders");
       }, 3000);
     }, 1000);

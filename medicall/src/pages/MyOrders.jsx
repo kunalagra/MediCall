@@ -4,52 +4,65 @@ import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import OrderedItem from "../components/orders/OrderedItem";
+import httpClient from "../httpClient";
 
 const MyOrders = () => {
 
     const navigate = useNavigate();
-    const orderedItems = [
-        {
-            id: 3,
-            images: ["/medicines/prod1.jpg"],
-            title: "Benadryl",
-            price: 79,
-            path: "/",
-            quantity: 0,
-          },
-          {
-            id: 5,
-            images: ["/medicines/prod21.jpg"],
-            title: "Farlin Bottle Safety Bag",
-            price: 288,
-            path: "/",
-            quantity: 0,
-          },
-          {
-            id: 6,
-            images: ["/medicines/prod6.jpeg"],
-            title: "Moxikind",
-            price: 150,
-            path: "/",
-            quantity: 0,
-          },
-          {
-            id: 7,
-            images: ["/medicines/prod7.jpg"],
-            title: "Kivokast",
-            price: 88,
-            path: "/",
-            quantity: 0,
-          },
-          {
-            id: 8,
-            images: ["/medicines/prod8.jpg"],
-            title: "Alecensa",
-            price: 100,
-            path: "/",
-            quantity: 0,
-          }
-    ];
+    const [orderedItems, setOrderedItems] = useState([]);
+
+    useEffect(() => {
+        httpClient.post('/get_orders', {email: localStorage.getItem("email")})
+        .then((res) => {
+            setOrderedItems(res.data.orders);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+    // const orderedItems = [
+    //     {
+    //         id: 3,
+    //         images: ["/medicines/prod1.jpg"],
+    //         title: "Benadryl",
+    //         price: 79,
+    //         path: "/",
+    //         quantity: 0,
+    //       },
+    //       {
+    //         id: 5,
+    //         images: ["/medicines/prod21.jpg"],
+    //         title: "Farlin Bottle Safety Bag",
+    //         price: 288,
+    //         path: "/",
+    //         quantity: 0,
+    //       },
+    //       {
+    //         id: 6,
+    //         images: ["/medicines/prod6.jpeg"],
+    //         title: "Moxikind",
+    //         price: 150,
+    //         path: "/",
+    //         quantity: 0,
+    //       },
+    //       {
+    //         id: 7,
+    //         images: ["/medicines/prod7.jpg"],
+    //         title: "Kivokast",
+    //         price: 88,
+    //         path: "/",
+    //         quantity: 0,
+    //       },
+    //       {
+    //         id: 8,
+    //         images: ["/medicines/prod8.jpg"],
+    //         title: "Alecensa",
+    //         price: 100,
+    //         path: "/",
+    //         quantity: 0,
+    //       }
+    // ];
 
     const orderedQuantity = orderedItems.length;
     const [viewAll, setViewAll] = useState(false);

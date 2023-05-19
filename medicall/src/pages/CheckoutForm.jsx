@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import cartContext from "../contexts/cart/cartContext";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const { orders } = useContext(cartContext);
 
 //   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [message, setMessage] = useState(null);
@@ -47,6 +49,7 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    localStorage.setItem("orders", JSON.stringify(orders));
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -60,6 +63,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
+
         return_url: "http://localhost:3000/success",
       },
     });

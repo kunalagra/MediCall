@@ -26,6 +26,17 @@ const cartReducer = (state, action) => {
                 cartItems: updatedCartItems
             };
 
+        case 'PLACE_ORDER':
+            return {
+                ...state,
+                orders: [...state.orders, action.payload.order]
+            };
+
+        case 'CLEAR_ORDERS':
+            return {
+                ...state,
+                orders: []
+            };
 
         case 'REMOVE_FROM_CART':
             return {
@@ -65,7 +76,6 @@ const cartReducer = (state, action) => {
 
         case 'CLEAR_CART':
             return { ...state, cartItems: [] }
-
 
         default:
             return state;
