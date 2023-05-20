@@ -34,7 +34,8 @@ const Home = () => {
     const [isAlert, setIsAlert] = useState("");
     const [availablemodal, setAvailablemodal] = useState(false);
     const [alertmessage, setAlertmessage] = useState("");
-    const [available, setAvailable] = useState(localStorage.getItem("available") ? localStorage.getItem("available") : true);
+    const [available, setAvailable] = useState(localStorage.getItem("available")===undefined || localStorage.getItem("available")===null || localStorage.getItem("available")==="true");
+    const [verify, setVerify] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
 
 
     const handleFeedbackClose = () => {
@@ -218,6 +219,26 @@ const Home = () => {
         }, 3000);
     }
 
+    const check = () => {
+        httpClient.post("/verify", { "email": localStorage.getItem("email") })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.verified) {
+                    localStorage.setItem("verified", true);
+                    setVerify(true);
+                }
+                else {
+                    localStorage.setItem("verified", false);
+                    setVerify(false);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+
+
     // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
     
     // const pastAppointments = [{date: "2023-04-17", time: "11:20", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-16", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
@@ -229,7 +250,7 @@ const Home = () => {
         <>
             <div id="home-page">
 
-                {isDoctor && (
+                {isDoctor&& verify && (
                     <div className="is-meet-div">
                         <div className="meet-bg"></div>
                         <div className="main">
@@ -247,6 +268,25 @@ const Home = () => {
                         </div>
                     </div>
                 )}
+
+                {
+                    isDoctor && !verify && (
+                        <div className="is-meet-div">
+                            <div className="meet-bg"></div>
+                            <div className="main">
+                                <div className="content-div">
+                                    <h2>Your account is not verified</h2>
+                                    <p>Check your verification status</p>
+                                </div>
+                                <div className="test-btn">
+                                    <button onClick={() => check()}>
+                                        Check
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
 
                 { !isDoctor && (
                     <div className="dis-pred-test-div">
@@ -337,7 +377,7 @@ const Home = () => {
                 </div>
 
                 {
-                    isDoctor && (
+                    isDoctor && verify && (
                         <div className="make-available" onClick={() => setAvailablemodal(true)}>
                             { isAlert!=="" && <Alert severity={isAlert} className='avilability_alert'>{alertmessage}</Alert> }
                             Set your availability

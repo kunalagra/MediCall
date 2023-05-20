@@ -22,6 +22,7 @@ const AccountForm = () => {
     const [isAlert, setIsAlert] = useState("");
     const [alertCont, setAlertCont] = useState("");
     const [isSuccessLoading, setIsSuccessLoading] = useState(false);
+    const [doctorId, setDoctorId] = useState("");
 
     const formRef = useRef();
 
@@ -95,8 +96,8 @@ const AccountForm = () => {
                     setAlertCont("Signup Successful");
                     setTimeout(() => {
                         setIsAlert("");
-                        setFormUserInfo({ username: username, usertype: usertype, gender: gender, phone: phone, email: email, passwd: passwd, specialization: specialization, age: age });
-                        setIsSignupVisible(false);
+                        setFormUserInfo({ username: username, usertype: usertype, gender: gender, phone: phone, email: email, passwd: passwd, specialization: specialization, age: age, verified: false });
+                        toggleForm(false);
                     }, 1500);
                 })
                 .catch(err => {
@@ -121,7 +122,7 @@ const AccountForm = () => {
                     setTimeout(() => {
                         setIsAlert("");
                         toggleForm(false);
-                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization, age:res.data.age });
+                        setFormUserInfo({ username:res.data.username, usertype:res.data.usertype, gender:res.data.gender, phone:res.data.phone, email, passwd, specialization:res.data.specialization, age:res.data.age, verified:res.data.verified });
                     }, 1500);
                 }
                 )
@@ -212,6 +213,20 @@ const AccountForm = () => {
                                                         required
                                                     />
                                                     <label className="input_label">Specialization {"(Eg. Cancer Surgeon)"}</label>
+                                                </div>
+                                            )}
+
+                                            { usertype==="doctor" && (
+                                                <div className="input_box">
+                                                    <input
+                                                        type="text"
+                                                        name="ID"
+                                                        className="input_field"
+                                                        value={doctorId}
+                                                        onChange={(e) => setDoctorId(e.target.value)}
+                                                        required
+                                                    />
+                                                    <label className="input_label">Doctor ID</label>
                                                 </div>
                                             )}
 

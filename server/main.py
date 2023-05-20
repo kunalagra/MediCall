@@ -150,11 +150,20 @@ def login():
             if bcrypt.check_password_hash(var['passwd'], data['passwd']):
                 access_token = create_access_token(identity=data['email'])
                 # token = access_token.decode('utf-8')
-                return jsonify({'message': 'User logged in successfully', 'access_token': access_token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "specialization": var["specialization"], "meet": var["meet"]}), 200
+                return jsonify({'message': 'User logged in successfully', 'access_token': access_token, "username": var["username"], "usertype": "doctor", "gender": var["gender"], "phone": var["phone"], "specialization": var["specialization"], "meet": var["meet"], "verified": var.get("verified", False)}), 200
             else:
                 return jsonify({'message': 'Invalid password'}), 400
         else:
             return jsonify({'message': 'Invalid username or password'}), 401
+        
+@app.route('/verify', methods=['POST'])
+def verify():
+    data = request.get_json()
+    email = data['email']
+    var = doctor.find_one({'email': email})
+    print(var.get("verified", False))
+    return jsonify({'message': 'verification details', "verified": var.get("verified", False)}), 200
+
         
 @app.route('/doc_status', methods=['PUT'])
 def doc_status():
@@ -186,8 +195,9 @@ def get_status():
     details = []
     count = 0
     for i in doctor.find():
-        count += 1
-        details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
+        if i.get('verified', False):
+            count += 1
+            details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
     # print(details)
     return jsonify({"details": details}), 200
 
@@ -198,7 +208,7 @@ def mail_file():
     user = request.form.get("email")
     # customer = details['meet']
     f = request.files['file']
-    f.save(f.filename)
+    f.save("Medicall-Invoice")
     msg = Message("Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])
@@ -206,7 +216,7 @@ def mail_file():
     with open(f.filename, 'rb') as fp:
         msg.attach(f.filename, "application/pdf", fp.read())
     mail.send(msg)
-    os.remove(f.filename)
+    os.remove("Medicall-Invoice")
     return jsonify({"messgae": "successfully sent"}), 200
 
 @app.route('/doctor_app', methods=['POST'])
