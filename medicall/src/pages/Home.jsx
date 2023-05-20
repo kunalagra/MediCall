@@ -323,7 +323,7 @@ const Home = () => {
                         <div className="make-available" onClick={() => setAvailablemodal(true)}>
                             { isAlert!=="" && <Alert severity={isAlert} className='avilability_alert'>{alertmessage}</Alert> }
                             Set your availability
-                            <span className="doctor_status">{available ? <TbPointFilled style={{ color: "#25D366" }} /> : <TbPointFilled style={{ color: "red" }}/>}</span>
+                            <span className={`doctor_status ${available? "available" : ""}`}></span>
                         </div>
                     )      
                 }

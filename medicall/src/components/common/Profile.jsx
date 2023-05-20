@@ -7,12 +7,12 @@ import httpClient from '../../httpClient';
 
 const Profile = () => {
     const { isProfileOpen, toggleProfile, setFormUserInfo } = useContext(commonContext);
-    const [username, setUsername] = useState(localStorage.getItem("username")? localStorage.getItem("username") : "");
-    const [age, setAge] = useState(localStorage.getItem("age")? localStorage.getItem("age") : "");
-    const [gender, setGender] = useState(localStorage.getItem("gender")? localStorage.getItem("gender") : "");
-    const [phone, setPhone] = useState(localStorage.getItem("phone")? localStorage.getItem("phone") : "");
-    const [specialization, setSpecialization] = useState(localStorage.getItem("specialization")? localStorage.getItem("specialization") : "");
-    const [fee, setFee] = useState(localStorage.getItem("fee")? localStorage.getItem("fee") : 199);
+    const [username, setUsername] = useState(localStorage.getItem("username")!=="undefined" && localStorage.getItem("username")!==null? localStorage.getItem("username") : "");
+    const [age, setAge] = useState(localStorage.getItem("age")!=="undefined" && localStorage.getItem("age")!==null? localStorage.getItem("age") : "");
+    const [gender, setGender] = useState(localStorage.getItem("gender")!=="undefined" && localStorage.getItem("gender")!==null? localStorage.getItem("gender") : "");
+    const [phone, setPhone] = useState(localStorage.getItem("phone")!=="undefined" && localStorage.getItem("phone")!==null? localStorage.getItem("phone") : "");
+    const [specialization, setSpecialization] = useState(localStorage.getItem("specialization")!=="undefined" && localStorage.getItem("specialization")!==null? localStorage.getItem("specialization") : "");
+    const [fee, setFee] = useState(localStorage.getItem("fee")!=="undefined" && localStorage.getItem("fee")!==null? localStorage.getItem("fee") : 199);
     const email = localStorage.getItem("email")? localStorage.getItem("email") : "";
     const [isChPasswd, setChPasswd] = useState(false);
     const [passwd, setPasswd] = useState("");
@@ -27,6 +27,13 @@ const Profile = () => {
 
     useOutsideClose(profileRef, () => {
         toggleProfile(false);
+        setUsername(localStorage.getItem("username")!=="undefined" && localStorage.getItem("username")!==null? localStorage.getItem("username") : "");
+        setAge(localStorage.getItem("age")!=="undefined" && localStorage.getItem("age")!==null? localStorage.getItem("age") : "");
+        setGender(localStorage.getItem("gender")!=="undefined" && localStorage.getItem("gender")!==null? localStorage.getItem("gender") : "");
+        setPhone(localStorage.getItem("phone")!=="undefined" && localStorage.getItem("phone")!==null? localStorage.getItem("phone") : "");
+        setSpecialization(localStorage.getItem("specialization")!=="undefined" && localStorage.getItem("specialization")!==null? localStorage.getItem("specialization") : "");
+        setFee(localStorage.getItem("fee")!=="undefined" && localStorage.getItem("fee")!==null? localStorage.getItem("fee") : 199);
+        setPasswd("");
     });
 
     useScrollDisable(isProfileOpen);
@@ -200,7 +207,7 @@ const Profile = () => {
                                                 className="input_field"
                                                 value={fee}
                                                 onChange={(e) => setFee(e.target.value)}
-                                                min="1"
+                                                min={1}
                                                 required
                                             />
                                             <label className="input_label">Fee</label>

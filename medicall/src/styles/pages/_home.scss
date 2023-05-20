@@ -270,21 +270,34 @@
         color:white;
         cursor: pointer;
         @include transition($duration: 0.3s);
+        @include flexbox(center, center);
+        flex-direction: column;
+
         &:hover {
             background-color: var(--blue-color-8),
         }
+
         .avilability_alert {
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            color: #000;
-        }
-        .doctor_status {
-            display: grid;
             position: absolute;
-            top: 0px;
-            left: 0px;
+            top: -60px;
+            color: #000;
+            width: 250px;
+            left: 0;
         }
+        
+        .doctor_status {
+            width: 100%;
+            margin: 5px auto;
+            height: 3px;
+            background-color: red;
+            margin-bottom: 0;
+            border-radius: 8px;
+            
+            &.available {
+                background-color: var(--whatsapp-color);
+            }
+        }
+
     }
 }
 
