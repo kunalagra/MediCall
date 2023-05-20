@@ -252,9 +252,8 @@ const MeetPage = () => {
       selectedDoc: searchparams.get("selectedDoc")? searchparams.get("selectedDoc") : "Doctor_Name"
     }, prescription);
     setSendingMsg("Sending...");
-    
     var file = pdf.output('blob');
-    console.log(file);
+    // console.log(file);
     let bodyContent = new FormData();
     bodyContent.append("email", email);
     bodyContent.append("file", file);
