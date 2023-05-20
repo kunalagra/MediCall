@@ -20,6 +20,8 @@ from dotenv import load_dotenv
 import os
 import json
 import stripe
+from threading import Thread
+
 load_dotenv()
 secret_key = secrets.token_hex(16)
 
@@ -201,23 +203,29 @@ def get_status():
     # print(details)
     return jsonify({"details": details}), 200
 
+def send_email_async(msg):
+    with app.app_context():
+        mail.send(msg)
+
+
 @app.route('/mail_file', methods=['POST'])
 def mail_file():
     # get form data
-    print(request.form.get("email"))
     user = request.form.get("email")
-    # customer = details['meet']
     f = request.files['file']
-    f.save("Medicall-Invoice")
+    file_name = "Receipt.pdf"
+    file_content = f.read()
+    
     msg = Message("Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])
     msg.body = "PFA Prescription for today's appointment on MediCall"
-    with open(f.filename, 'rb') as fp:
-        msg.attach(f.filename, "application/pdf", fp.read())
-    mail.send(msg)
-    os.remove("Medicall-Invoice")
-    return jsonify({"messgae": "successfully sent"}), 200
+    
+    msg.attach(file_name, "application/pdf", file_content)
+    thread = Thread(target=send_email_async, args=(msg,))
+    thread.start()
+
+    return jsonify({"message": "successfully sent"}), 200
 
 @app.route('/doctor_app', methods=['POST'])
 def doctor_app():
