@@ -1,6 +1,28 @@
 #home-page {
     padding-top: 6rem;
 
+    .check-verify-status {
+        margin: 2rem auto;
+        width: min(1100px, 93vw);
+        color: var(--blue-color-8);
+        @include flexbox(center, center); 
+
+        button {
+            background-color: var(--blue-color-8);
+            color: var(--white-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px 1px var(--blue-color-2);
+            margin-left: 1rem;
+            
+            &:hover, &:active {
+                background-color: var(--blue-color-9);
+            }
+        }
+    }
+
     .is-meet-div {
         border: 2px solid var(--blue-color-2);
         width: min(1100px, 93vw);

@@ -36,6 +36,7 @@ const Home = () => {
     const [alertmessage, setAlertmessage] = useState("");
     const [available, setAvailable] = useState(localStorage.getItem("available")===undefined || localStorage.getItem("available")===null || localStorage.getItem("available")==="true");
     const [isVerified, setVerified] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
+    const [verCont, setVerCont] = useState("Your Account is not verified yet! Please wait until you're verified!!");
 
 
     const handleFeedbackClose = () => {
@@ -224,12 +225,19 @@ const Home = () => {
             .then((res) => {
                 console.log(res.data);
                 if (res.data.verified) {
-                    localStorage.setItem("verified", true);
-                    setVerify(true);
+                    setVerCont("Yayy! Your Account is verified!!")
+                    setTimeout(() => {
+                        setVerified(true);
+                        localStorage.setItem("verified", true);
+                    }, 2000);
                 }
                 else {
-                    localStorage.setItem("verified", false);
+                    setVerCont("Oops! Your Account isn't verfied yet!!");
+                    setTimeout(() => {
+                        setVerCont("Your Account is not verified yet! Please wait until you're verified!!");
+                    }, 2000);
                     setVerify(false);
+                    localStorage.setItem("verified", false);
                 }
             })
             .catch((err) => {
@@ -249,9 +257,16 @@ const Home = () => {
     return (
         <>
             <div id="home-page">
-                {isDoctor && !isVerified && <Alert severity={"error"} style={{
+                {isDoctor && !isVerified && <Alert severity={localStorage.getItem("verified")==="true"? "success" : "error"} style={{
                     position: "fixed", top: "50px", width: "100%", display: "flex", justifyContent: "center"
-                    }}>Your Account is not verified yet! Please wait until you're verified!!</Alert>}
+                    }}>{verCont}</Alert>}
+
+                {isDoctor && !isVerified && (
+                    <div className="check-verify-status">
+                        <h3>Wanna check your verification status? </h3>
+                        <button onClick={check}>Check</button>
+                    </div>
+                )}
 
                 {isDoctor && (
                     <div className="is-meet-div">
