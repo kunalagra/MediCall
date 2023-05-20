@@ -6,7 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { Alert } from "@mui/material";
 import { BsEmojiAngry, BsEmojiFrown, BsEmojiExpressionless, BsEmojiSmile, BsEmojiLaughing } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb, HiUserGroup } from "react-icons/hi";
 import { FaVideo } from "react-icons/fa";
 import httpClient from "../httpClient";
@@ -226,6 +226,8 @@ const Home = () => {
     
     // const pastAppointments = [{date: "2023-04-17", time: "11:20", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-16", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
 
+    const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
+
 
     return (
         <>
@@ -304,6 +306,26 @@ const Home = () => {
                     </div>
                 </div> */}
 
+
+                <div className="news-section">
+                    <h2>News from Our Doctors</h2>
+                    <div className="content">
+                        {news.length > 0 && <div className="messages">
+                            <div className="head">Recent Messages {`(`}<Link to="/news" className="news-link">Check older messages</Link>{`)`}</div>
+                            {news.map((item, ind) => (
+                                <div key={ind} className="message-item">
+                                    <div className="msg-name">Dr. {item.doctor}</div>
+                                    <div className="msg-text">{item.message}</div>
+                                </div>
+                            ))}
+                        </div>}
+                        {news.length===0 && <div className="no-messages">No messages found recently...</div>}
+                        {isDoctor && <div className="post-message">
+                            <input type="text" placeholder="Any Message..." />
+                            <button>Send</button>
+                        </div>}
+                    </div>
+                </div>
 
                 <div className="todays-tip">
                     <div className="head">

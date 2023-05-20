@@ -204,6 +204,131 @@
     }
 
 
+    .news-section {
+        width: min(1100px, 93vw);
+        margin: 0 auto;
+        margin-bottom: 4rem;
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--blue-color-8);
+        }
+
+        .content {
+            border: 2px solid var(--blue-color-5);
+            background-color: var(--blue-color-2);
+            padding: 10px;
+            border-radius: 12px;
+
+            .messages {
+                width: min(100%, 600px);
+                margin: 0 auto;
+
+                .head {
+                    text-align: center;
+                    color: var(--blue-color-8);
+                    margin-bottom: 20px;
+
+                    .news-link {
+                        transition: all 0.3s ease-in-out;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+                
+                .message-item {
+                    @include flexbox(space-between, center);
+                    @include devices(sm) {
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                    }
+
+                    color: var(--white-color);
+                    margin: 10px 0;
+
+                    .msg-name {
+                        background-color: var(--blue-color-5);
+                        padding: 0.6rem 1rem;
+                        border-radius: 20px 15px 15px 0;
+                    }
+                    
+                    .msg-text {
+                        padding: 0.6rem 1rem;
+                        border-radius: 15px 20px 0 15px;
+                        background-color: var(--blue-color-5);
+                        align-self: flex-end;
+                        max-width: 70%;
+                        line-height: 1.4rem;
+                        word-break: break-all;
+
+                        @include devices(sm) {
+                            margin-top: 10px;
+                            max-width: 90%;
+                        }
+                    }
+                }
+            }
+
+            .post-message {
+                padding: 10px 0;
+                @include flexbox(center, center);
+                
+                @include devices(sm) {
+                    flex-direction: column;
+                }
+
+                input {
+                    background-color: var(--blue-color-1);
+                    outline: 1px solid var(--blue-color-1);
+                    border: 1px solid var(--blue-color-1);
+                    color: var(--blue-color-8);
+                    padding: .5rem;
+                    width: 400px;
+                    transition: all .3s ease-in-out;
+
+                    @include devices(sm) {
+                        width: 80vw;
+                        margin: 0 10px;
+                    }
+                    
+                    &:focus {
+                        outline-color: var(--blue-color-2);
+                        border-color: var(--blue-color-2);
+                        box-shadow: 0 0 6px 2px var(--blue-color-1);
+                    }
+                }
+
+                button {
+                    margin-left: 1rem;
+                    padding: 0.7rem 1rem;
+                    border-radius: 4px;
+                    color: var(--white-color);
+                    transition: all 0.3s ease;
+                    background-color: var(--blue-color-4);
+
+                    @include devices(sm) {
+                        margin-top: 1rem;
+                        width: 80vw;
+                        margin-left: 0;
+                    }
+
+                    &:hover, &:active {
+                        background-color: var(--blue-color-6);
+                    }
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        background-color: var(--blue-color-6);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     .todays-tip {
         width: min(1100px, 93vw);
