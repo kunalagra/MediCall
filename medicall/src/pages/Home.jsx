@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb, HiUserGroup } from "react-icons/hi";
 import { FaVideo } from "react-icons/fa";
 import httpClient from "../httpClient";
+import { TbPointFilled } from 'react-icons/tb';
 
 const Home = () => {
     useDocTitle("Home");
@@ -33,6 +34,7 @@ const Home = () => {
     const [isAlert, setIsAlert] = useState("");
     const [availablemodal, setAvailablemodal] = useState(false);
     const [alertmessage, setAlertmessage] = useState("");
+    const [available, setAvailable] = useState(localStorage.getItem("available") ? localStorage.getItem("available") : true);
 
 
     const handleFeedbackClose = () => {
@@ -202,6 +204,8 @@ const Home = () => {
             httpClient.put("/doctor_avilability", { "email": localStorage.getItem("email") })
             setIsAlert("");
             setAlertmessage("");
+            setAvailable(true);
+            localStorage.setItem("available", true);
         }, 3000);
     }
 
@@ -213,6 +217,8 @@ const Home = () => {
             httpClient.put("/doc_status", { "email": localStorage.getItem("email") })
             setIsAlert("");
             setAlertmessage("");
+            setAvailable(false);
+            localStorage.setItem("available", false);
         }, 3000);
     }
 
@@ -317,6 +323,7 @@ const Home = () => {
                         <div className="make-available" onClick={() => setAvailablemodal(true)}>
                             { isAlert!=="" && <Alert severity={isAlert} className='avilability_alert'>{alertmessage}</Alert> }
                             Set your availability
+                            <span className="doctor_status">{available ? <TbPointFilled style={{ color: "#25D366" }} /> : <TbPointFilled style={{ color: "red" }}/>}</span>
                         </div>
                     )      
                 }

@@ -69,9 +69,9 @@ const Profile = () => {
             setTimeout(() => {
                 setIsAlert("");
                 setAlertCont("");
-                setFormUserInfo({ username: username, usertype: isDoctor? "doctor" : "patient", gender: gender, phone: phone, email: email, passwd: passwd, specialization: specialization, age: age , fee: fee});
+                setFormUserInfo({ username: username, usertype: isDoctor? "doctor" : "patient", gender: gender, phone: phone, email: email, passwd: passwd? passwd:localStorage.getItem('passwd'), specialization: specialization, age: age , fee: fee});
                 toggleProfile(false);
-            }, 2000);
+            }, 1000);
         })
         .catch(() => {
             setIsSuccessLoading(false);
@@ -81,7 +81,7 @@ const Profile = () => {
             setTimeout(() => {
                 setIsAlert("");
                 setAlertCont("");
-            }, 2000);
+            }, 1000);
         });
     }
 
