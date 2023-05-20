@@ -60,7 +60,7 @@ const Home = () => {
     const ratings = ["Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied"];
 
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
-    const [pastAppointments, setPastAppointments] = useState([]);
+    // const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
         const now = new Date(new Date().getTime() - 10*60000);
@@ -76,17 +76,17 @@ const Home = () => {
                 .then((res) => {
                     // console.log(res.data);
                     let upcoming = [];
-                    let past = [];
+                    // let past = [];
                     res.data.appointments.sort().reverse().forEach((appointment) => {
                         if (new Date(appointment.date+" " + appointment.time) >= now) {
                             upcoming.push(appointment);
                         }
-                        else {
-                            past.push(appointment);
-                        }
+                        // else {
+                            // past.push(appointment);
+                        // }
                     });
                     setUpcomingAppointments(upcoming);
-                    setPastAppointments(past);
+                    // setPastAppointments(past);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -96,17 +96,17 @@ const Home = () => {
                 httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
                     .then((res) => {
                         let upcoming = [];
-                        let past = [];
+                        // let past = [];
                         res.data.appointments.sort().reverse().forEach((appointment) => {
                             if(new Date(appointment.date+" "+appointment.time) >= now){
                                 upcoming.push(appointment);
                             }
-                            else{
-                                past.push(appointment);
-                            }
+                            // else{
+                                // past.push(appointment);
+                            // }
                         });
                         setUpcomingAppointments(upcoming)
-                        setPastAppointments(past)
+                        // setPastAppointments(past)
                     })
                     .catch((err) => {
                         console.log(err);
@@ -280,7 +280,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="past-appointments">
+                {/* <div className="past-appointments">
                     <h2>Past Appointments</h2>
                     <div className="main">
                         <ul>
@@ -296,7 +296,7 @@ const Home = () => {
                             {pastAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div></li>}
                         </ul>
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="todays-tip">

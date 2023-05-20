@@ -183,7 +183,7 @@ const Doctors = () => {
       }
      },
     {
-      field: "contact", headerName: "Contact", headerAlign: "center", align: "center", width: 150,
+      field: "contact", headerName: "Contact", headerAlign: "center", align: "center", width: 100,
       renderCell: (params) => {
         return (
           <div className="social-column--cell">
