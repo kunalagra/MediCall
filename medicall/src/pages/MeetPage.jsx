@@ -1,4 +1,4 @@
-import { JitsiMeeting } from "@jitsi/react-sdk";
+import { JaaSMeeting } from "@jitsi/react-sdk";
 import React, { useRef, useState, useContext, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +42,8 @@ const MeetPage = () => {
 
   const [sendingMsg, setSendingMsg] = useState("Send");
   const [isMeetEnded, setMeetEnded] = useState(false);
+
+  const JaasAppId = import.meta.env.VITE_JAAS_APP_ID;
 
   useDocTitle("Meet");
 
@@ -308,7 +310,8 @@ const MeetPage = () => {
         </span>
       </h2>
       <div className="jitsi-component-div">
-        <JitsiMeeting
+        <JaaSMeeting
+            appId={JaasAppId}
             roomName={meetId}
             spinner={renderSpinner}
             configOverwrite={{
