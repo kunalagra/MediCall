@@ -6,7 +6,7 @@ import { Alert, CircularProgress } from "@mui/material";
 import httpClient from '../../httpClient';
 
 const Profile = () => {
-    const { isProfileOpen, toggleProfile } = useContext(commonContext);
+    const { isProfileOpen, toggleProfile, setFormUserInfo } = useContext(commonContext);
     const [username, setUsername] = useState(localStorage.getItem("username")? localStorage.getItem("username") : "");
     const [age, setAge] = useState(localStorage.getItem("age")? localStorage.getItem("age") : "");
     const [gender, setGender] = useState(localStorage.getItem("gender")? localStorage.getItem("gender") : "");
@@ -66,11 +66,12 @@ const Profile = () => {
             setIsSuccessLoading(false);
             setIsAlert("success");
             setAlertCont("Successfully updated");
-            
             setTimeout(() => {
                 setIsAlert("");
                 setAlertCont("");
-            }, 2000);
+                setFormUserInfo({ username: username, usertype: isDoctor? "doctor" : "patient", gender: gender, phone: phone, email: email, passwd: passwd? passwd:localStorage.getItem('passwd'), specialization: specialization, age: age , fee: fee});
+                toggleProfile(false);
+            }, 1000);
         })
         .catch(() => {
             setIsSuccessLoading(false);
@@ -80,7 +81,7 @@ const Profile = () => {
             setTimeout(() => {
                 setIsAlert("");
                 setAlertCont("");
-            }, 2000);
+            }, 1000);
         });
     }
 

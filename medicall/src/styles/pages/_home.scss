@@ -264,7 +264,7 @@
         position:fixed;
         bottom: 40px;
         left:20px;
-        padding:10px;
+        padding:12px;
         border-radius: 10px;
         background-color: var(--blue-color-9);
         color:white;
@@ -278,6 +278,12 @@
             top: 50px;
             right: 20px;
             color: #000;
+        }
+        .doctor_status {
+            display: grid;
+            position: absolute;
+            top: 0px;
+            left: 0px;
         }
     }
 }

@@ -178,7 +178,7 @@ const Doctors = () => {
     { field: "fee", headerName: "Fee", headerAlign: "center", align: "center", width: 100,
       renderCell: (params) => {
         return (
-          <div>₹ {localStorage.getItem("fee")? localStorage.getItem("fee") : "199"}</div>
+          <div>₹ {params.row.fee}</div>
         )
       }
      },
