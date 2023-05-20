@@ -187,7 +187,7 @@ def get_status():
     count = 0
     for i in doctor.find():
         count += 1
-        details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count})
+        details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
     # print(details)
     return jsonify({"details": details}), 200
 
@@ -333,18 +333,18 @@ def get_orders():
         var = doctor.find_one({'email': email})
         return jsonify({'message': 'Orders', 'orders': var['orders']}), 200
 
-@app.route('/update_details', methods=['POST'])
+@app.route('/update_details', methods=['PUT'])
 def update_details():
     data = request.get_json()
     usertype = data['usertype']
     email = data['email']
     if usertype == 'doctor':
         if data['passwd'] == '':
-            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'gender': data['gender']}})
+            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'gender': data['gender'], 'fee': data['fee']}})
         else:
             hashed_password = bcrypt.generate_password_hash(data['passwd']).decode('utf-8')
             data['passwd'] = hashed_password
-            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'passwd': data['passwd'], 'gender': data['gender']}})
+            doctor.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'], 'specialization': data['specialization'], 'passwd': data['passwd'], 'gender': data['gender'], 'fee': data['fee']}})
         return jsonify({'message': 'Doctor details updated successfully'}), 200
     else:
         if data['passwd'] == '':

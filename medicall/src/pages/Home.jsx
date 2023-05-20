@@ -79,7 +79,7 @@ const Home = () => {
                     let past = [];
                     res.data.appointments.sort().reverse().forEach((appointment) => {
                         if (new Date(appointment.date+" " + appointment.time) >= now) {
-                            upcoming.push(appointment);
+                            upcoming.unshift(appointment);
                         }
                         else {
                             past.push(appointment);
@@ -99,7 +99,7 @@ const Home = () => {
                         let past = [];
                         res.data.appointments.sort().reverse().forEach((appointment) => {
                             if(new Date(appointment.date+" "+appointment.time) >= now){
-                                upcoming.push(appointment);
+                                upcoming.unshift(appointment);
                             }
                             else{
                                 past.push(appointment);
