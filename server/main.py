@@ -1,6 +1,6 @@
 import datetime
 import uuid
-from flask import Flask, request, Response, redirect
+from flask import Flask, request, Response, redirect, render_template
 from flask_jwt_extended import JWTManager
 import secrets
 import stripe
@@ -216,11 +216,11 @@ def mail_file():
     file_name = "Receipt.pdf"
     file_content = f.read()
     
-    msg = Message("Prescription for your Consultancy",
+    msg = Message("Receipt cum Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])
-    msg.body = "PFA Prescription for today's appointment on MediCall"
-    
+    pat = patients.find_one({'email': user})
+    msg.html = render_template('email.html', Name=pat['username'])
     msg.attach(file_name, "application/pdf", file_content)
     thread = Thread(target=send_email_async, args=(msg,))
     thread.start()
