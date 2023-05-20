@@ -45,10 +45,6 @@ const Home = () => {
         httpClient.post('/doctor_app', {
             email: localStorage.getItem("lastMeetMail"),
             stars: feedbackRate
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
         });
         localStorage.setItem("lastMeetWith", null);
         setHasLastMeet(false);

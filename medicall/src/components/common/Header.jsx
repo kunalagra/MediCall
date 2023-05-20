@@ -35,13 +35,13 @@ const Header = () => {
     }, [isSticky]);
 
     const updatestatus = () => {
-        httpClient.put('/doc_status', { "email": localStorage.getItem("email")})
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        httpClient.put('/doc_status', { "email": localStorage.getItem("email")});
+            // .then((res) => {
+            //     // console.log(res);
+            // })
+            // .catch((err) => {
+            //     console.log(err);
+            // })
         userLogout();
     }
 

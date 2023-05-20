@@ -41,6 +41,7 @@ const MeetPage = () => {
   const [isInvDuration, setInvDuration] = useState(false);
 
   const [sendingMsg, setSendingMsg] = useState("Send");
+  const [isMeetEnded, setMeetEnded] = useState(false);
 
   useDocTitle("Meet");
 
@@ -130,11 +131,11 @@ const MeetPage = () => {
       console.log(err);
     });
   };
-
+  
   const handleDocEndMeeting = () => {
     toggleFeedback(true);
-    httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} )
-
+    setMeetEnded(true);
+    httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} );
   };
 
   // const generateRoomName = () => `JitsiMeetRoomNo${Math.random() * 100}-${Date.now()}`;
@@ -244,7 +245,6 @@ const MeetPage = () => {
   }
 
   const handleFormSubmit = () => {
-    // const pdf = PDFGenerator({...searchparams}, [...prescription]);
     const pdf = PDFGenerator({
       name: searchparams.get("name")? searchparams.get("name") : "Mr. ABC DEF",
       age: searchparams.get("age")? searchparams.get("age") : "NA",
@@ -254,7 +254,6 @@ const MeetPage = () => {
     setSendingMsg("Sending...");
     
     var file = pdf.output('blob');
-    console.log(file);
     let bodyContent = new FormData();
     bodyContent.append("email", email);
     bodyContent.append("file", file);
@@ -276,8 +275,6 @@ const MeetPage = () => {
     
     setPrescription([]);
     setNewPrescription({name: "", dosage: "", duration: "", durationUnit: "day(s)", dosageTime: "Before Food"});
-    // console.log(email, phone);
-    // console.log(prescription);
   };
 
   const handleDownload = () => {
@@ -296,6 +293,8 @@ const MeetPage = () => {
   }
   return (
     <div id="meet-page">
+      {!isMeetEnded && 
+      <>
       <h2 className="meet-header">Live Meet  <span className="copy-icon" onClick={() => {
         setCopyAlert(true);
         navigator.clipboard.writeText(`https://meet.jit.si/${meetId}`);
@@ -336,6 +335,8 @@ const MeetPage = () => {
             }}
         />
       </div>
+      </>
+      }
 
       {/* {renderButtons()} */}
 
@@ -419,7 +420,8 @@ const MeetPage = () => {
                 <button className="send-btn" onClick={handleFormSubmit}>{sendingMsg}</button>
                 <button className="download-btn" onClick={handleDownload}>Download</button>
             </div>
-            <div style={{marginTop: "10px"}}>Note: Please ensure that you covered the prescription correctly before clicking the 'send' button.</div>
+            <div style={{marginTop: "20px"}}>Note: Please ensure that you covered the prescription correctly before clicking the 'send' button.
+            As the page will redirect to the home page.</div>
         </div>
 
       )}
