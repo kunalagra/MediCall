@@ -298,7 +298,7 @@ const MeetPage = () => {
       <>
       <h2 className="meet-header">Live Meet  <span className="copy-icon" onClick={() => {
         setCopyAlert(true);
-        navigator.clipboard.writeText(`https://meet.jit.si/${meetId}`);
+        navigator.clipboard.writeText(`https://8x8.vc/${JaasAppId}/${meetId}`);
         setTimeout(() => setCopyAlert(false), 2000);
       }}>
         <MdContentCopy />
@@ -321,8 +321,18 @@ const MeetPage = () => {
               disableModeratorIndicator: true,
               startScreenSharing: false,
               enableEmailInStats: false,
-              enableClosePage: false
-
+              enableClosePage: false,
+              toolbarButtons:[
+                'camera',
+              'fullscreen',
+              'chat',
+              'microphone',
+              'hangup',
+              'highlight',
+              'participants-pane',
+              'settings',
+              'toggle-camera'
+              ]  
             }}
             onApiReady={(externalApi) => handleApiReady(externalApi)}
             onReadyToClose={isDoctor ? handleDocEndMeeting : handleEndMeeting}
