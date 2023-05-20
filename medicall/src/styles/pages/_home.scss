@@ -65,6 +65,10 @@
                 &:hover, &:active {
                     background-color: var(--blue-color-9);
                 }
+
+                &:disabled {
+                    cursor: not-allowed;
+                }
             }
         }
     }

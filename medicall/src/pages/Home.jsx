@@ -35,7 +35,7 @@ const Home = () => {
     const [availablemodal, setAvailablemodal] = useState(false);
     const [alertmessage, setAlertmessage] = useState("");
     const [available, setAvailable] = useState(localStorage.getItem("available")===undefined || localStorage.getItem("available")===null || localStorage.getItem("available")==="true");
-    const [verify, setVerify] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
+    const [isVerified, setVerified] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
 
 
     const handleFeedbackClose = () => {
@@ -249,8 +249,11 @@ const Home = () => {
     return (
         <>
             <div id="home-page">
+                {isDoctor && !isVerified && <Alert severity={"error"} style={{
+                    position: "fixed", top: "50px", width: "100%", display: "flex", justifyContent: "center"
+                    }}>Your Account is not verified yet! Please wait until you're verified!!</Alert>}
 
-                {isDoctor&& verify && (
+                {isDoctor && (
                     <div className="is-meet-div">
                         <div className="meet-bg"></div>
                         <div className="main">
@@ -261,32 +264,15 @@ const Home = () => {
                             <div className="test-btn">
                                 <button onClick={() => {
                                     // httpClient.put("/meet_end", {"email": localStorage.getItem("email")})
-                                    searchmeet()}}>
+                                    searchmeet()}}
+                                    disabled={!isVerified}
+                                    >
                                     Search
                                 </button>
                             </div>
                         </div>
                     </div>
                 )}
-
-                {
-                    isDoctor && !verify && (
-                        <div className="is-meet-div">
-                            <div className="meet-bg"></div>
-                            <div className="main">
-                                <div className="content-div">
-                                    <h2>Your account is not verified</h2>
-                                    <p>Check your verification status</p>
-                                </div>
-                                <div className="test-btn">
-                                    <button onClick={() => check()}>
-                                        Check
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }
 
                 { !isDoctor && (
                     <div className="dis-pred-test-div">
@@ -377,7 +363,7 @@ const Home = () => {
                 </div>
 
                 {
-                    isDoctor && verify && (
+                    isDoctor && isVerified && (
                         <div className="make-available" onClick={() => setAvailablemodal(true)}>
                             { isAlert!=="" && <Alert severity={isAlert} className='avilability_alert'>{alertmessage}</Alert> }
                             Set your availability
