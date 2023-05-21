@@ -54,7 +54,8 @@ const Header = () => {
 
     return (
         <>
-            {(localStorage.getItem("username") && localStorage.getItem("username")!=="undefined") && <div id='contact-header' className={`${isScrolled? "scrolled" : ""}`}>
+            {(localStorage.getItem("username") && localStorage.getItem("username")!=="undefined") && localStorage.getItem("usertype")==="patient" && 
+             <div id='contact-header' className={`${isScrolled? "scrolled" : ""}`}>
                 <div className='details'>
                     <Link to="/" className='contact-detail'>
                         <FiMail className='icon'/>
@@ -66,7 +67,7 @@ const Header = () => {
                     </Link>
                 </div>
                 <div>
-                    <Link to="/" className='appt-link'>Appointment</Link>
+                    <Link to="/doctors" className='appt-link'>Appointment</Link>
                 </div>
             </div>}
             <header id="header" className={isSticky ? 'sticky' : ''}>
