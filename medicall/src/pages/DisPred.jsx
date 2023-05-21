@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+import { useNavigate } from "react-router-dom";
 import {
   MainContainer,
   ChatContainer,
@@ -10,6 +14,16 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 function DisPred() {
+
+  const { isLoading, toggleLoading } = useContext(commonContext);
+
+  useEffect(() => {
+      toggleLoading(true);
+      setTimeout(() => toggleLoading(false), 2000);
+  }, []);
+
+  useScrollDisable(isLoading);    
+
   const API_KEY = import.meta.env.VITE_API_KEY;
   const systemMessage = {
     role: "system",
@@ -158,6 +172,10 @@ const handleSend = async (message) => {
         ]);
         setIsTyping(false);
       });
+  }
+
+  if(isLoading) {
+    return <Preloader />;
   }
 
   return (
