@@ -17,7 +17,7 @@ import { MdClose } from "react-icons/md";
 const Header = () => {
 
     const { toggleForm, userLogout, toggleProfile } = useContext(commonContext);
-    const { cartItems } = useContext(cartContext);
+    const { cartItems, setCartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -47,6 +47,15 @@ const Header = () => {
         userLogout();
     }
 
+    useEffect(() => {
+        httpClient.post('/get_cart', { "email": localStorage.getItem("email")})
+        .then((res) => {
+            setCartItems(res.data.cart);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const dropdownRef = useRef();
 
