@@ -5,12 +5,14 @@ import CartItem from "../components/cart/CartItem";
 import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import httpClient from "../httpClient";
 
 const Cart = () => {
   useDocTitle("Cart");
 
   const navigate = useNavigate(); 
   const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
       if(userNotExists) {
@@ -19,7 +21,20 @@ const Cart = () => {
       //eslint-disable-next-line
   }, []);
 
-  const { cartItems, clearCart, placeOrder } = useContext(cartContext);
+  const { cartItems, clearCart, placeOrder, setCartItems } = useContext(cartContext);
+
+  useEffect(() => {
+    if (cart !== cartItems) {
+    httpClient.post('add_to_cart', {email: localStorage.getItem("email"), cart: cartItems})
+    .then((res) => {
+        setCartItems(res.data.cart);
+        setCart(res.data.cart);
+    })
+    .catch((err) => { 
+        console.log(err);
+    });
+    }
+  }, []);
   
   const cartQuantity = cartItems.length;
 
@@ -32,6 +47,10 @@ const Cart = () => {
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
+
+  const deleteAll = () => {
+    httpClient.post('delete_all_cart', {email: localStorage.getItem("email")})
+  }
   
   return (
     <>
@@ -54,7 +73,7 @@ const Cart = () => {
 
               <div className="cart_right_col">
                 <div className="clear_cart_btn">
-                  <button onClick={clearCart}>Clear Cart</button>
+                  <button onClick={() => {clearCart(),deleteAll()} }>Clear Cart</button>
                 </div>
                 <div className="order_summary">
                   <h3>

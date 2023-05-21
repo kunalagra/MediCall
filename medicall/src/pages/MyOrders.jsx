@@ -14,7 +14,7 @@ const MyOrders = () => {
     useEffect(() => {
         httpClient.post('/get_orders', {email: localStorage.getItem("email")})
         .then((res) => {
-            setOrderedItems(res.data.orders);
+            setOrderedItems(res.data.orders.reverse());
         })
         .catch((err) => {
             console.log(err);

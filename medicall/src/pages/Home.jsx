@@ -37,6 +37,7 @@ const Home = () => {
     const [available, setAvailable] = useState(localStorage.getItem("available")===undefined || localStorage.getItem("available")===null || localStorage.getItem("available")==="true");
     const [isVerified, setVerified] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
     const [verCont, setVerCont] = useState("Your Account is not verified yet! Please wait until you're verified!!");
+    const [verAlert, setVerAlert] = useState(false);
 
 
     const handleFeedbackClose = () => {
@@ -226,17 +227,19 @@ const Home = () => {
                 console.log(res.data);
                 if (res.data.verified) {
                     setVerCont("Yayy! Your Account is verified!!")
+                    setVerAlert(true);
                     setTimeout(() => {
                         setVerified(true);
-                        localStorage.setItem("verified", true);
                     }, 2000);
+                    localStorage.setItem("verified", true);
                 }
                 else {
                     setVerCont("Oops! Your Account isn't verfied yet!!");
+                    setVerAlert(false);
                     setTimeout(() => {
                         setVerCont("Your Account is not verified yet! Please wait until you're verified!!");
+                        setVerified(false);
                     }, 2000);
-                    setVerify(false);
                     localStorage.setItem("verified", false);
                 }
             })
@@ -257,7 +260,7 @@ const Home = () => {
     return (
         <>
             <div id="home-page">
-                {isDoctor && !isVerified && <Alert severity={localStorage.getItem("verified")==="true"? "success" : "error"} style={{
+                {isDoctor && !isVerified && <Alert severity={verAlert ? "success" : "error"} style={{
                     position: "fixed", top: "50px", width: "100%", display: "flex", justifyContent: "center"
                     }}>{verCont}</Alert>}
 
