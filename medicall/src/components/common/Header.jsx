@@ -86,6 +86,12 @@ const Header = () => {
                                         </span>
                                         <div className="tooltip">Disease Prediction</div>
                                     </div>
+                                    <div className="model_action">
+                                        <span onClick={() => navigate("/dispred")}>
+                                            <BsRobot />
+                                        </span>
+                                        <div className="tooltip">Disease Prediction</div>
+                                    </div>
 
                                     <div className="medicine_action">
                                         <span onClick={() => navigate("/buy-medicines")}>

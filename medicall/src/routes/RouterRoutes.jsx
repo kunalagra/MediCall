@@ -14,6 +14,7 @@ import Failed from "../pages/Failed";
 import DiseasePrediction from "../pages/DiseasePrediction";
 import ErrorPage from "../pages/ErrorPage";
 import Checkout from "../pages/Checkout";
+import DisPred from "../pages/DisPred";
 import Chatbot from "../components/common/Chatbot";
 import MyOrders from "../pages/MyOrders";
 
@@ -34,6 +35,7 @@ const RouterRoutes = () => {
           element={<MedicineDetails />}
         />
         <Route path="/my-cart" element={<Cart />} />
+        <Route path="/dispred" element={<DisPred />} />
         <Route path="/instant-meet" element={<MeetPage />} />
         <Route path="/success" element={<Success />} />
         <Route path="/failed" element={<Failed />} />
