@@ -164,7 +164,7 @@
 .user_action {
     span {
         cursor: pointer;
-        font-size: 0.7em;
+        font-size: 0.6em;
         font-weight: bold;
     }
 }
@@ -317,6 +317,7 @@
             flex-direction: column;
             top: 30px;
             right: 0;
+            gap: 1.5rem;
             background-color: var(--blue-color-1);
             z-index: 99;
             padding: 1rem 5rem; 
