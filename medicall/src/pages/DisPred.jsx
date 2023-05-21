@@ -171,8 +171,9 @@ const handleSend = async (message) => {
           },
         ]);
         setIsTyping(false);
-      });
+      });      
   }
+
 
   if(isLoading) {
     return <Preloader />;
@@ -180,7 +181,7 @@ const handleSend = async (message) => {
 
   return (
     <div className="App">
-      <div style={{ position: "relative", height: "700px", width: "700px" }}>
+      <div style={{ position: "relative", height: "550px", width: "500px" }}>
         <MainContainer>
           <ChatContainer>
             <MessageList

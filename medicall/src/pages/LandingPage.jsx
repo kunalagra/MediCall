@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import useDocTitle from "../hooks/useDocTitle";
 import { MdAccountCircle } from "react-icons/md";
 import Accordion from '@mui/material/Accordion';
@@ -20,6 +21,7 @@ import useScrollDisable from "../hooks/useScrollDisable";
 const LandingPage = () => {
 
     const { isLoading, toggleLoading } = useContext(commonContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         toggleLoading(true);
@@ -67,7 +69,7 @@ const LandingPage = () => {
                     <div className="text">
                         <h2>Take best quality treatments <br />and avoid health problems</h2>
                         <p>The art of medicine consists in amusing the patient while nature cures the disease. Treatment without prevention is simply unsustainable.</p>
-                        <button>Appointment</button>
+                        <button onClick={() => navigate("/doctors")}>Appointment</button>
                     </div>
                     <div className="doctor-img">
                         <img src="/doctor-image.png" alt="" />
