@@ -49,19 +49,33 @@
 }
 
 .foot_menu {
+    margin: 0 1rem;
     ul {
         margin-top: 1.8rem;
         display: grid;
         gap: 1rem;
+        min-width: 200px;
+
+        .arrow-icon {
+            font-size: 0.65em;
+        }
+
+        li {
+            
+            transition: all 0.3s ease-in-out;
+            &:hover, &:active {
+                margin-left: 10px;
+
+                a {
+                    opacity: 1;
+                    text-decoration: underline;
+                }
+            }
+        }
 
         a {
             font-size: 0.9rem;
             opacity: 0.8;
-
-            &:hover {
-                opacity: 1;
-                text-decoration: underline;
-            }
         }
     }
 }
@@ -78,12 +92,14 @@
 
 .foot_copyright {
     font-size: 0.95rem;
-
+    
     a {
-        // color: #eee;
         opacity: 0.8;
+        color: var(--blue-color-8);
+        transition: all 0.3s ease-in-out;
 
         &:hover {
+            color: var(--blue-color-9);
             opacity: 1;
         }
     }
@@ -94,4 +110,12 @@
     gap: 2rem;
     font-size: 1.2rem;
     margin-right: 4rem;
+
+
+    .icon {
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            color: var(--blue-color-9);
+        }
+    }
 }

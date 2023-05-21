@@ -1,0 +1,56 @@
+#preloader {
+
+    .st-perloader {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+    }
+    .st-perloader .st-perloader-in {
+        position: relative; 
+    }
+    
+    .st-perloader .st-perloader-in svg {
+        width: 110px;
+        height: 110px; 
+    }
+    .st-perloader .st-wave-first svg {
+        fill: #b0bbd8; 
+    }
+        
+    .st-perloader .st-wave-second {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        animation: spark 1.25s linear infinite; 
+    }
+    
+    .st-perloader .st-wave-second svg {
+        fill: #4a4cb2; 
+    }
+    
+    .st-perloader.st-color1 .st-wave-second svg {
+        fill: #4a4cb2; 
+    }
+
+    .st-perloader.st-color2 .st-wave-second svg {
+        fill: #4a4cb2; 
+    }
+      
+    @keyframes spark {
+        0% {
+          max-width: 0; 
+        }
+        100% {
+          max-width: 100%; 
+        } 
+    }
+}
