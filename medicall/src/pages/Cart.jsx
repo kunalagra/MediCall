@@ -6,35 +6,44 @@ import EmptyView from "../components/cart/EmptyView";
 import { Alert, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import httpClient from "../httpClient";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 const Cart = () => {
+
+  const { isLoading, toggleLoading } = useContext(commonContext);
+
   useDocTitle("Cart");
 
   const navigate = useNavigate(); 
   const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
   const [cart, setCart] = useState([]);
+  const { cartItems, clearCart, placeOrder, setCartItems } = useContext(cartContext);
 
   useEffect(() => {
       if(userNotExists) {
           navigate("/");
+      } else {
+          toggleLoading(true);
+          if (cart !== cartItems) {
+            httpClient.post('add_to_cart', {email: localStorage.getItem("email"), cart: cartItems})
+            .then((res) => {
+              setCartItems(res.data.cart);
+              setCart(res.data.cart);
+              toggleLoading(false);
+            })
+            .catch((err) => { 
+              console.log(err);
+              toggleLoading(false);
+            });
+          }
       }
       //eslint-disable-next-line
   }, []);
 
-  const { cartItems, clearCart, placeOrder, setCartItems } = useContext(cartContext);
 
-  useEffect(() => {
-    if (cart !== cartItems) {
-    httpClient.post('add_to_cart', {email: localStorage.getItem("email"), cart: cartItems})
-    .then((res) => {
-        setCartItems(res.data.cart);
-        setCart(res.data.cart);
-    })
-    .catch((err) => { 
-        console.log(err);
-    });
-    }
-  }, []);
+  useScrollDisable(isLoading);
   
   const cartQuantity = cartItems.length;
 
@@ -51,6 +60,10 @@ const Cart = () => {
   const deleteAll = () => {
     httpClient.post('delete_all_cart', {email: localStorage.getItem("email")})
   }
+
+  if(isLoading) {
+    return <Preloader />;
+  };
   
   return (
     <>

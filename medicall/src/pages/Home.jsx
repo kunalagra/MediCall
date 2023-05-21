@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Modal from '@mui/material/Modal';
 import useDocTitle from "../hooks/useDocTitle";
 import { IoMdClose } from "react-icons/io";
@@ -10,11 +9,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb, HiUserGroup } from "react-icons/hi";
 import { FaVideo } from "react-icons/fa";
 import httpClient from "../httpClient";
-import { TbPointFilled } from 'react-icons/tb';
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+
 
 const Home = () => {
     useDocTitle("Home");
     const navigate = useNavigate();
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
@@ -73,6 +77,7 @@ const Home = () => {
 
         if(!userNotExists) {
             if (!isDoctor) {
+            toggleLoading(true);
             httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
                     // console.log(res.data);
@@ -86,14 +91,17 @@ const Home = () => {
                             // past.push(appointment);
                         // }
                     });
+                    toggleLoading(false);
                     setUpcomingAppointments(upcoming);
                     // setPastAppointments(past);
                 })
                 .catch((err) => {
+                    toggleLoading(false);
                     console.log(err);
                 })
             }
             else {
+                toggleLoading(true);
                 httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
                     .then((res) => {
                         let upcoming = [];
@@ -106,10 +114,12 @@ const Home = () => {
                                 // past.push(appointment);
                             // }
                         });
+                        toggleLoading(false);
                         setUpcomingAppointments(upcoming)
                         // setPastAppointments(past)
                     })
                     .catch((err) => {
+                        toggleLoading(false);
                         console.log(err);
                     })
             }
@@ -255,6 +265,12 @@ const Home = () => {
     // const pastAppointments = [{date: "2023-04-17", time: "11:20", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-16", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
 
     const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
+
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
 
 
     return (

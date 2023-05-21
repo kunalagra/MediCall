@@ -1,12 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, useContext, useEffect } from "react";
 import Home from "../components/diseasePrediction/Home";
 import Patient from "../components/diseasePrediction/Patient1";
 import Patient2 from "../components/diseasePrediction/Patient2";
 import Symptom from "../components/diseasePrediction/Symptom";
 import Disease from "../components/diseasePrediction/Disease";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+import { useNavigate } from "react-router-dom";
 
 
-class DiseasePrediction extends Component {
+class DP extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -260,5 +264,35 @@ class DiseasePrediction extends Component {
     );
   }
 }
+
+const DiseasePrediction = () => {
+
+  const { isLoading, toggleLoading } = useContext(commonContext);
+
+  const navigate = useNavigate(); 
+
+  const userNotExists = !localStorage.getItem("username") || localStorage.getItem("username")==="undefined";
+
+  useEffect(() => {
+    if(userNotExists) {
+        navigate("/");
+    } else {
+        toggleLoading(true);
+        setTimeout(() => toggleLoading(false), 2000);
+    }
+    //eslint-disable-next-line
+  }, []);
+
+  useScrollDisable(isLoading);
+
+  if(isLoading) {
+    return <Preloader />;
+  };
+
+  
+  return (
+    <DP />
+  )
+};
 
 export default DiseasePrediction;

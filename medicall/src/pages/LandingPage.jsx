@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import useDocTitle from "../hooks/useDocTitle";
 import { MdAccountCircle } from "react-icons/md";
 import Accordion from '@mui/material/Accordion';
@@ -12,10 +12,21 @@ import { BsRobot } from "react-icons/bs";
 import { AiOutlineAlert } from "react-icons/ai";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { IoAccessibility } from "react-icons/io5";
-
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 
 const LandingPage = () => {
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
+
+    useEffect(() => {
+        toggleLoading(true);
+        setTimeout(() => toggleLoading(false), 2000);
+    }, []);
+
+    useScrollDisable(isLoading);    
 
     useDocTitle();
 
@@ -41,6 +52,10 @@ const LandingPage = () => {
             answer: "Yes. You can purchase the medicines from Medicall store."
         },
     ];
+
+    if(isLoading) {
+        return <Preloader />;
+    }
     
     return (
         <>

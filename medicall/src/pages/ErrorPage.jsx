@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 const ErrorPage = () => {
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        toggleLoading(true);
+        setTimeout(() => toggleLoading(false), 1000);
+        //eslint-disable-next-line
+    }, []);
+
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
 
     return (
         <div id="error-page">
