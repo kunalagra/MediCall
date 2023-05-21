@@ -154,6 +154,7 @@
     user-select: none;
     font-size: 0.8rem;
     padding: 0.4rem 0.6rem;
+    z-index: 99;
     @include bordered(1px, var(--grey-color-3));
     @include toggleVisibility(hidden, 0);
     @include transition(all, 0.2s, ease-in-out);

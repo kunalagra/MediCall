@@ -1,14 +1,81 @@
+#contact-header {
+    @include flexbox(space-between, center);
+    padding: 1rem 10rem;
+    border-bottom: 1px solid var(--blue-color-8);
+    height: 100%;
+    @include toggleVisibility(visible, 1);
+    @include transition(all, 0.3s, ease-out);
+    
+    @include devices(950px) {
+        padding: 1rem 2rem;
+    }
+    
+    @include devices(xs) {
+        padding: 1rem;
+    }
+    
+    &.scrolled {
+        @include toggleVisibility(hidden, 0);
+        height: 0%;
+        padding: 0;
+    }
+    
+    .details {
+        @include flexbox(center, center);
+        flex-wrap: wrap;
+        color: var(--grey-color-3);
+        
+        .contact-detail {
+            @include flexbox(center, center);
+            transition: all 0.3s ease-out;
+            
+            &:hover {
+                color: #333;
+            }
+        }
+        
+        .icon, .detail {
+            font-size: 0.9em;
+            line-height: 1.4rem;
+        }
+        
+        .icon {
+            margin-right: 5px;
+        }
+        
+        .contact-detail:first-child {
+            margin-right: 20px;
+            
+            @include devices(xs) {
+                margin-right: 0;
+            }
+        }
+    }
+    
+    .appt-link {
+        color: var(--blue-color-5);
+        font-weight: bold;
+
+        transition: all 0.3s ease-out;
+    
+        &:hover {
+            color: var(--blue-color-7);
+        }
+    }
+    
+}
+
 #header {
-    position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
     width: 100%;
     color: var(--blue-color-8);
-    @include padding-y(0.8rem, 0.8rem);
+    @include padding-y(1.5rem, 1.5rem);
     @include transition(background-color, 0.2s, linear);
 
     &.sticky {
+        position: sticky;
         background-color: var(--blue-color-1);
     }
 }
@@ -64,14 +131,30 @@
 .doctor_action,
 .model_action,
 .medicine_action {
-    &:hover .tooltip {
-        @include toggleVisibility(visible, 1);
-    }
    
     &:hover {
         color: var(--blue-color-9);
     }
 
+    ::before {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 2px;
+        width: 0%;
+        background-color: var(--blue-color-9);
+        transition: all 0.3s ease;
+    }
+
+    &.active {
+        color: var(--blue-color-9);
+
+        ::before {
+            width: 100%;
+        }
+    }
 }
 
 .dash_action,
@@ -81,6 +164,8 @@
 .user_action {
     span {
         cursor: pointer;
+        font-size: 0.7em;
+        font-weight: bold;
     }
 }
 
@@ -122,6 +207,7 @@
         font-size: 0.9rem;
         border-radius: 3px;
         color: #eee;
+        z-index: 99;
         @include bordered(1px, var(--grey-color-3));
         @include toggleVisibility(hidden, 0);
         @include transition(all, 0.2s, ease-in-out);
@@ -133,9 +219,138 @@
         h4 {
             font-weight: 600;
             letter-spacing: 0.5px;
-
+            
             span {
                 color: var(--blue-color-2);
+                font-size: 1em;
+                opacity: 0.95;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+
+        p {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            @include bordered(1px, var(--grey-color-2));
+            @include transition(all, 0.3s, ease);
+
+            &:hover {
+                color: var(--blue-color-1);
+                border-color: var(--blue-color-3);
+                background-color: var(--blue-color-3);
+            }
+        }
+
+        .profile_btn {
+            color: var(--blue-color-1);
+            border-color: var(--blue-color-3);
+            background-color: var(--blue-color-3);
+            margin-right: 10px;
+            
+            &:hover {
+                border-color: var(--blue-color-5);
+                background-color: var(--blue-color-5);
+            }
+        }
+
+        li {
+            &:not(:last-child) {
+                margin-bottom: 0.7rem;
+            }
+
+            .cart-icon {
+                font-size: 1.4em;
+            }
+
+            a {
+                color: var(--blue-color-1);
+                margin-left: 10px;
+
+                &:hover {
+                    color: var(--white-color);
+                    text-decoration: underline;
+                }
+            }
+
+            .cart_badge {
+                background-color: var(--blue-color-3);
+                font-size: 0.8rem;
+                border-radius: 3px;
+                margin-left: 10px;
+                padding: 0.2rem 0.4rem;
+                color: var(--white-color);
+            }
+
+        }
+    }
+}
+
+
+#sidebar {
+
+    .sidebar-icon {
+        font-size: 1.5em;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .collapse {
+        @include toggleVisibility(hidden, 0);
+        position: relative;
+        transition: all 0.3s ease-in;
+        
+        &.active {
+            @include toggleVisibility(visible, 1);
+        }
+
+        .nav_actions {
+            position: absolute;
+            flex-direction: column;
+            top: 30px;
+            right: 0;
+            background-color: var(--blue-color-1);
+            z-index: 99;
+            padding: 1rem 5rem; 
+            border-radius: 20px;
+
+        }
+    }
+
+    .dropdown_menu {
+        position: absolute;
+        top: 80px;
+        right: 10px;
+        width: 17.5rem;
+        background-color: var(--blue-color-6);
+        padding: 1.4rem;
+        font-size: 0.9rem;
+        border-radius: 3px;
+        color: #eee;
+        z-index: 99;
+        @include bordered(1px, var(--grey-color-3));
+        @include toggleVisibility(hidden, 0);
+        @include transition(all, 0.2s, ease-in-out);
+
+        &.active {
+            @include toggleVisibility(visible, 1);
+        }
+
+        h4 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            span {
+                color: var(--blue-color-2);
+                font-size: 1em;
                 opacity: 0.95;
 
                 &:hover {
