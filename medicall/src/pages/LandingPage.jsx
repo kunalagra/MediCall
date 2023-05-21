@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useContext } from "react";
 import useDocTitle from "../hooks/useDocTitle";
 import { MdAccountCircle } from "react-icons/md";
 import Accordion from '@mui/material/Accordion';
@@ -7,11 +8,25 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { MdExpandMore } from 'react-icons/md';
 import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai';
 import { IoMdMail } from "react-icons/io";
+import httpClient from "../httpClient";
+import cartContext from "../contexts/cart/cartContext";
 
 
 const LandingPage = () => {
 
     useDocTitle();
+
+    const { setCartItems } = useContext(cartContext);
+
+    useEffect(() => {
+        httpClient.post('get_cart', {email: localStorage.getItem("email")})
+        .then((res) => {
+            setCartItems(res.data.cart);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const faqs = [
         {

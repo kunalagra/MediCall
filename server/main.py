@@ -404,16 +404,16 @@ def add_to_cart():
         doctor.update_one({'email': email}, {'$set': {'cart': cart}})
         return jsonify({'message': 'Cart added successfully', 'cart': cart}), 200
     
-# @app.route("/get_cart", methods=['POST'])
-# def get_cart():
-#     data = request.get_json()
-#     email = data['email']
-#     var = patients.find_one({'email':email})
-#     if var:
-#         return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
-#     else:
-#         var = doctor.find_one({'email': email})
-#         return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+@app.route("/get_cart", methods=['POST'])
+def get_cart():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email':email})
+    if var:
+        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
 
 @app.route('/increase_quantity', methods=['POST'])
 def increase_quantity():
