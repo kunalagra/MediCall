@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { footMenu, footSocial } from '../../data/footerData';
-
+import { TfiAngleRight } from "react-icons/tfi";
 
 const Footer = () => {
 
@@ -30,14 +30,14 @@ const Footer = () => {
                                                 const { id, link, path } = item;
                                                 return (
                                                     <li key={id}>
-                                                        <Link to={path}>{link}</Link>
+                                                        <TfiAngleRight className='arrow-icon'/> <Link to={path}>{link}</Link>
                                                     </li>
                                                 );
                                             })
                                         }
                                         {localStorage.getItem("usertype")==="patient" && title==="Shop & More" &&  (
                                             <li>
-                                                <Link to="/doctors">Book an Appointment</Link>
+                                                <TfiAngleRight className='arrow-icon' /> <Link to="/doctors">Book an Appointment</Link>
                                             </li>
                                         )}
                                     </ul>
@@ -63,7 +63,7 @@ const Footer = () => {
                                 footSocial.map((item) => {
                                     const { id, icon, cls, path } = item;
                                     return (
-                                        <Link to={path} key={id} className={cls}>{icon}</Link>
+                                        <Link to={path} key={id} className={`icon {cls}`}>{icon}</Link>
                                     );
                                 })
                             }

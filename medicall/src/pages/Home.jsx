@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Modal from '@mui/material/Modal';
 import useDocTitle from "../hooks/useDocTitle";
 import { IoMdClose } from "react-icons/io";
@@ -10,11 +9,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineLightBulb, HiUserGroup } from "react-icons/hi";
 import { FaVideo } from "react-icons/fa";
 import httpClient from "../httpClient";
-import { TbPointFilled } from 'react-icons/tb';
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+
 
 const Home = () => {
     useDocTitle("Home");
     const navigate = useNavigate();
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
@@ -37,6 +41,7 @@ const Home = () => {
     const [available, setAvailable] = useState(localStorage.getItem("available")===undefined || localStorage.getItem("available")===null || localStorage.getItem("available")==="true");
     const [isVerified, setVerified] = useState(localStorage.getItem("verified")!==undefined && localStorage.getItem("verified")!==null && localStorage.getItem("verified")==="true");
     const [verCont, setVerCont] = useState("Your Account is not verified yet! Please wait until you're verified!!");
+    const [verAlert, setVerAlert] = useState(false);
 
 
     const handleFeedbackClose = () => {
@@ -72,6 +77,7 @@ const Home = () => {
 
         if(!userNotExists) {
             if (!isDoctor) {
+            toggleLoading(true);
             httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
                     // console.log(res.data);
@@ -85,14 +91,17 @@ const Home = () => {
                             // past.push(appointment);
                         // }
                     });
+                    toggleLoading(false);
                     setUpcomingAppointments(upcoming);
                     // setPastAppointments(past);
                 })
                 .catch((err) => {
+                    toggleLoading(false);
                     console.log(err);
                 })
             }
             else {
+                toggleLoading(true);
                 httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
                     .then((res) => {
                         let upcoming = [];
@@ -105,10 +114,12 @@ const Home = () => {
                                 // past.push(appointment);
                             // }
                         });
+                        toggleLoading(false);
                         setUpcomingAppointments(upcoming)
                         // setPastAppointments(past)
                     })
                     .catch((err) => {
+                        toggleLoading(false);
                         console.log(err);
                     })
             }
@@ -226,17 +237,19 @@ const Home = () => {
                 console.log(res.data);
                 if (res.data.verified) {
                     setVerCont("Yayy! Your Account is verified!!")
+                    setVerAlert(true);
                     setTimeout(() => {
                         setVerified(true);
-                        localStorage.setItem("verified", true);
                     }, 2000);
+                    localStorage.setItem("verified", true);
                 }
                 else {
                     setVerCont("Oops! Your Account isn't verfied yet!!");
+                    setVerAlert(false);
                     setTimeout(() => {
                         setVerCont("Your Account is not verified yet! Please wait until you're verified!!");
+                        setVerified(false);
                     }, 2000);
-                    setVerify(false);
                     localStorage.setItem("verified", false);
                 }
             })
@@ -253,11 +266,17 @@ const Home = () => {
 
     const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
 
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
+
 
     return (
         <>
             <div id="home-page">
-                {isDoctor && !isVerified && <Alert severity={localStorage.getItem("verified")==="true"? "success" : "error"} style={{
+                {isDoctor && !isVerified && <Alert severity={verAlert ? "success" : "error"} style={{
                     position: "fixed", top: "50px", width: "100%", display: "flex", justifyContent: "center"
                     }}>{verCont}</Alert>}
 

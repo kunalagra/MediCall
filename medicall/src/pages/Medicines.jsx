@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import FeaturedSlider from "../components/medicines/FeaturedProducts";
 import TopProducts from "../components/medicines/TopProducts";
 import useDocTitle from "../hooks/useDocTitle";
-import { useEffect } from "react";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 const BuyMedicines = () => {
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     useDocTitle("Buy Medicines");
     
@@ -15,9 +19,18 @@ const BuyMedicines = () => {
     useEffect(() => {
         if(userNotExists) {
             navigate("/");
+        } else {
+            toggleLoading(true);
+            setTimeout(() => toggleLoading(false), 1000);
         }
         //eslint-disable-next-line
     }, []);
+
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
 
     return (
         <div id="buy-medicines">

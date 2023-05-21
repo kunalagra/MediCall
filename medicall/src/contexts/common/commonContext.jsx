@@ -10,7 +10,8 @@ const initialState = {
     isFormOpen: false,
     searchResults: [],
     isFeedbackOpen: false,
-    isProfileOpen: false
+    isProfileOpen: false,
+    isLoading: false
 };
 
 // Common-Provider Component
@@ -36,6 +37,13 @@ const CommonProvider = ({ children }) => {
     const toggleFeedback = (toggle) => {
         return dispatch({
             type: 'TOGGLE_FEEDBACK',
+            payload: { toggle }
+        });
+    };
+
+    const toggleLoading = (toggle) => {
+        return dispatch({
+            type: 'TOGGLE_LOADING',
             payload: { toggle }
         });
     };
@@ -68,7 +76,8 @@ const CommonProvider = ({ children }) => {
         userLogout,
         setSearchResults,
         toggleFeedback,
-        toggleProfile
+        toggleProfile,
+        toggleLoading
     };
 
     return (

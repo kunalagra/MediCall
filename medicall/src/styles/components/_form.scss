@@ -6,6 +6,7 @@
     width: 100%;
     padding: 3rem;
     border-radius: 3px;
+    z-index: 99;
 
     @include devices(xs) {
         @include padding-x(1rem, 1rem);

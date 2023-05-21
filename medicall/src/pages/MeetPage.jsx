@@ -269,7 +269,7 @@ const MeetPage = () => {
         setSendingMsg("Send");
       }, 3000);
       httpClient.put('/delete_meet', { "email": searchparams.get("selectedMail") })
-      navigate("/");
+      navigate("/home");
     }).catch((err) => {
       console.log(err);
     });

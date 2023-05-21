@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useState, useEffect } from "react";
 import { IoMdMail } from "react-icons/io";
 import { RiWhatsappFill } from "react-icons/ri";
 import Modal from '@mui/material/Modal';
@@ -15,11 +14,15 @@ import { Alert, CircularProgress } from "@mui/material";
 import { IoMdRefresh } from "react-icons/io";
 import useActive from "../hooks/useActive";
 import { FaVideo } from "react-icons/fa";
-
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 const Doctors = () => {
 
   useDocTitle("Doctors");
+
+  const { isLoading, toggleLoading } = useContext(commonContext);
 
   const [meetModal, setMeetModal] = useState(false);
   const [doctors, setDoctors] = useState([]);
@@ -44,12 +47,11 @@ const Doctors = () => {
     if (userNotExists) {
       navigate("/");
     }
+    else {
+      fetchDoctors();
+    }
     //eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    fetchDoctors();
-  }, [])
 
   useEffect(() => {
     handletimings();
@@ -57,12 +59,15 @@ const Doctors = () => {
 
   function fetchDoctors() {
     setFetchingData(true);
+    toggleLoading(true);
     httpClient.get("/get_status").then((res) => {
       setDoctors(res.data.details);
       // console.log(doctors)
+      toggleLoading(false);
       setFetchingData(false);
     }).catch(() => {
       // console.log(res)
+      toggleLoading(false);
       setFetchingData(false);
     });
   };
@@ -246,6 +251,12 @@ const Doctors = () => {
       },
     },
   ];
+
+  useScrollDisable(isLoading);
+
+  if(isLoading) {
+    return <Preloader />;
+  };
 
   return (
     <>

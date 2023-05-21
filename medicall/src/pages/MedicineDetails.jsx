@@ -7,6 +7,9 @@ import cartContext from '../contexts/cart/cartContext';
 import medicinesData from '../data/medicinesData';
 import MedicineSummary from '../components/medicines/MedicineSummary';
 import { useNavigate } from 'react-router-dom';
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 
 const MedicineDetails = () => {
@@ -18,6 +21,8 @@ const MedicineDetails = () => {
     const { handleActive, activeClass } = useActive(0);
 
     const { addItem } = useContext(cartContext);
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     const { productId } = useParams();
 
@@ -64,6 +69,18 @@ const MedicineDetails = () => {
         setPreviewImg(allImages[i]);
         handleActive(i);
     };
+
+    useEffect(() => {
+        toggleLoading(true);
+        setTimeout(() => toggleLoading(false), 1500);
+        //eslint-disable-next-line
+    }, []);
+
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
 
 
     return (

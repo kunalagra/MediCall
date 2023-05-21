@@ -16,6 +16,13 @@ const CartProvider = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, initialState);
 
     // Dispatched Actions
+    const setCartItems = (cartItems) => {
+        return dispatch({
+            type: 'SET_CART_ITEMS',
+            payload: { cartItems }
+        });
+    };
+
     const addItem = (item) => {
         return dispatch({
             type: 'ADD_TO_CART',
@@ -73,6 +80,7 @@ const CartProvider = ({ children }) => {
         clearCart,
         placeOrder,
         clearOrders,
+        setCartItems,
     };
 
     return (

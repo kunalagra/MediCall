@@ -372,6 +372,123 @@ def update_details():
             data['passwd'] = hashed_password
             patients.update_one({'email': email}, {'$set': {'username': data['username'], 'phone': data['phone'],  'passwd': data['passwd'], 'age': data['age'], 'gender': data['gender']}})
         return jsonify({'message': 'Patient details updated successfully'}), 200
+    
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        cart = var.get('cart', [])
+        for i in data["cart"]:
+            for j in cart:
+                if j['id'] == i['id']:
+                    j['quantity'] += i['quantity']
+                    break
+            else:
+                i['key'] = str(uuid.uuid4())
+                cart.append(i)
+        patients.update_one({'email': email}, {'$set': {'cart': cart}})
+        return jsonify({'message': 'Cart added successfully', 'cart': cart}), 200
+    else:
+        var = doctor.find_one({"email":email})
+        cart = var.get('cart', [])
+        for i in data["cart"]:
+            for j in cart:
+                if j['id'] == i['id']:
+                    j['quantity'] = i['quantity']
+                    break
+            else:
+                i['key'] = str(uuid.uuid4())
+                cart.append(i)
+        doctor.update_one({'email': email}, {'$set': {'cart': cart}})
+        return jsonify({'message': 'Cart added successfully', 'cart': cart}), 200
+    
+@app.route("/get_cart", methods=['POST'])
+def get_cart():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email':email})
+    if var:
+        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+
+@app.route('/increase_quantity', methods=['POST'])
+def increase_quantity():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                i['quantity'] += 1
+                break
+        patients.update_one({'email': email}, {'$set': {'cart': var['cart']}})
+        return jsonify({'message': 'Quantity increased successfully'}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                i['quantity'] += 1
+                break
+        doctor.update_one({'email': email}, {'$set': {'cart': var['cart']}})
+        return jsonify({'message': 'Quantity increased successfully'}), 200
+    
+@app.route('/decrease_quantity', methods=['POST'])
+def decrease_quantity():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                i['quantity'] -= 1
+                break
+        patients.update_one({'email': email}, {'$set': {'cart': var['cart']}})
+        return jsonify({'message': 'Quantity increased successfully'}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                i['quantity'] -= 1
+                break
+        doctor.update_one({'email': email}, {'$set': {'cart': var['cart']}})
+        return jsonify({'message': 'Quantity increased successfully'}), 200
+    
+@app.route("/delete_cart", methods=['POST'])
+def delete_cart():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email':email})
+    if var:
+        cart = var['cart']
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                cart.remove(i)
+        patients.update_one({'email': email}, {'$set': {'cart': cart}})
+        return jsonify({'message': 'Cart deleted successfully'}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        cart = var['cart']
+        for i in var['cart']:
+            if i['id'] == data['id']:
+                cart.remove(i)
+        doctor.update_one({'email': email}, {'$set': {'cart': cart}})
+        return jsonify({'message': 'Cart deleted successfully'}), 200
+    
+@app.route("/delete_all_cart", methods=['POST'])
+def delete_all_cart():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({"email": email})
+    if var:
+        patients.update_one({'email': email}, {'$set': {'cart': []}})
+        return jsonify({'message': 'Cart deleted successfully'}), 200
+    else:
+        doctor.update_one({'email': email}, {'$set': {'cart': []}})
+        return jsonify({'message': 'Cart deleted successfully'}), 200
 
 
 if __name__ == "__main__":

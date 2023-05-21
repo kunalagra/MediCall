@@ -1,71 +1,44 @@
 import React, { useContext, useState, useEffect } from "react";
 import useDocTitle from "../hooks/useDocTitle";
 import EmptyView from "../components/cart/EmptyView";
-import { Alert, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import OrderedItem from "../components/orders/OrderedItem";
 import httpClient from "../httpClient";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+
 
 const MyOrders = () => {
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     const navigate = useNavigate();
     const [orderedItems, setOrderedItems] = useState([]);
 
+    useDocTitle("My Orders");
+
     useEffect(() => {
+        toggleLoading(true);
         httpClient.post('/get_orders', {email: localStorage.getItem("email")})
         .then((res) => {
-            setOrderedItems(res.data.orders);
+            setOrderedItems(res.data.orders.reverse());
+            toggleLoading(false);
         })
         .catch((err) => {
+            toggleLoading(false);
             console.log(err);
         });
     }, []);
 
-    // const orderedItems = [
-    //     {
-    //         id: 3,
-    //         images: ["/medicines/prod1.jpg"],
-    //         title: "Benadryl",
-    //         price: 79,
-    //         path: "/",
-    //         quantity: 0,
-    //       },
-    //       {
-    //         id: 5,
-    //         images: ["/medicines/prod21.jpg"],
-    //         title: "Farlin Bottle Safety Bag",
-    //         price: 288,
-    //         path: "/",
-    //         quantity: 0,
-    //       },
-    //       {
-    //         id: 6,
-    //         images: ["/medicines/prod6.jpeg"],
-    //         title: "Moxikind",
-    //         price: 150,
-    //         path: "/",
-    //         quantity: 0,
-    //       },
-    //       {
-    //         id: 7,
-    //         images: ["/medicines/prod7.jpg"],
-    //         title: "Kivokast",
-    //         price: 88,
-    //         path: "/",
-    //         quantity: 0,
-    //       },
-    //       {
-    //         id: 8,
-    //         images: ["/medicines/prod8.jpg"],
-    //         title: "Alecensa",
-    //         price: 100,
-    //         path: "/",
-    //         quantity: 0,
-    //       }
-    // ];
-
     const orderedQuantity = orderedItems.length;
     const [viewAll, setViewAll] = useState(false);
+
+    useScrollDisable(isLoading);
+
+    if(isLoading) {
+        return <Preloader />;
+    }
 
     return (
         <>

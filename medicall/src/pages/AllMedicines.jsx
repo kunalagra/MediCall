@@ -7,9 +7,14 @@ import filtersContext from '../contexts/filters/filterContext';
 import EmptyView from '../components/common/EmptyView';
 import SearchBar from '../components/common/SearchBar';
 import { useNavigate } from 'react-router-dom';
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
 
 
 const AllMedicines = () => {
+
+    const { isLoading, toggleLoading } = useContext(commonContext);
 
     useDocTitle('All Medicines');
 
@@ -19,11 +24,20 @@ const AllMedicines = () => {
     useEffect(() => {
         if(userNotExists) {
             navigate("/");
+        } else {
+            toggleLoading(true);
+            setTimeout(() => toggleLoading(false), 2000);
         }
         //eslint-disable-next-line
     }, []);
 
+    useScrollDisable(isLoading);
+
     const { allProducts } = useContext(filtersContext);
+
+    if(isLoading) {
+        return <Preloader />;
+    };
 
     return (
         <>
