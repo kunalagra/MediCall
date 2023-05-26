@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import useDocTitle from "../hooks/useDocTitle";
 import { MdAccountCircle } from "react-icons/md";
 import Accordion from '@mui/material/Accordion';
@@ -21,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
 
     const { isLoading, toggleLoading } = useContext(commonContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         toggleLoading(true);

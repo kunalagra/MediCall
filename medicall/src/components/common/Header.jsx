@@ -111,6 +111,12 @@ const Header = () => {
                                                 MODEL
                                             </span>
                                         </div>
+                                        
+                                        <div className={`model_action ${curPath==="/dispred"? "active" : ""}`}>
+                                            <span onClick={() => navigate("/dispred")}>
+                                                MODEL 2
+                                            </span>
+                                        </div>
 
                                         <div className={`medicine_action ${curPath==="/buy-medicines"? "active" : ""}`}>
                                             <span onClick={() => navigate("/buy-medicines")}>

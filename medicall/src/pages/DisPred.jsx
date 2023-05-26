@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { FaChevronUp } from "react-icons/fa";
-import { AiFillWechat } from "react-icons/ai";
-import { MdClear } from "react-icons/md"; 
+import React, { useContext, useEffect, useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import Preloader from "../components/common/Preloader";
+import commonContext from "../contexts/common/commonContext";
+import useScrollDisable from "../hooks/useScrollDisable";
+import { useNavigate } from "react-router-dom";
 import {
   MainContainer,
   ChatContainer,
@@ -12,11 +13,24 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-const BackTop = () => {
+function DisPred() {
+
+  const { isLoading, toggleLoading } = useContext(commonContext);
+
+  useEffect(() => {
+      toggleLoading(true);
+      setTimeout(() => toggleLoading(false), 2000);
+  }, []);
+
+  useScrollDisable(isLoading);    
+
   const API_KEY = import.meta.env.VITE_API_KEY;
   const systemMessage = {
     role: "system",
-    content: "Only answer health related questions and do not mention anything about chatgpt and open ai",
+    content: `
+    1. Predict patient's disease in maximum 50 words based on given symptoms, age, past medical history and sex
+    2. Give output as possible diseases, their individual accuracy in percentage, their cure and preventive health tips
+    3. Dont relate yourself to chatgpt or open ai`,
   };
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -37,6 +51,7 @@ const BackTop = () => {
       behavior: "smooth",
     });
   };
+  
 
   const HEALTH_KEYWORDS = ["health", "medicine", "doctor", "hospital", "symptom", "colour blindness","myopia","hypermetropia","bronchitis","cough",
   "cold","tuberculosis","TB","dry eyes","eye","chalization","appendictius","dysepia","food poison","food poisoning","gastritis",
@@ -99,7 +114,7 @@ const handleSend = async (message) => {
 
   const [messages, setMessages] = useState([
     {
-      message: "Hello, This is MediBot! Ask me anything!",
+      message: "Welcome to PredBot!! Specify age, sex, symptoms and past medical history",
       sentTime: "just now",
       sender: "ChatGPT",
     },
@@ -156,53 +171,38 @@ const handleSend = async (message) => {
           },
         ]);
         setIsTyping(false);
-      });
+      });      
   }
 
 
-  return (
-    <>
-      {!open && (
-        <div
-          className={`back_top ${isVisible ? "popped" : ""}`}
-          title="Back to top"
-          onClick={handleBackTop}
-        >
-          <FaChevronUp />
-        </div>
-      )}
-      <div
-        onClick={() => setOpen(!open)} 
-        className="back_top popped chat_icon"
-        title="Wanna Chat?"
-      >
-        {open? <MdClear /> : <AiFillWechat />}
-      </div>
-      <div className={`chatbot ${open && "opened"}`}>
-        <div className="chat">
-          <MainContainer
-          style={{border: 0, borderRadius: 10}}
-          >
-            <ChatContainer>
-              <MessageList
-                scrollBehavior="smooth"
-                typingIndicator={
-                  isTyping ? (
-                    <TypingIndicator content="MediBot is typing" />
-                  ) : null
-                }
-              >
-                {messages.map((message, i) => {
-                  return <Message key={i} model={message} />;
-                })}
-              </MessageList>
-              <MessageInput placeholder="Type message here" onSend={handleSend} />
-            </ChatContainer>
-          </MainContainer>
-        </div>
-      </div>
-    </>
-  );
-};
+  if(isLoading) {
+    return <Preloader />;
+  }
 
-export default BackTop;
+  return (
+    <div className="App">
+      <div style={{ position: "relative", height: "550px", width: "500px" }}>
+        <MainContainer>
+          <ChatContainer>
+            <MessageList
+              scrollBehavior="smooth"
+              typingIndicator={
+                isTyping ? (
+                  <TypingIndicator content="PredBot is typing" />
+                ) : null
+              }
+            >
+              {messages.map((message, i) => {
+                console.log(message);
+                return <Message key={i} model={message} />;
+              })}
+            </MessageList>
+            <MessageInput placeholder="Type message here" onSend={handleSend} />
+          </ChatContainer>
+        </MainContainer>
+      </div>
+    </div>
+  );
+}
+
+export default DisPred;
