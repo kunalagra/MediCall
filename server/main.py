@@ -180,9 +180,12 @@ def meet_status():
     user = data['email']
     details = doctor.find_one({'email': user})
     if details['meet'] == True:
-        return jsonify({'message': 'Doctor is already in a meet'}), 208
+        return jsonify({'message': 'Doctor is already in a meet', 'link': details.get('link', '')}), 208
     else:
-        doctor.update_one({'email': user}, {'$set': {'meet': True}})
+        if data.get('link', '') == '':
+            doctor.update_one({'email': user}, {'$set': {'meet': True}})
+        else:
+            doctor.update_one({'email': user}, {'$set': {'meet': True, 'link': data['link']}})
         return jsonify({'message': 'Doctor status updated successfully'}), 200
 
 # @app.route('/meet_end', methods=['PUT'])
@@ -383,7 +386,7 @@ def add_to_cart():
         for i in data["cart"]:
             for j in cart:
                 if j['id'] == i['id']:
-                    j['quantity'] += i['quantity']
+                    j['quantity'] = i['quantity']
                     break
             else:
                 i['key'] = str(uuid.uuid4())

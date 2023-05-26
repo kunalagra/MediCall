@@ -143,7 +143,7 @@ const Home = () => {
             setJoinmeet(true);
         }
         else{
-            httpClient.post("meet_status", {email: localStorage.getItem("email")})
+            httpClient.post("meet_status", {email: localStorage.getItem("email"), link: link})
             httpClient.put("/currently_in_meet", {email: localStorage.getItem("email")})
             .then(res => {
                 setSearchPatient(false);
@@ -157,7 +157,7 @@ const Home = () => {
 
     const handlemeet = () => {
         httpClient.post("/meet_status", { "email": doctormail }).then((res) => {
-            if (res.status === 200) {
+            if ((res.status === 208 && res.data.link === joinlink) || res.status === 200) {
               httpClient.put("/make_meet", {
                 "email": doctormail,
                 "link": joinlink,
@@ -420,14 +420,14 @@ const Home = () => {
             <Modal
                 open={searchPatient}
                 onClose={() => {
-                    httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
+                    // httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
                     setSearchPatient(false)
                 }}
                 >
                 <div id="search-patient-modal">
                     <div className="close_btn_div">
                         <IoMdClose onClick={() => {
-                            httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
+                            // httpClient.put('/delete_meet', { email: localStorage.getItem("email")})
                             setSearchPatient(false)}} />
                     </div>
                     {searching===0 && (
@@ -499,8 +499,6 @@ const Home = () => {
                 setDoctorMail("");
                 setDoctorName("");
                 setJoinlink("");
-
-                    httpClient.put('/delete_meet', { "email": doctormail })
                     }} />
                 </div>
                 <div className="meet-details">
