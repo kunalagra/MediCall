@@ -468,11 +468,13 @@
         text-align: center;
         background-color: var(--white-color);
 
+
         .faq-div {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
             margin: 0 auto;
+            padding: 5px;
             justify-content: space-between;
             align-items: center;
             max-width: 1300px;
@@ -529,6 +531,7 @@
                         border-radius: 12px;
                         border: none;
                         outline: none;
+                        margin-bottom: 10px;
 
                         .item-qn {
                             text-align: left;

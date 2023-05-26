@@ -200,7 +200,7 @@ const LandingPage = () => {
                                 <div className="contact-div">
                                     <div className="contact-icon"><IoMdMail /></div>
                                     <div className="contact-icon"><AiFillGithub /></div>
-                                    <div className="contact-icon"><AiFillLinkedin /></div>
+                                    <div className="contact-icon"><AiFillLinkedin onClick="https://www.linkedin.com/in/aman-tiwari-603245200/"/></div>
                                 </div>
                             </div>
                             <h3>Aman Tiwari</h3>
