@@ -1,6 +1,6 @@
 import React, { Component, useContext, useEffect } from "react";
 import Home from "../components/diseasePrediction/Home";
-import Patient from "../components/diseasePrediction/Patient1";
+// import Patient from "../components/diseasePrediction/Patient1";
 import Patient2 from "../components/diseasePrediction/Patient2";
 import Symptom from "../components/diseasePrediction/Symptom";
 import Disease from "../components/diseasePrediction/Disease";
@@ -21,9 +21,9 @@ class DP extends Component {
       home_button_checked: false, //Check if terms are agreed
       age: localStorage.getItem("age")? localStorage.getItem("age") : "18", //Patient Default Age
       button_name: "Next", //Button name retry or next
-      gender: "Male", //Default gender
-      male: true, // patient checkbox
-      female: false, // patient checkbox
+      gender: localStorage.getItem("gender")? localStorage.getItem("gender").toUpperCase() : "Male", //Default gender
+      // male: true, // patient checkbox
+      // female: false, // patient checkbox
       home_nav_icon: <p>1</p>,
       patient_nav_icon: <p>2</p>,
       symptom_nav_icon: <p>3</p>,
@@ -46,18 +46,21 @@ class DP extends Component {
     switch (this.state.current_page) {
       case "Home":
         return this.setState({
-          current_page: "Patient",
+          // current_page: "Patient",
+          current_page: "Patient-2",
           tab_progress: 50,
           home_nav_value: true,
           button_is_disabled: false,
           home_button_checked: false,
-        });
-      case "Patient":
-        return this.setState({
-          current_page: "Patient-2",
           button_name: "Next",
           patient_2_next_button_disabled: true,
         });
+      // case "Patient":
+      //   return this.setState({
+      //     current_page: "Patient-2",
+      //     button_name: "Next",
+      //     patient_2_next_button_disabled: true,
+      //   });
       case "Patient-2":
         return this.setState({
           current_page: "Symptom",
@@ -176,10 +179,11 @@ class DP extends Component {
           user_symptoms: [],
         });
       case "Patient-2":
-        return this.setState({ current_page: "Patient", patient_2_next_button_disabled: false });
-      case "Patient":
-        return this.setState({
-          current_page: "Home",
+        // return this.setState({ current_page: "Patient", patient_2_next_button_disabled: false });
+        return this.setState({ 
+          current_page: "Home", 
+          // patient_2_next_button_disabled: false,
+          // current_page: "Home",
           home_nav_icon: <p>1</p>,
           home_nav_value: false,
           button_is_disabled: true,
@@ -187,16 +191,27 @@ class DP extends Component {
           tab_progress: 25,
           user_symptom_length: 1,
         });
+      // case "Patient":
+      //   return this.setState({
+      //     current_page: "Home",
+      //     home_nav_icon: <p>1</p>,
+      //     home_nav_value: false,
+      //     button_is_disabled: true,
+      //     home_button_checked: false,
+      //     tab_progress: 25,
+      //     user_symptom_length: 1,
+      //   });
     }
   };
+
   showPage = (e) => {
-    const { current_page, home_button_checked, age, male, female } = this.state;
+    const { current_page, home_button_checked, age, gender } = this.state;
     // eslint-disable-next-line default-case
     switch (current_page) {
       case "Home":
         return <Home isChecked={home_button_checked} checked={this.home_button_check_event} />;
-      case "Patient":
-        return <Patient male={male} female={female} gender={this.get_gender} age={age} ageChange={this.get_age_event} />;
+      // case "Patient":
+      //   return <Patient male={male} female={female} gender={this.get_gender} age={age} ageChange={this.get_age_event} />;
       case "Patient-2":
         return <Patient2 callback={this.patient_2_callback} />;
       case "Symptom":
@@ -210,7 +225,7 @@ class DP extends Component {
           />
         );
       case "Disease":
-        return <Disease patientInfo={this.state.patient_question} disease_with_possibility={this.state.disease_possibility} gender={this.state.gender} age={this.state.age} />;
+        return <Disease patientInfo={this.state.patient_question} disease_with_possibility={this.state.disease_possibility} gender={gender} age={age} />;
     }
   };
 
@@ -290,9 +305,7 @@ const DiseasePrediction = () => {
   };
 
   
-  return (
-    <DP />
-  )
+  return <DP />;
 };
 
 export default DiseasePrediction;

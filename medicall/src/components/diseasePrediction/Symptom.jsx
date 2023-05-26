@@ -17,8 +17,8 @@ class Symptom extends Component {
 
   addSymptomButtonEvent = (e) => {
     if (!this.state.user_symptoms.includes(e.target.value)) {
-      let user_symptoms = [...this.state.user_symptoms, e.target.value];
-      return this.setState({ user_symptoms: user_symptoms }, () => {
+      let user_symptoms = [e.target.value, ...this.state.user_symptoms];
+      return this.setState({ user_symptoms: user_symptoms, searched: "" }, () => {
         this.get_possible_disease();
       });
     }
@@ -130,7 +130,7 @@ class Symptom extends Component {
     const symps = Symptoms.filter((each) => {
       return each.toLowerCase().includes(this.state.searched.toLowerCase());
     });
-    // console.log(symps, "symps");
+    
     return (
       <div id="Symptoms">
         <div className="grid-container">
@@ -139,6 +139,7 @@ class Symptom extends Component {
                 className="usa-input searchSymptomsInput"
                 onKeyDown={this.keyDownEvent}
                 onChange={this.getInputSymptoms}
+                value={this.state.searched}
                 placeholder="Search Symptoms"
                 id="input-type-text"
                 name="input-type-text"
@@ -152,7 +153,6 @@ class Symptom extends Component {
                 .map((key, id) => {
                     return (
                     <li key={id}>
-                        {/* {console.log(key, "key")} */}
                         <button onClick={this.addSymptomButtonEvent.bind(this)} value={key}>
                         {key}
                         </button>

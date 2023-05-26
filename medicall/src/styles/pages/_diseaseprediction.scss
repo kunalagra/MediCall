@@ -6,15 +6,25 @@
 
     #main-content {
         padding: 2rem 3rem 0 3rem;
-        width: 980px;
+        width: min(1000px, 95vw)    ;
         border: 1px solid var(--grey-color-3);
         border-radius: 1rem;
+
+        @include devices(sm) {
+            padding: 1.5rem;
+            padding-bottom: 0;
+        }
         
         .first-grid {
             display: grid;
             grid-template-rows: 1fr;
             grid-template-columns: 0.3fr 1fr;
             border-bottom: 1px solid var(--grey-color-3);
+
+            @include devices(md) {
+                grid-template-rows: 2fr;
+                grid-template-columns: 1fr;
+            }
         }
         
         .second-grid {
@@ -62,18 +72,18 @@
         }
     }
     
-    @media (min-width: 64em) {
-        .side-menu-list {
-            list-style-type: none;
-            color: var(--grey-color-3);
-        }
+    // @media (min-width: 64em) {
+    //     .side-menu-list {
+    //         list-style-type: none;
+    //         color: var(--grey-color-3);
+    //     }
         
-        .side-menu-list > .list {
-            font-size: 1rem;
-            border-left: 2px solid var(--blue-color-2);
-            color: var(--blue-color-5);
-        }
-    }
+    //     .side-menu-list > .list {
+    //         font-size: 1rem;
+    //         border-left: 2px solid var(--blue-color-2);
+    //         color: var(--blue-color-5);
+    //     }
+    // }
     
     .side-menu-list {
         list-style-type: none;
@@ -96,7 +106,7 @@
         border-left: 2px solid var(--blue-color-9);
     }
         
-    @media (max-width: 63.938em) {
+    @include devices(md) {
       
         .shoPageSection {
           height: 100%;
@@ -113,6 +123,7 @@
           padding: 3px;
           width: 25%;
           float: right;
+          background-color: var(--blue-color-1);
         }
       
         .progressbardiv {
@@ -297,6 +308,15 @@
             display: grid;
             grid-template-rows: 1fr;
             grid-template-columns: 0.5fr 0.7fr;
+
+            @include devices(900px) {
+                grid-template-columns: 0.5fr 0.95fr;
+            }
+
+            @include devices(600px) {
+                grid-template-rows: 2fr;
+                grid-template-columns: 0.9fr;
+            }
         }
 
         .searchSymptomsInput {

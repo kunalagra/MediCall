@@ -45,9 +45,6 @@ const Home = () => {
 
 
     const handleFeedbackClose = () => {
-        // TODO: fetch the data of the doctor name = <<localStorage.setItem("lastMeetWith")>>; and 
-        // increase the <<noOfAppointments>> by 1 and increase the <<noOfStars>> by <<feedbackRate>>; 
-        // then set the <<lastMeetWith>> in localStorage to null;
 
         httpClient.post('/doctor_app', {
             email: localStorage.getItem("lastMeetMail"),
@@ -65,12 +62,10 @@ const Home = () => {
     const ratings = ["Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied"];
 
     const [upcomingAppointments, setUpcomingAppointments] = useState([]);
-    // const [pastAppointments, setPastAppointments] = useState([]);
 
     useEffect(() => {
         const now = new Date(new Date().getTime() - 10*60000);
 
-        // console.log(now);
         if(userNotExists) {
             navigate("/");
         }
@@ -80,20 +75,14 @@ const Home = () => {
             toggleLoading(true);
             httpClient.post('/patient_apo', { email: localStorage.getItem('email') })
                 .then((res) => {
-                    // console.log(res.data);
                     let upcoming = [];
-                    // let past = [];
                     res.data.appointments.sort().reverse().forEach((appointment) => {
                         if (new Date(appointment.date+" " + appointment.time) >= now) {
                             upcoming.unshift(appointment);
                         }
-                        // else {
-                            // past.push(appointment);
-                        // }
                     });
                     toggleLoading(false);
                     setUpcomingAppointments(upcoming);
-                    // setPastAppointments(past);
                 })
                 .catch((err) => {
                     toggleLoading(false);
@@ -105,18 +94,13 @@ const Home = () => {
                 httpClient.post('/set_appointment', { email: localStorage.getItem('email') })
                     .then((res) => {
                         let upcoming = [];
-                        // let past = [];
                         res.data.appointments.sort().reverse().forEach((appointment) => {
                             if(new Date(appointment.date+" "+appointment.time) >= now){
                                 upcoming.unshift(appointment);
                             }
-                            // else{
-                                // past.push(appointment);
-                            // }
                         });
                         toggleLoading(false);
                         setUpcomingAppointments(upcoming)
-                        // setPastAppointments(past)
                     })
                     .catch((err) => {
                         toggleLoading(false);
@@ -258,12 +242,6 @@ const Home = () => {
             })
     }
 
-
-
-    // const upcomingAppointments = [{date: "2023-04-18", time: "11:50", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-18", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
-    
-    // const pastAppointments = [{date: "2023-04-17", time: "11:20", doctor: "Shiva", meet: "qwerty12345"}, {date: "2023-04-16", time: "06:00", doctor: "Aryan", meet: "qwerty12345"}];
-
     const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
 
     useScrollDisable(isLoading);
@@ -297,7 +275,6 @@ const Home = () => {
                             </div>
                             <div className="test-btn">
                                 <button onClick={() => {
-                                    // httpClient.put("/meet_end", {"email": localStorage.getItem("email")})
                                     searchmeet()}}
                                     disabled={!isVerified}
                                     >
@@ -343,25 +320,6 @@ const Home = () => {
                         </ul>
                     </div>
                 </div>
-
-                {/* <div className="past-appointments">
-                    <h2>Past Appointments</h2>
-                    <div className="main">
-                        <ul>
-                            {pastAppointments.map((item, index) => (
-                                <li className="appt-item" key={index}>
-                                    <div className="content">
-                                        <p>{new Date(item.date + " " + item.time).toString().slice(0,3) + "," + new Date(item.date + " " + item.time).toString().slice(3, 16) + "at " + new Date(item.date + " " + item.time).toString().slice(16,21)},</p>
-                                        <p> By {item.doctor ? item.doctor : item.patient}</p>
-                                    </div>
-                                    {!isDoctor && <button className="join-btn" onClick={() => {}}>Prescription</button>}
-                                </li>
-                            ))}
-                            {pastAppointments.length===0 && <li className="appt-item"><div className="content">No appointments found...</div></li>}
-                        </ul>
-                    </div>
-                </div> */}
-
 
                 <div className="news-section">
                     <h2>News from Our Doctors</h2>
@@ -570,9 +528,6 @@ const Home = () => {
                     <button onClick={() => {
                     setIsConnecting(true);
                     handlemeet();
-                    // setTimeout(() => {
-                    //   handlemeet();
-                    // }, 3000);
                     }}>Connect <FaVideo /></button>
                 </div>
                 )

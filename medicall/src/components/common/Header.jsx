@@ -58,8 +58,10 @@ const Header = () => {
     }, []);
 
     const dropdownRef = useRef();
+    const sidebarRef = useRef();
 
     useOutsideClose(dropdownRef, () => setShowDropdown(false));
+    useOutsideClose(sidebarRef, () => setSideBarOpen(false));
 
     return (
         <>
@@ -166,7 +168,7 @@ const Header = () => {
                                         <div className='sidebar-icon' onClick={() => setSideBarOpen(prev => !prev)}>
                                             {isSideBarOpen? <MdClose /> : <CiMenuFries />}
                                         </div>
-                                        <div className={`collapse ${isSideBarOpen? "active" : ""}`}>
+                                        <div className={`collapse ${isSideBarOpen? "active" : ""}`} ref={sidebarRef}>
                                         <nav className="nav_actions">
                                             <div className={`dash_action ${curPath==="/home"? "active" : ""}`}>
                                                 <span onClick={() => {navigate("/home");setSideBarOpen(false);}}>
