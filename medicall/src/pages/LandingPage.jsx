@@ -16,13 +16,11 @@ import { IoAccessibility } from "react-icons/io5";
 import Preloader from "../components/common/Preloader";
 import commonContext from "../contexts/common/commonContext";
 import useScrollDisable from "../hooks/useScrollDisable";
-import { useNavigate } from "react-router-dom";
 
 
 const LandingPage = () => {
 
     const { isLoading, toggleLoading } = useContext(commonContext);
-    const navigate = useNavigate();
 
     useEffect(() => {
         toggleLoading(true);
