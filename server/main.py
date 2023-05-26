@@ -1,26 +1,19 @@
 import datetime
 import uuid
-from flask import Flask, request, Response, redirect, render_template
-from flask_jwt_extended import JWTManager
+from flask import Flask, request, Response, redirect, render_template, send_from_directory, jsonify, url_for
 import secrets
 import stripe
-from flask_mail import Mail
-from flask import request, jsonify
+from flask_mail import Mail, Message
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
-from flask_cors import CORS
-from flask import request, jsonify
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, JWTManager
 from flask_cors import CORS
 import pymongo
 from pymongo.server_api import ServerApi
-from flask_mail import Message
 from dotenv import load_dotenv
 import os
 import json
-import stripe
 from threading import Thread
+import requests
 
 load_dotenv()
 secret_key = secrets.token_hex(16)
@@ -44,7 +37,7 @@ CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
 
 URI = "mongodb+srv://Deexith06:Deexith06@cluster0gc.0bncw3x.mongodb.net/?retryWrites=true&w=majority"
-    
+TOKEN = os.getenv("WHATSAPP")
 
 client = pymongo.MongoClient(URI, server_api=ServerApi('1'))
 
@@ -206,9 +199,27 @@ def get_status():
     # print(details)
     return jsonify({"details": details}), 200
 
-def send_email_async(msg):
+def send_message_async(msg):
     with app.app_context():
         mail.send(msg)
+    fileloc = request.url_root + "media/Receipt.pdf"
+    reqUrl = "https://graph.facebook.com/v16.0/100184439766915/messages"
+    headersList = {
+     "Accept": "*/*",
+     "Authorization": f"Bearer {TOKEN}",
+     "Content-Type": "application/json" 
+    }
+
+    payload = json.dumps({
+      "messaging_product": "whatsapp",
+      "to": "919867174368",
+      "type": "document",
+      "image": {
+        "link" : fileloc
+      }
+    })
+    response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+    os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
 
 
 @app.route('/mail_file', methods=['POST'])
@@ -216,19 +227,18 @@ def mail_file():
     # get form data
     user = request.form.get("email")
     f = request.files['file']
-    file_name = "Receipt.pdf"
-    file_content = f.read()
+    f.save(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
     
     msg = Message("Receipt cum Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])
     pat = patients.find_one({'email': user})
-    msg.html = render_template('email.html', Name=pat['username'])
-    msg.attach(file_name, "application/pdf", file_content)
-    thread = Thread(target=send_email_async, args=(msg,))
+    msg.html = render_template('email.html', Name=pat['username'] )
+    with app.open_resource(os.path.join(app.root_path, 'upload', 'Receipt.pdf')) as fp:
+        msg.attach("Receipt.pdf", "application/pdf", fp.read())
+    thread = Thread(target=send_message_async, args=(msg,))
     thread.start()
-
-    return jsonify({"message": "successfully sent"}), 200
+    return jsonify({"message": "Sucess"}), 200
 
 @app.route('/doctor_app', methods=['POST'])
 def doctor_app():
@@ -493,6 +503,11 @@ def delete_all_cart():
         doctor.update_one({'email': email}, {'$set': {'cart': []}})
         return jsonify({'message': 'Cart deleted successfully'}), 200
 
+@app.get('/media/<path:path>')
+def send_media(path):
+    return send_from_directory(
+        directory='upload', path=path
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
