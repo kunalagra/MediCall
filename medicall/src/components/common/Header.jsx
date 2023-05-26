@@ -48,14 +48,15 @@ const Header = () => {
     }
 
     useEffect(() => {
+        {(localStorage.getItem("email") && localStorage.getItem("email")!=="undefined") &&
         httpClient.post('/get_cart', { "email": localStorage.getItem("email")})
         .then((res) => {
             setCartItems(res.data.cart);
         })
         .catch((err) => {
             console.log(err);
-        });
-    }, []);
+        });}
+    }, [localStorage.getItem("email")]);
 
     const dropdownRef = useRef();
     const sidebarRef = useRef();

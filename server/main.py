@@ -410,10 +410,10 @@ def get_cart():
     email = data['email']
     var = patients.find_one({'email':email})
     if var:
-        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+        return jsonify({'message': 'Cart', 'cart': var.get('cart', [])}), 200
     else:
         var = doctor.find_one({'email': email})
-        return jsonify({'message': 'Cart', 'cart': var['cart']}), 200
+        return jsonify({'message': 'Cart', 'cart': var.get('cart', [])}), 200
 
 @app.route('/increase_quantity', methods=['POST'])
 def increase_quantity():
