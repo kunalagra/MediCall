@@ -214,8 +214,9 @@ def send_message_async(msg):
       "messaging_product": "whatsapp",
       "to": "919867174368",
       "type": "document",
-      "image": {
-        "link" : fileloc
+      "document": {
+        "filename": "Receipt.pdf",
+        "link" : fileloc,
       }
     })
     response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
