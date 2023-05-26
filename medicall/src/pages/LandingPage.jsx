@@ -9,12 +9,13 @@ import { AiFillLinkedin, AiFillGithub } from 'react-icons/ai';
 import { IoMdMail } from "react-icons/io";
 import { TbStethoscope, TbHeartPlus } from "react-icons/tb";
 import { BsRobot } from "react-icons/bs";
-import { AiOutlineAlert } from "react-icons/ai";
+import { GiMedicines } from "react-icons/gi";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { IoAccessibility } from "react-icons/io5";
 import Preloader from "../components/common/Preloader";
 import commonContext from "../contexts/common/commonContext";
 import useScrollDisable from "../hooks/useScrollDisable";
+import { useNavigate } from "react-router-dom";
 
 
 const LandingPage = () => {
@@ -29,6 +30,8 @@ const LandingPage = () => {
     useScrollDisable(isLoading);    
 
     useDocTitle();
+
+    const navigate = useNavigate();
 
     const faqs = [
         {
@@ -67,7 +70,8 @@ const LandingPage = () => {
                     <div className="text">
                         <h2>Take best quality treatments <br />and avoid health problems</h2>
                         <p>The art of medicine consists in amusing the patient while nature cures the disease. Treatment without prevention is simply unsustainable.</p>
-                        <button>Appointment</button>
+                        {(localStorage.getItem("username") && localStorage.getItem("username")!=="undefined") && localStorage.getItem("usertype")==="patient" && 
+                            <button onClick={() => navigate("/doctors")}>Appointment</button> }
                     </div>
                     <div className="doctor-img">
                         <img src="/doctor-image.png" alt="" />
@@ -99,7 +103,7 @@ const LandingPage = () => {
                     <div className="item">
                         <div className="img-div">
                             <div className="img third">
-                                <AiOutlineAlert />
+                                <GiMedicines />
                             </div>
                         </div>
                         <h3>Pharmacy integrated with stripe</h3>

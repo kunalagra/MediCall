@@ -256,7 +256,7 @@ const Profile = () => {
                                                     required
                                                     autoComplete=""
                                                 />
-                                                <label className="input_label">Password</label>
+                                                <label className="input_label">Update Password</label>
                                             </div>
                                             { passwd!=="" && isInvPass && <Alert severity="warning" className='input_alert'>Password should contain atleast 6 characters</Alert> }
                                         </div>

@@ -386,7 +386,7 @@ const Home = () => {
                 <div className="todays-tip">
                     <div className="head">
                         <HiOutlineLightBulb className="bulb-icon"/>
-                        <h2>Healthy Tip of the Day</h2>
+                        <h2>Healthy Fact of the Day</h2>
                     </div>
                     <div className="content">
                         <h3>Eat lots of fruit and veg</h3>

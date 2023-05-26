@@ -366,22 +366,22 @@
 
     .todays-tip {
         width: min(1100px, 93vw);
-        background-color: var(--yellow-color-2);
-        border: 2px solid var(--yellow-color-5);
+        background-color: #eedfa3;
+        border: 2px solid #ff5500;
         padding: 1.5rem;
-        color: #ff9d33;
+        color: #ff5500;
         border-radius: 8px;
         margin: 0 auto;
         margin-bottom: 5rem;
         transition: all 0.3s ease-in-out;
 
         ::selection {
-            background-color: #ff9d33;
+            background-color: #ff5500;
             color: #fff;
         }
         
         ::-moz-selection {
-            background-color: #ff9d33;
+            background-color: #ff5500;
             color: #fff;
         }        
 
@@ -394,7 +394,7 @@
         .head {
             @include flexbox(flex-start, center);
             margin-bottom: 1rem;
-            color: var(--orange-color-1);
+            color: #ff5900;
 
             .bulb-icon {
                 font-size: 2em;

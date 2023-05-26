@@ -163,27 +163,27 @@ const Header = () => {
                                         <div className={`collapse ${isSideBarOpen? "active" : ""}`}>
                                         <nav className="nav_actions">
                                             <div className={`dash_action ${curPath==="/home"? "active" : ""}`}>
-                                                <span onClick={() => navigate("/home")}>
+                                                <span onClick={() => {navigate("/home");setSideBarOpen(false);}}>
                                                     HOME
                                                 </span>
                                             </div>
 
                                             {localStorage.getItem("usertype")==="patient" && 
                                                 <div className={`doctor_action ${curPath==="/doctors"? "active" : ""}`}>
-                                                    <span onClick={() => navigate("/doctors")}>
+                                                    <span onClick={() => {navigate("/doctors"); setSideBarOpen(false);}}>
                                                         DOCTORS
                                                     </span>
                                                 </div>
                                             }
 
                                             <div className={`model_action ${curPath==="/disease-prediction"? "active" : ""}`}>
-                                                <span onClick={() => navigate("/disease-prediction")}>
+                                                <span onClick={() => {navigate("/disease-prediction"); setSideBarOpen(false);}}>
                                                     MODEL
                                                 </span>
                                             </div>
 
                                             <div className={`medicine_action ${curPath==="/buy-medicines"? "active" : ""}`}>
-                                                <span onClick={() => navigate("/buy-medicines")}>
+                                                <span onClick={() => {navigate("/buy-medicines"); setSideBarOpen(false);}}>
                                                     MEDICINES
                                                     <span className="badge">20% off</span>
                                                 </span>
