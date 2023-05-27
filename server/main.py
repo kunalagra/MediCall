@@ -52,6 +52,17 @@ def before_request():
     if request.method == 'OPTIONS':
         return Response()
 
+def whatsapp_message(msg):
+    reqUrl = "https://graph.facebook.com/v16.0/100184439766915/messages"
+    headersList = {
+     "Accept": "*/*",
+     "Authorization": f"Bearer {TOKEN}",
+     "Content-Type": "application/json" 
+    }
+    payload = json.dumps(msg)
+    response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
+    print(response)
+
 @app.route('/checkout')
 def create_checkout_session():
     try:
@@ -103,6 +114,15 @@ def register():
                 data['upcomingAppointments'] = []
                 del data['specialization']
                 patients.insert_one(data)
+                payload = {
+                      "messaging_product": "whatsapp",
+                      "to": data['phone'],
+                      "text": {
+                        "body": "Thank You for Signing up on MediCall"
+                    }
+                }
+                whatsapp_message(payload)
+
                 return jsonify({'message': 'User created successfully'}), 200
         elif data['registerer'] == 'doctor':
             if patients.find_one({'email': data['email']}):
@@ -198,16 +218,7 @@ def get_status():
             details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
     # print(details)
     return jsonify({"details": details}), 200
-def whatsapp_message(msg):
-    reqUrl = "https://graph.facebook.com/v16.0/100184439766915/messages"
-    headersList = {
-     "Accept": "*/*",
-     "Authorization": f"Bearer {TOKEN}",
-     "Content-Type": "application/json" 
-    }
-    payload = json.dumps(msg)
-    response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
-    print(response)
+
 def send_message_async(msg):
     with app.app_context():
         mail.send(msg)
@@ -220,9 +231,14 @@ def mail_file():
     user = request.form.get("email")
     f = request.files['file']
     f.save(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
+    msg = Message("Receipt cum Prescription for your Consultancy",
+                  sender="deexithmadas277@gmail.com",
+                  recipients=[user])
+    pat = patients.find_one({'email': user})
+    msg.html = render_template('email.html', Name=pat['username'] )
     payload = {
           "messaging_product": "whatsapp",
-          "to": "919867174368",
+          "to": pat['phone'],
           "type": "document",
           "document": {
             "filename": "Receipt.pdf",
@@ -230,19 +246,7 @@ def mail_file():
           }
         }
     whatsapp_message(payload)
-    payload = {
-          "messaging_product": "whatsapp",
-          "to": "919867174368",
-          "text": {
-              "body": "Hello World!"
-          }
-    }
-    whatsapp_message(payload)
-    msg = Message("Receipt cum Prescription for your Consultancy",
-                  sender="deexithmadas277@gmail.com",
-                  recipients=[user])
-    pat = patients.find_one({'email': user})
-    msg.html = render_template('email.html', Name=pat['username'] )
+
     with app.open_resource(os.path.join(app.root_path, 'upload', 'Receipt.pdf')) as fp:
         msg.attach("Receipt.pdf", "application/pdf", fp.read())
     thread = Thread(target=send_message_async, args=(msg,))
