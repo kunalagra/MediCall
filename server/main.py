@@ -207,11 +207,12 @@ def whatsapp_message(msg):
     }
     payload = json.dumps(msg)
     response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
-    os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
-
+    print(response)
 def send_message_async(msg):
     with app.app_context():
         mail.send(msg)
+        os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
+
 
 @app.route('/mail_file', methods=['POST'])
 def mail_file():
