@@ -39,6 +39,11 @@ const Doctors = () => {
     "08:00": true, "09:00": true, "10:00": true, "11:00": true, "12:00": true, "15:00": true, "16:00": true, "17:00": true, "18:00": true
   });
 
+  // Set this to user's balance amount
+  const balance = 3;
+  const [isLowBalance, setLowBalance] = useState(false);
+  const [curFee, setCurFee] = useState(0);
+
 
   const navigate = useNavigate();
   const userNotExists = localStorage.getItem("usertype") === undefined || localStorage.getItem("usertype") === null;
@@ -236,13 +241,19 @@ const Doctors = () => {
         return (
           <div className="appointment-column--cell">
             <button onClick={() => {
-              setSelectEmail(params.row.email);
+              if(params.row.fee > balance) {
+                setLowBalance(true);
+                setCurFee(params.row.fee);
+              } else {
+                setSelectEmail(params.row.email);
+                setSelectedDocStatus(params.row.status === "online");
+                setSelectedDocAvailable(params.row.isInMeet);
+                setScheduleMeet(false);
+                setInstantMeet(false);
+                setLowBalance(false);
+              }
               setSelectedDoc("Dr. " + params.row.username.split(" ").map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(" "));
               setMeetModal(true);
-              setSelectedDocStatus(params.row.status === "online");
-              setSelectedDocAvailable(params.row.isInMeet);
-              setScheduleMeet(false);
-              setInstantMeet(false);
             }}>
               BOOK
             </button>
@@ -281,7 +292,42 @@ const Doctors = () => {
         </div>
       </div>
       <Modal
-        open={meetModal}
+        open={meetModal && isLowBalance}
+        onClose={() => {
+          setMessage("")
+          setMeetModal(false);
+        }}
+      >
+        <div id="meet-modal" style={{ width: "min(400px, 90vw)" }}>
+          <div className="close_btn_div">
+            <IoMdClose onClick={() => {
+              setMessage("")
+              setMeetModal(false)
+              setConnecting(false)
+              httpClient.put('/delete_meet', { email: selectEmail} )
+            }} />
+          </div>
+          <div className="balance-details">
+            <h3>Uhuh!!</h3>
+            <p>Low Balance!</p>
+            <div className="fee-split">
+              <div className="text">Doctor Fee {`(${selectedDoc})`}</div>
+              <div className="fee">₹ {curFee}</div>
+            </div>
+            <div className="fee-split">
+              <div className="text">Available Balance</div>
+              <div className="fee">₹ {balance}</div>
+            </div>
+            <div className="fee-split last">
+              <div className="text">Remaining Balance</div>
+              <div className="fee">₹ {(curFee - balance).toFixed(2)}</div>
+            </div>
+            <button className="recharge-btn" onClick={() => navigate(`/my-wallet?recharge=${curFee - balance}`)}>Recharge Wallet</button>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        open={meetModal && !isLowBalance}
         onClose={() => {
           setMessage("")
           setMeetModal(false);
@@ -341,9 +387,6 @@ const Doctors = () => {
                 <button onClick={() => {
                   setConnecting(true);
                   handlemeet();
-                  // setTimeout(() => {
-                  //   handlemeet();
-                  // }, 3000);
                 }}>Connect <FaVideo /></button>
               </div>
             )

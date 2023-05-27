@@ -389,6 +389,7 @@
                 border-radius: 5px;
                 margin: 8px 5px;
                 font-family: 'Montserrat', sans-serif;
+                transition: all 0.3s ease;
                 
                 &:hover, &:active, &:disabled {
                     background-color: var(--blue-color-5);
@@ -400,6 +401,69 @@
             }
 
         }
+
+    }
+    
+    
+    .balance-details {
+        @include flexbox(center, flex-start);
+        flex-direction: column;
+        margin: 0 1rem;
+
+        h3 {
+            font-size: 1.3em;
+            color: var(--blue-color-8);
+        }
+
+        p {
+            color: rgb(200, 0, 0);
+        }
+
+        .fee-split {
+            margin-top: 1rem;
+            @include flexbox(space-between, center);
+            width: 100%;
+
+            .text {
+                font-size: 1.1em;
+                color: var(--blue-color-8);
+                text-align: left;
+                max-width: 70%;
+            }
+            
+            .fee {
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+
+        }
+
+        .last {
+            border-top: 2px solid var(--blue-color-7);
+            padding-top: 1rem;
+
+            .text, .fee {
+                color: rgb(200, 0, 0);
+            }
+                
+        }
+
+        .recharge-btn {
+            background-color: var(--blue-color-5);
+            border: 1px solid var(--blue-color-6);
+            color: var(--white-color);
+            padding: 10px 12px;
+            border-radius: 5px;
+            margin: 1.5rem auto;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            
+            &:hover, &:active {
+                background-color: var(--blue-color-6);
+            }   
+        }
+
     }
 
 }

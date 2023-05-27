@@ -198,29 +198,20 @@ def get_status():
             details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
     # print(details)
     return jsonify({"details": details}), 200
-
-def send_message_async(msg):
-    with app.app_context():
-        mail.send(msg)
-    fileloc = request.url_root + "media/Receipt.pdf"
+def whatsapp_message(msg):
     reqUrl = "https://graph.facebook.com/v16.0/100184439766915/messages"
     headersList = {
      "Accept": "*/*",
      "Authorization": f"Bearer {TOKEN}",
      "Content-Type": "application/json" 
     }
-
-    payload = json.dumps({
-      "messaging_product": "whatsapp",
-      "to": "919867174368",
-      "type": "document",
-      "document": {
-        "filename": "Receipt.pdf",
-        "link" : fileloc,
-      }
-    })
+    payload = json.dumps(msg)
     response = requests.request("POST", reqUrl, data=payload,  headers=headersList)
-    os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
+    print(response)
+def send_message_async(msg):
+    with app.app_context():
+        mail.send(msg)
+        os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
 
 
 @app.route('/mail_file', methods=['POST'])
@@ -229,7 +220,16 @@ def mail_file():
     user = request.form.get("email")
     f = request.files['file']
     f.save(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
-    
+    payload = {
+          "messaging_product": "whatsapp",
+          "to": "919867174368",
+          "type": "document",
+          "document": {
+            "filename": "Receipt.pdf",
+            "link" : request.url_root + "media/Receipt.pdf",
+          }
+        }
+    whatsapp_message(payload)
     msg = Message("Receipt cum Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
                   recipients=[user])

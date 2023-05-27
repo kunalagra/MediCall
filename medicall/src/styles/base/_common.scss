@@ -159,9 +159,6 @@
     @include toggleVisibility(hidden, 0);
     @include transition(all, 0.2s, ease-in-out);
 
-    @include devices(lg) {
-        display: none;
-    }
 }
 
 .backdrop {
