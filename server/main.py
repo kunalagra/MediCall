@@ -211,7 +211,7 @@ def whatsapp_message(msg):
 def send_message_async(msg):
     with app.app_context():
         mail.send(msg)
-        os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
+        # os.remove(os.path.join(app.root_path, 'upload', 'Receipt.pdf'))
 
 
 @app.route('/mail_file', methods=['POST'])
@@ -226,9 +226,17 @@ def mail_file():
           "type": "document",
           "document": {
             "filename": "Receipt.pdf",
-            "link" : request.url_root + "media/Receipt.pdf",
+            "link" : "http://34.93.183.254/media/Receipt.pdf",
           }
         }
+    whatsapp_message(payload)
+    payload = {
+          "messaging_product": "whatsapp",
+          "to": "919867174368",
+          "text": {
+              "body": "Hello World!"
+          }
+    }
     whatsapp_message(payload)
     msg = Message("Receipt cum Prescription for your Consultancy",
                   sender="deexithmadas277@gmail.com",
