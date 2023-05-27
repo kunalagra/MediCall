@@ -23,11 +23,11 @@ const Home = () => {
     const [haslastMeet, setHasLastMeet] = useState(localStorage.getItem("lastMeetWith")!==undefined && localStorage.getItem("lastMeetWith")!==null && localStorage.getItem("lastMeetWith")!=="null");
     const [feedbackRate, setFeedbackRate] = useState(3);
     const [feedbackAlert, setFeedbackAlert] = useState(false);
-    const [searchPatient, setSearchPatient] = useState(false);
+    const [searchPatient, setSearchPatient] = useState(localStorage.getItem("setSearchPatient")!==undefined && localStorage.getItem("setSearchPatient")!==null && localStorage.getItem("setSearchPatient")==="true");
     const isDoctor = localStorage.getItem("usertype")==="doctor";
-    const [searching, setSearching] = useState(0); 
-    const [patient_name, setPatient_name] = useState("");
-    const [meetlink, setMeetlink] = useState("");
+    const [searching, setSearching] = useState(localStorage.getItem("searching")!==undefined && localStorage.getItem("searching")!==null ? localStorage.getItem("searching")==="2" ? 2 : 1 : 0);
+    const [patient_name, setPatient_name] = useState(localStorage.getItem("curpname")!==undefined && localStorage.getItem("curpname")!==null && localStorage.getItem("curpname")!=="null" ? localStorage.getItem("curpname") : "");
+    const [meetlink, setMeetlink] = useState(localStorage.getItem("curmlink")!==undefined && localStorage.getItem("curmlink")!==null && localStorage.getItem("curmlink")!=="null" ? localStorage.getItem("curmlink") : "");
     const userNotExists = localStorage.getItem("usertype")===undefined || localStorage.getItem("usertype")===null;
     const [joinmeet, setJoinmeet] = useState(false);
     const [message, setMessage] = useState("");
@@ -121,6 +121,9 @@ const Home = () => {
                     setTimeout(() => {
                         setSearching(1);
                     }, 1000);
+                    setTimeout(() => {
+                        setSearchPatient(false);
+                    }, 2000);
                 }
                 else {
                     setPatient_name(res.data.link['name']);
@@ -134,6 +137,32 @@ const Home = () => {
                 console.log(err);
             })
     }
+
+    // setInterval(() => {
+    //     httpClient.post('make_meet', { email: localStorage.getItem('email') })
+    //         .then((res) => {
+    //             if (res.data.link!==null) {
+    //                 setPatient_name(res.data.link['name']);
+    //                 setMeetlink(res.data.link['link']);
+    //                 setSearchPatient(true);
+    //                 setSearching(2);
+    //             }
+    //             else {
+    //                 setSearchPatient(false);
+    //                 setSearching(0);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         })
+    // }, 25000);
+
+    setInterval(() => {
+        setMeetlink(localStorage.getItem("curmlink"));
+        setPatient_name(localStorage.getItem("curpname"));
+        setSearching(localStorage.getItem("searching")==="2" ? 2 : localStorage.getItem("searching")==="1" ? 1 : 0);
+        setSearchPatient(localStorage.getItem("setSearchPatient") === "true" ? true : false);
+    }, 25010);
 
     const handleappointmentmeet = (doc, demail, link) => {
         if(doc){

@@ -36,7 +36,7 @@ const Doctors = () => {
   const [curTime, setCurTime] = useState(null);
   const [fetchingData, setFetchingData] = useState(false);
   const [available, setAvailable] = useState({
-    "08:00": true, "09:00": true, "10:00": true, "11:00": true, "12:00": true, "13:13": true, "16:00": true, "17:00": true, "18:00": true
+    "08:00": true, "09:00": true, "10:00": true, "11:00": true, "12:00": true, "15:00": true, "16:00": true, "17:00": true, "18:00": true
   });
 
 
@@ -73,7 +73,7 @@ const Doctors = () => {
   };
 
   function checkInvDateTime(date, time) {
-    const now = new Date(new Date().getTime() );
+    const now = new Date(new Date().getTime() + 30 * 60000);
     const d = new Date(date + ' ' + time);
     setInvDateTime(now >= d);
   }
@@ -82,8 +82,8 @@ const Doctors = () => {
   const handleSchedule = (upcomingAppointments) => {
     for (let i = 0; i < upcomingAppointments.length; i++) {
       const now = new Date(curDate + " " + curTime);
-      const d1 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() );
-      const d2 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() );
+      const d1 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() - 30 * 60000);
+      const d2 = new Date(new Date(upcomingAppointments[i].date + ' ' + upcomingAppointments[i].time).getTime() + 30 * 60000);
 
       if (d1 < now && now <= d2)
         return false;
@@ -100,7 +100,7 @@ const Doctors = () => {
         // console.log(res.data);
         const appointments = res.data.appointments;
         let times = {
-          "08:00": true, "09:00": true, "10:00": true, "11:00": true, "12:00": true, "13:13": true, "16:00": true, "17:00": true, "18:00": true
+          "08:00": true, "09:00": true, "10:00": true, "11:00": true, "12:00": true, "15:00": true, "16:00": true, "17:00": true, "18:00": true
         };
         console.log(curDate)
         appointments.filter((item) => item.date === curDate).map((item) => {
@@ -120,7 +120,7 @@ const Doctors = () => {
   const [selectedDocAvailable, setSelectedDocAvailable] = useState(false);
   const [selectEmail, setSelectEmail] = useState("");
   const [message, setMessage] = useState("");
-  const timings = [{ time: "08:00", available: available["08:00"] }, { time: "09:00", available: available["09:00"] }, { time: "10:00", available: available["10:00"] }, { time: "11:00", available: available["11:00"] }, { time: "12:00", available: available["12:00"] }, { time: "13:13", available: available["13:13"] }, { time: "16:00", available: available["16:00"] }, { time: "17:00", available: available["17:00"] }, { time: "18:00", available: available["18:00"] }];
+  const timings = [{ time: "08:00", available: available["08:00"] }, { time: "09:00", available: available["09:00"] }, { time: "10:00", available: available["10:00"] }, { time: "11:00", available: available["11:00"] }, { time: "12:00", available: available["12:00"] }, { time: "15:00", available: available["15:00"] }, { time: "16:00", available: available["16:00"] }, { time: "17:00", available: available["17:00"] }, { time: "18:00", available: available["18:00"] }];
   const { handleActive, activeClass } = useActive(-1);
 
   const handlemeet = () => {
