@@ -11,6 +11,19 @@ const Success = () => {
   const navigate = useNavigate();
 
   window.onload = () => {
+    if (localStorage.getItem("wallet") === "true") {
+      setTimeout(() => {
+        setActive(true);
+        setTimeout(() => {
+          httpClient.post('/wallet', {email: localStorage.getItem("email"), amount: localStorage.getItem("totalPrice")})
+          httpClient.post('/add_wallet_history', {email: localStorage.getItem("email"), 
+          history: {desc: "Recharge", amount: Number(localStorage.getItem("totalPrice")), date: new Date().toLocaleString(), add: true}})
+          navigate("/my-wallet");
+          localStorage.removeItem("wallet");
+        }, 3000);
+      }, 1000);
+    }
+    else {
     setTimeout(() => {
       setActive(true);
       setTimeout(() => {
@@ -18,6 +31,7 @@ const Success = () => {
         navigate("/my-orders");
       }, 3000);
     }, 1000);
+  }
   };
   
   return (

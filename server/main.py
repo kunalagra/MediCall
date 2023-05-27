@@ -510,6 +510,71 @@ def send_media(path):
         directory='upload', path=path
     )
 
+@app.route('/wallet', methods=['POST'])
+def wallet():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        wallet = var.get('wallet', 0)+int(data['walletAmount'])
+        patients.update_one({'email': email}, {'$set': {'wallet': wallet}})
+        return jsonify({'message': 'Wallet updated successfully'}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        wallet = var.get('wallet', 0)+int(data['walletAmount'])
+        doctor.update_one({'email': email}, {'$set': {'wallet': wallet}})
+        return jsonify({'message': 'Wallet updated successfully'}), 200
+
+@app.route('/get_wallet', methods=['POST'])
+def get_wallet():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        return jsonify({'message': 'Wallet', 'wallet': var.get('wallet', 0)}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        return jsonify({'message': 'Wallet', 'wallet': var.get('wallet', 0)}), 200
+
+@app.route("/debit_wallet", methods=['POST'])
+def debit_wallet():
+    data = request.get_json()
+    email = data['email']
+    demail = data['demail']
+    doctor = doctor.find_one({'email': demail})
+    var = patients.find_one({'email': email})
+    wallet = var.get('wallet', 0)-int(doctor.get('fee', 0))
+    patients.update_one({'email': email}, {'$set': {'wallet': wallet}})
+    return jsonify({'message': 'Wallet updated successfully'}), 200
+    
+@app.route('/add_wallet_history', methods=['POST'])
+def add_wallet_history():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        history = var.get('wallet_history', [])
+        history.append(data['history'])
+        patients.update_one({'email': email}, {'$set': {'wallet_history': history}})
+        return jsonify({'message': 'Wallet history added successfully'}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        history = var.get('wallet_history', [])
+        history.append(data['history'])
+        doctor.update_one({'email': email}, {'$set': {'wallet_history': history}})
+        return jsonify({'message': 'Wallet history added successfully'}), 200
+    
+@app.route('/get_wallet_history', methods=['POST'])
+def get_wallet_history():
+    data = request.get_json()
+    email = data['email']
+    var = patients.find_one({'email': email})
+    if var:
+        return jsonify({'message': 'Wallet history', 'wallet_history': var.get('wallet_history', [])}), 200
+    else:
+        var = doctor.find_one({'email': email})
+        return jsonify({'message': 'Wallet history', 'wallet_history': var.get('wallet_history', [])}), 200
+
 if __name__ == "__main__":
     app.run(debug=True)
 

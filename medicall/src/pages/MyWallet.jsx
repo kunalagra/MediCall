@@ -5,27 +5,48 @@ import commonContext from "../contexts/common/commonContext";
 import Preloader from "../components/common/Preloader";
 import useScrollDisable from "../hooks/useScrollDisable";
 import { CircularProgress } from "@mui/material";
+import httpClient from "../httpClient";
 
 const MyWallet = () => {
 
     const [canSeeMoney, setSeeMoney] = useState(false);
 
     // Set this to user's balance amount
-    const [availableMoney, setAvailableMoney] = useState(Number((1244.2).toFixed(2)));
+    const [availableMoney, setAvailableMoney] = useState(0.00);
     const [searchparams] = useSearchParams();
     const [inputMoney, setInputMoney] = useState(searchparams.get("recharge")? searchparams.get("recharge") : "");
     const recommendedMoney = [1000, 1500, 2000];
     const navigate = useNavigate();
+    const [transactions, setTransactions] = useState([]);
 
     // Set this to real time transactions: 
     // Item Structure: {desc: <Description>, amount: <Transaction Amount>, add: <bool for recharged or charged>, date: <Date should in form of "16 May, 12:05 PM">}
-    const transactions = [{desc: "Doctor Fee", amount: 299, add: false}, {desc: "Recharge", amount: 2000, add: true}, {desc: "Doctor Fee", amount: 499, add: false}];
+    // const transactions = [{desc: "Doctor Fee", amount: 299, add: false}, {desc: "Recharge", amount: 2000, add: true}, {desc: "Doctor Fee", amount: 499, add: false}];
 
     const { isLoading, toggleLoading } = useContext(commonContext);
     const [addingMoney, setAddingMoney] = useState(false);
     const [rechargeText, setRechargeText] = useState("Proceed to Topup");
 
     useScrollDisable(isLoading);
+
+    useEffect(() => {
+        httpClient.post("/get_wallet", {email: localStorage.getItem("email")})
+        .then((res) => {
+            setAvailableMoney(Number((res.data.wallet).toFixed(2)));
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        httpClient.post("/get_wallet_history", {email: localStorage.getItem("email")})
+        .then((res) => {
+            setTransactions(res.data.wallet_history);
+        }
+        )
+        .catch((err) => {
+            console.log(err);
+        }
+        );
+    }, [localStorage.getItem("wallet")]);
 
     useEffect(() => {
         setInputMoney(prev => displayMoney(prev));
@@ -65,7 +86,9 @@ const MyWallet = () => {
 
             // This is temporarily adding money: Update this to add the money via checkout form
             //start
-            setAvailableMoney(prev => prev + res);
+            localStorage.setItem("wallet", true)
+            localStorage.setItem("totalPrice", res);
+            navigate("/checkout");
             setTimeout(() => {
                 setRechargeText("Successfully Recharged");
             }, 2000);
@@ -140,7 +163,7 @@ const MyWallet = () => {
                                     <div key={index} className="trans-item">
                                         <div className="text">
                                             <p className="desc">{trans.desc}</p>
-                                            <p>16 May, 12:05 PM</p>
+                                            <p>{trans.date}</p>
                                             <div className="tooltip">{trans.desc}</div>
                                         </div>
                                         <div className={`amount ${trans.add? "add" : ""}`}>

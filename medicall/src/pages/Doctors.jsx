@@ -40,7 +40,7 @@ const Doctors = () => {
   });
 
   // Set this to user's balance amount
-  const balance = 3;
+  const [balance, setBalance] = useState(0);
   const [isLowBalance, setLowBalance] = useState(false);
   const [curFee, setCurFee] = useState(0);
 
@@ -135,14 +135,14 @@ const Doctors = () => {
       if (res.status === 200) {
         httpClient.put("/make_meet", {
           "email": selectEmail,
-          "link": `/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}`,
+          "link": `/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}&fee=${curFee}`,
           "patient": localStorage.getItem("username")
         }).then((res) => {
           setTimeout(() => {
             httpClient.post("/currently_in_meet", { "email": selectEmail }).then((res) => {
               if (res.data.curmeet) {
                 setConnecting(false);
-                navigate(`/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}`)
+                navigate(`/instant-meet?meetId=${time}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}fee=${curFee}`);
               }
               else {
                 httpClient.put('/delete_meet', { "email": selectEmail })
@@ -164,6 +164,14 @@ const Doctors = () => {
     })
 
   };
+
+  useEffect(() => {
+    httpClient.post("/get_wallet", { "email": localStorage.getItem("email") }).then((res) => {
+      setBalance(res.data.wallet);
+    }).catch(() => {
+      // console.log(res)
+    })
+  }, []);
 
   const columns = [
     { field: "id", headerName: "#", headerAlign: "center", align: "center", width: 100 },
@@ -430,7 +438,7 @@ const Doctors = () => {
                       if (handleSchedule(res.data.appointments)) {
                         setScheduleAlert(2);
                         const datetime = `${curDate}${curTime.replace(":", "")}`;
-                        const link = `/instant-meet?meetId=${datetime}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}`
+                        const link = `/instant-meet?meetId=${datetime}&selectedDoc=${selectedDoc}&selectedMail=${encodeURIComponent(selectEmail)}&name=${localStorage.getItem("username")}&age=${localStorage.getItem("age")}&gender=${localStorage.getItem("gender")}&pemail=${localStorage.getItem("email")}fee=${curFee}`;
                         httpClient.put('/patient_apo', { email: localStorage.getItem('email'), date: curDate, time: curTime, doctor: selectedDoc, demail: selectEmail, link: link }).then((res) => {
                           console.log(res);
                         }).catch((err) => {

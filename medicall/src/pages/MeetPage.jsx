@@ -138,6 +138,10 @@ const MeetPage = () => {
     toggleFeedback(true);
     setMeetEnded(true);
     httpClient.put('/delete_meet', { email: searchparams.get("selectedMail")} );
+    httpClient.post('/debit_wallet', { email: searchparams.get("pemail"), demail: searchparams.get("selectedMail") })
+    httpClient.post('/add_wallet_history', { email: searchparams.get("pemail"),
+    history: {desc: "Doctor Fee", amount: searchparams.get('fee'), date: new Date().toLocaleDateString(), add: false}
+  })
   };
 
   const renderSpinner = () => (
