@@ -72,7 +72,7 @@ const Header = () => {
                 <div className='details'>
                     <Link to="/" className='contact-detail'>
                         <FiMail className='icon'/>
-                        <p className='detail'>info@medicall.com</p>
+                        <p className='detail'>medicall489@gmail.com</p>
                     </Link>
                     <Link to="/" className='contact-detail'>
                         <FiPhoneCall className='icon'/>
