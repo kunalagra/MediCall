@@ -54,8 +54,8 @@
     }
 
     @include devices(sm) {
-        grid-template-columns: 0.3fr 0.7fr;
-        gap: 2rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
         @include padding-y(2rem, 2rem);
     }
 }
@@ -65,6 +65,7 @@
         border-radius: 12px;
         max-width: 150px;
         max-height: 150px;
+        width: 100%;
     }
 }
 
@@ -154,7 +155,7 @@
 .order_summary_details {
     display: grid;
     gap: 1.5rem;
-    @include margin-y(3rem, 3rem);
+    @include margin-y(3rem, 2rem);
 
     div {
         @include flexbox(space-between, center);
@@ -174,6 +175,16 @@
         color: var(--black-color-2);
         padding: 1.5rem;
         border-radius: 12px;
+    }
+}
+
+.use-balance-div {
+    @include flexbox(flex-start, center);
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+
+    input {
+        margin-right: 1rem;
     }
 }
 

@@ -17,6 +17,8 @@ import Checkout from "../pages/Checkout";
 import DisPred from "../pages/DisPred";
 import Chatbot from "../components/common/Chatbot";
 import MyOrders from "../pages/MyOrders";
+import MyWallet from "../pages/MyWallet";
+import RecentTransactions from "../pages/RecentTransactions";
 
 
 const RouterRoutes = () => {
@@ -43,6 +45,8 @@ const RouterRoutes = () => {
         <Route path="/disease-prediction" element={<DiseasePrediction />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/my-wallet" element={<MyWallet />} />
+        <Route path="/recent-transactions" element={<RecentTransactions />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Routes>

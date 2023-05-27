@@ -12,6 +12,7 @@ import { FiMail } from "react-icons/fi";
 import { FiPhoneCall } from "react-icons/fi";
 import { CiMenuFries } from "react-icons/ci";
 import { MdClose } from "react-icons/md";
+import { IoWalletOutline } from "react-icons/io5";
 
 
 const Header = () => {
@@ -151,8 +152,12 @@ const Header = () => {
                                                 <div className="separator"></div>
                                                 <ul>
                                                     <li>
+                                                        <IoWalletOutline className='cart-icon' />
+                                                        <Link to="/my-wallet" onClick={() => setShowDropdown(false)}>My Wallet</Link>
+                                                    </li>
+                                                    <li>
                                                         <AiOutlineShoppingCart className='cart-icon' />
-                                                        <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My cart</Link>
+                                                        <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My Cart</Link>
                                                         <span className='cart_badge'>{cartItems.length}</span>
                                                     </li>
                                                     <li>
@@ -227,8 +232,12 @@ const Header = () => {
                                             <div className="separator"></div>
                                             <ul>
                                                 <li>
+                                                    <IoWalletOutline className='cart-icon' />
+                                                    <Link to="/my-wallet" onClick={() => setShowDropdown(false)}>My Wallet</Link>
+                                                </li>
+                                                <li>
                                                     <AiOutlineShoppingCart className='cart-icon' />
-                                                    <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My cart</Link>
+                                                    <Link to="/my-cart" onClick={() => setShowDropdown(false)}>My Cart</Link>
                                                     <span className='cart_badge'>{cartItems.length}</span>
                                                 </li>
                                                 <li>

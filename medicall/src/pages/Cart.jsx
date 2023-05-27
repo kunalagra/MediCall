@@ -50,6 +50,10 @@ const Cart = () => {
   // total original price
   let cartTotal = 0;
 
+  // Set this to user's balance amount
+  const balance = 123;
+  const [addBalance, setAddBalance] = useState(false);
+
   cartItems.forEach((item) => {
     cartTotal += item.price * item.quantity;
   });
@@ -71,7 +75,6 @@ const Cart = () => {
         <div className="container">
           {cartQuantity === 0 ? (
             <EmptyView
-              // icon={<BsCartX />}
               msg="Your Cart is Empty"
               link="/all-medicines"
               btnText="Start Shopping"
@@ -98,7 +101,7 @@ const Cart = () => {
                       <b>
                         <small>SUBTOTAL</small>
                       </b>
-                      <b>₹ {cartTotal} /-</b>
+                      <b>₹ {cartTotal - (addBalance? balance : 0)} /-</b>
                     </div>
                     <div className="separator"></div>
                     <div className="summary_note">
@@ -108,6 +111,12 @@ const Cart = () => {
                       international transaction fees.
                     </div>
                   </div>
+
+                  <div onClick={() => setAddBalance(prev => !prev)} className="use-balance-div">
+                    <input type="checkbox" checked={addBalance} onChange={() => {}}/>
+                    <p>Use Wallet Money {`(₹ ${balance})`}</p>
+                  </div>
+
                   <button
                     type="button"
                     method="post"
@@ -117,7 +126,7 @@ const Cart = () => {
                     onClick={() => {
                       setIsCheckoutLoading(true);
                       setTimeout(() => {
-                        localStorage.setItem("totalPrice", cartTotal);
+                        localStorage.setItem("totalPrice", cartTotal - (addBalance? balance : 0));
                         cartItems.forEach((item) => {
                           placeOrder(item);
                         });
