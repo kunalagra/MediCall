@@ -37,6 +37,7 @@ const MeetPage = () => {
   const [prescription, setPrescription] = useState([]);
   const [newPrescription, setNewPrescription] = useState({name: "", dosage: "", duration: "", durationUnit: "day(s)", dosageTime: "Before Food"});
   const [copyAlert, setCopyAlert] = useState(false);
+  const [isInvName, setInvName] = useState(false);
   const [isInvDosage, setInvDosage] = useState(false);
   const [isInvDuration, setInvDuration] = useState(false);
 
@@ -300,7 +301,10 @@ const MeetPage = () => {
                           type="text"
                           className="input_field"
                           value={newPrescription.name}
-                          onChange={(e) => setNewPrescription({...newPrescription, name: e.target.value})}
+                          onChange={(e) => {
+                            setInvName(prescription.filter(item => item.toLowerCase()===newPrescription.name.toLowerCase()));
+                            setNewPrescription({...newPrescription, name: e.target.value});
+                          }}
                           placeholder="Medicine Name"
                       />
                     </div>
@@ -311,7 +315,7 @@ const MeetPage = () => {
                             className="input_field"
                             value={newPrescription.dosage}
                             onChange={(e) => {
-                              setInvDosage(!(/^[0-1]-[0-1]-[0-1]$/.test(e.target.value)));
+                              setInvDosage(!(/^[0-5]-[0-5]-[0-5]$/.test(e.target.value)));
                               setNewPrescription({...newPrescription, dosage: e.target.value});
                             }}
                             placeholder="Dosage i.e. 1-0-0"
@@ -327,7 +331,7 @@ const MeetPage = () => {
                             className="input_field"
                             value={newPrescription.duration}
                             onChange={(e) => {
-                              setInvDuration(!(/^[0-9]{1,9}$/.test(e.target.value)));
+                              setInvDuration(!(/^[0-9]{1,9}$/.test(e.target.value)) || (Number(e.target.value)===0));
                               setNewPrescription({...newPrescription, duration: e.target.value});
                             }}
                             placeholder="Duration"
@@ -340,9 +344,10 @@ const MeetPage = () => {
                     </div>
                 </div>
                 <div className="add-btn">
-                  <button onClick={addPrescriptionItem} disabled={(newPrescription.name.length===0) || newPrescription.dosage==="" || newPrescription.duration==="" || isInvDosage || isInvDuration}>
+                  <button onClick={addPrescriptionItem} disabled={(newPrescription.name.length===0) || newPrescription.dosage==="" || newPrescription.duration==="" || isInvName || isInvDosage || isInvDuration}>
                       Add
                   </button>
+                  {isInvName && <Alert severity="error">Medicine Name already exists</Alert>}
                   {isInvDosage && <Alert severity="error">Dosage should be in the form of n-n-n</Alert>}
                   {isInvDuration && <Alert severity="error">Invalid Duration</Alert>}
                 </div>
