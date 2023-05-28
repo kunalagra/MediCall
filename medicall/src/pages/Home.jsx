@@ -272,7 +272,7 @@ const Home = () => {
             })
     }
 
-    const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
+    // const news = [{message: "Hello! all, today is the holiday", doctor: "Sam"}, {message: "Please be safe and stay at home", doctor: "Joe"}];
 
     useScrollDisable(isLoading);
 
@@ -351,7 +351,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="news-section">
+                {/* <div className="news-section">
                     <h2>News from Our Doctors</h2>
                     <div className="content">
                         {news.length > 0 && <div className="messages">
@@ -369,7 +369,7 @@ const Home = () => {
                             <button>Send</button>
                         </div>}
                     </div>
-                </div>
+                </div> */}
 
                 <div className="todays-tip">
                     <div className="head">
