@@ -276,6 +276,16 @@ def set_appointment():
             "pemail": data['pemail'],
             "link": data['link'],
         })
+
+        payload = {
+                "messaging_product": "whatsapp",
+                "to": data['phone'],
+                "text": {
+                "body": "Your Appointment has been booked on" + data['date'] + "at "+ data['time'] + "with Dr." + doc['username'] +"."
+            }
+        }
+        whatsapp_message(payload)
+
         doctor.update_one({'email': email}, {'$set': {'upcomingAppointments': doc['upcomingAppointments']}})
         return jsonify({'message': 'Doctor status updated successfully'}), 200
 
