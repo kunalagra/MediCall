@@ -25,7 +25,7 @@ SECRET_KEY = "jkajoisjosk"
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'deexithmadas277'
+app.config['MAIL_USERNAME'] = 'medicall489'
 app.config['MAIL_PASSWORD'] = os.getenv('PASSWORD')
 app.config['MAIL_USE_TLS'] = True
 mail = Mail(app)
