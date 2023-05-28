@@ -302,7 +302,7 @@ const MeetPage = () => {
                           className="input_field"
                           value={newPrescription.name}
                           onChange={(e) => {
-                            setInvName(prescription.filter(item => item.name.toLowerCase()===newPrescription.name.toLowerCase()).length > 0);
+                            setInvName(prescription.filter(item => item.split(" | ")[0].toLowerCase()===e.target.value.toLowerCase()).length > 0);
                             setNewPrescription({...newPrescription, name: e.target.value});
                           }}
                           placeholder="Medicine Name"
