@@ -302,7 +302,7 @@ const MeetPage = () => {
                           className="input_field"
                           value={newPrescription.name}
                           onChange={(e) => {
-                            setInvName(prescription.filter(item => item.toLowerCase()===newPrescription.name.toLowerCase()).length > 0);
+                            setInvName(prescription.filter(item => item.name.toLowerCase()===newPrescription.name.toLowerCase()).length > 0);
                             setNewPrescription({...newPrescription, name: e.target.value});
                           }}
                           placeholder="Medicine Name"
@@ -348,7 +348,7 @@ const MeetPage = () => {
                       Add
                   </button>
                   {isInvName && <Alert severity="error">Medicine Name already exists</Alert>}
-                  {isInvDosage && <Alert severity="error">Dosage should be in the form of n-n-n</Alert>}
+                  {isInvDosage && <Alert severity="error">Dosage should be in the form of n-n-n and between 0-5</Alert>}
                   {isInvDuration && <Alert severity="error">Invalid Duration</Alert>}
                 </div>
             </div>
