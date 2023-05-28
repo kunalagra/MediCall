@@ -79,15 +79,20 @@ const BackTop = () => {
 "Hemorrhoids","Spasm bronchial","Aphasia","Obesity morbid","Pyelonephritis","Endocarditis","Effusion pericardial","Pericardial effusion body substance","Chronic alcoholic intoxication","Pneumothorax","Delirium","Neutropenia","Hyperbilirubinemia","Influenza","Dependence","Thrombus","Cholecystitis","Hernia hiatal","Migraine disorders","Pancytopenia","Cholelithiasis","Biliary calculus","Tachycardia sinus","Ileus","Adhesion","Delusion","Affect labile","Decubitus ulcer"  
 ];
 
-const INTRO_WORDS = ["hi","hello","hey","namaste"];
+const INTRO_WORDS = ["hi", "hii", "hello", "hey", "namaste"];
 
-const handleSend = async (message) => {
+const handleSend = async (msg) => {
+  if(msg==="") return;
+  let message = msg.replace(/&nbsp;/g, "").trim();
+
+  console.log(message);
+
   const newMessage = {
-    message,
+    message: message,
     direction: "outgoing",
     sender: "user",
   };
-  
+
   const containsHealthKeywords = HEALTH_KEYWORDS.some(keyword => message.toLowerCase().includes(keyword));
   
   if (INTRO_WORDS.includes(message)) {
@@ -101,6 +106,7 @@ const handleSend = async (message) => {
     ]);
     return;
   }
+
   if (!containsHealthKeywords && !INTRO_WORDS.includes(message)) {
     setMessages([
       ...messages,
@@ -112,6 +118,8 @@ const handleSend = async (message) => {
     ]);
     return;
   }
+
+
 
   const newMessages = [...messages, newMessage];
 
