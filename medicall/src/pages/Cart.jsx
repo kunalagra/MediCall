@@ -48,15 +48,31 @@ const Cart = () => {
   const cartQuantity = cartItems.length;
 
   // total original price
-  let cartTotal = 0;
+  const [cartTotal, setCartTotal] = useState(0);
 
   // Set this to user's balance amount
-  const balance = 123;
+  const [balance, setBalance] = useState(0);
   const [addBalance, setAddBalance] = useState(false);
+  const [totalBalance, setTotalBalance] = useState(cartTotal);
+  
+  
+  useEffect(() => {
+    setCartTotal(0);
+    setTotalBalance(0);
+    cartItems.forEach((item) => {
+      setCartTotal(prev => prev + (item.price * item.quantity));
+      setTotalBalance(prev => prev + (item.price * item.quantity));  
+    });
+    // console.log(cartItems);
+    httpClient.post('/get_wallet', {email: localStorage.getItem("email")})
+    .then((res) => {
+      setBalance(Number(res.data.wallet))
+    });
+  }, [cartItems]);
 
-  cartItems.forEach((item) => {
-    cartTotal += item.price * item.quantity;
-  });
+  
+  // setTotalBalance(cartTotal);
+
 
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [isAlert, setIsAlert] = useState(0);
@@ -89,7 +105,7 @@ const Cart = () => {
 
               <div className="cart_right_col">
                 <div className="clear_cart_btn">
-                  <button onClick={() => {clearCart(),deleteAll()} }>Clear Cart</button>
+                  <button onClick={() => {clearCart();deleteAll()} }>Clear Cart</button>
                 </div>
                 <div className="order_summary">
                   <h3>
@@ -101,7 +117,7 @@ const Cart = () => {
                       <b>
                         <small>SUBTOTAL</small>
                       </b>
-                      <b>₹ {cartTotal - (addBalance? balance : 0)} /-</b>
+                      <b>₹ {totalBalance} /-</b>
                     </div>
                     <div className="separator"></div>
                     <div className="summary_note">
@@ -112,7 +128,19 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <div onClick={() => setAddBalance(prev => !prev)} className="use-balance-div">
+                  <div onClick={() => {
+                    console.log(cartTotal);
+                    if(!addBalance) {
+                      if(cartTotal <= balance) {
+                        setTotalBalance(0);
+                      } else {
+                        setTotalBalance(cartTotal - balance);
+                      }
+                    } else {
+                      setTotalBalance(cartTotal);
+                    }
+                    setAddBalance(prev => !prev);
+                  }} className="use-balance-div">
                     <input type="checkbox" checked={addBalance} onChange={() => {}}/>
                     <p>Use Wallet Money {`(₹ ${balance})`}</p>
                   </div>
@@ -124,16 +152,28 @@ const Cart = () => {
                       isCheckoutLoading && "active"
                     }`}
                     onClick={() => {
-                      setIsCheckoutLoading(true);
-                      setTimeout(() => {
-                        localStorage.setItem("totalPrice", cartTotal - (addBalance? balance : 0));
-                        cartItems.forEach((item) => {
-                          placeOrder(item);
-                        });
-                        navigate("/checkout");
-                        setIsCheckoutLoading(false);
-                        setIsAlert(2);
-                      }, 2000);
+                      if (totalBalance===0){
+                        httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: cartTotal})
+                        localStorage.setItem("totalPrice", cartTotal);
+                        // cartItems.forEach((item) => {
+                        //   placeOrder(item);
+                        // });
+                        localStorage.setItem("orders", JSON.stringify(cartItems))
+                        window.location.href = "http://localhost:3000/success";
+                      }
+                      else{
+                        setIsCheckoutLoading(true);
+                        httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: balance})
+                        setTimeout(() => {
+                          localStorage.setItem("totalPrice", cartTotal);
+                          cartItems.forEach((item) => {
+                            placeOrder(item);
+                          });
+                          navigate("/checkout");
+                          setIsCheckoutLoading(false);
+                          setIsAlert(2);
+                        }, 2000);
+                      }
                       
                     }}
                   >

@@ -63,8 +63,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-
-        return_url: "https://gfg-sfi.onrender.com/success",
+        return_url: process.env.NODE_ENV === 'development' ? "http://localhost:3000/success" : "https://gfg-sfi.onrender.com/success",
       },
     });
 

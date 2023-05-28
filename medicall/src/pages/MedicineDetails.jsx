@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Preloader from "../components/common/Preloader";
 import commonContext from "../contexts/common/commonContext";
 import useScrollDisable from "../hooks/useScrollDisable";
+import httpClient from '../httpClient';
 
 
 const MedicineDetails = () => {
@@ -22,7 +23,7 @@ const MedicineDetails = () => {
 
     const { addItem } = useContext(cartContext);
 
-    const { isLoading, toggleLoading } = useContext(commonContext);
+    const { isLoading, toggleLoading, placeOrder } = useContext(commonContext);
 
     const { productId } = useParams();
 
@@ -37,6 +38,17 @@ const MedicineDetails = () => {
     const [previewImg, setPreviewImg] = useState(images[0]);
 
     let allImages = [...images];
+
+    const [addBalance, setAddBalance] = useState(false);
+    const [balance, setBalance] = useState(0);
+    const [totalBalance, setTotalBalance] = useState(price);
+
+    useEffect(() => {
+        httpClient.post('/get_wallet',{email: localStorage.getItem("email")})
+        .then((res) => {
+          setBalance(Number(res.data.wallet))
+        })
+      }, []);
 
     if(images.length < 4) {
         for(let i=0; i < 4-images.length; i++) {
@@ -141,13 +153,44 @@ const MedicineDetails = () => {
 
                             <div className="separator"></div>
 
+                            <div onClick={() => {
+                                if(!addBalance) {
+                                    if(price <= balance) {
+                                      setTotalBalance(0);
+                                    } else {
+                                      setTotalBalance(price - balance);
+                                    }
+                                  } else {
+                                    setTotalBalance(price);
+                                  }
+                                  setAddBalance(prev => !prev);
+                            }} className="use-balance-div">
+                                <input type="checkbox" checked={addBalance} onChange={() => {}}/>
+                                <p>Use Wallet Money {`(₹ ${balance})`}</p>
+                            </div>
+
+                            <div className="use-balance-div">
+                                <p>Amount to pay: <b>₹ {totalBalance}</b></p>
+                            </div>
+
                             <div className="prod_details_buy_btn">
                                 <button
                                     type="button"
                                     className="btn"
                                     onClick={() => {
-                                        localStorage.setItem("totalPrice", price);
-                                        navigate("/checkout");
+                                        if (totalBalance===0){
+                                            httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: price})
+                                            localStorage.setItem("orders",JSON.stringify([product]))
+                                            window.location.href = "http://localhost:3000/success";
+                                          }
+                                          else{
+                                            httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: balance})
+                                            setTimeout(() => {
+                                              localStorage.setItem("totalPrice", totalBalance);
+                                              placeOrder(product)
+                                              navigate("/checkout");
+                                            }, 2000);
+                                          }
                                     }}
                                 >
                                     Buy now

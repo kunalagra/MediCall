@@ -30,7 +30,7 @@ const CartItem = (props) => {
                             <Link to={`/all-medicines/medicine-details/${id}`}><span>{title}</span> <br />Pharmaceuticals</Link>
                         </h4>
                         <div className="cart_item_del">
-                            <span onClick={() => {removeItem(id), remove(id)}}>
+                            <span onClick={() => {removeItem(id); remove(id)}}>
                                 <TbTrash />
                             </span>
                             <div className="tooltip">Remove Item</div>

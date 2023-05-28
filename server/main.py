@@ -552,12 +552,23 @@ def get_wallet():
 def debit_wallet():
     data = request.get_json()
     email = data['email']
-    demail = data['demail']
-    doctor = doctor.find_one({'email': demail})
     var = patients.find_one({'email': email})
-    wallet = var.get('wallet', 0)-int(doctor.get('fee', 0))
-    patients.update_one({'email': email}, {'$set': {'wallet': wallet}})
-    return jsonify({'message': 'Wallet updated successfully'}), 200
+    if data.get('demail', False):
+        demail = data['demail']
+        doc = doctor.find_one({'email': demail})
+        wallet = var.get('wallet', 0)-int(doc.get('fee', 0))
+        patients.update_one({'email': email}, {'$set': {'wallet': wallet}})
+        return jsonify({'message': 'Wallet updated successfully'}), 200
+    else:
+        if var:
+            wallet = var.get('wallet', 0)-int(data['walletAmount'])
+            patients.update_one({'email': email}, {'$set': {'wallet': wallet}})
+            return jsonify({'message': 'Wallet updated successfully'}), 200
+        else:
+            var = doctor.find_one({'email': email})
+            wallet = var.get('wallet', 0)-int(data['walletAmount'])
+            doctor.update_one({'email': email}, {'$set': {'wallet': wallet}})
+            return jsonify({'message': 'Wallet updated successfully'}), 200
     
 @app.route('/add_wallet_history', methods=['POST'])
 def add_wallet_history():
