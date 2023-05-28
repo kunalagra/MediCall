@@ -90,6 +90,7 @@ const handleSend = async (message) => {
   if (!containsHealthKeywords) {
     setMessages([
       ...messages,
+      newMessage,
       {
         message: "I'm sorry, I can only answer health-related questions.",
         sender: "ChatGPT",
