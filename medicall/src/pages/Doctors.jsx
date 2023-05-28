@@ -201,25 +201,35 @@ const Doctors = () => {
       }
      },
     {
-      field: "contact", headerName: "Contact", headerAlign: "center", align: "center", width: 100,
-      renderCell: (params) => {
+      field: "languages", headerName: "Languages", headerAlign: "center", align: "center", width: 100,
+      renderCell: () => {
         return (
           <div className="social-column--cell">
-            <IconButton onClick={() => {
-              const shareUrl = `https://wa.me/${params.row.phone}?text=Hello sir,%0AI want to talk to you!!`;
-              window.open(shareUrl, "_blank");
-            }}>
-              <RiWhatsappFill className="social-icon whatsapp" />
-            </IconButton>
-            <IconButton onClick={() => {
-              window.open(`mailto:${params.row.email}`, "_blank");
-            }}>
-              <IoMdMail className="social-icon mail" />
-            </IconButton>
+            English / Hindi
           </div>
         )
       },
     },
+    // {
+    //   field: "contact", headerName: "Contact", headerAlign: "center", align: "center", width: 100,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div className="social-column--cell">
+    //         <IconButton onClick={() => {
+    //           const shareUrl = `https://wa.me/${params.row.phone}?text=Hello sir,%0AI want to talk to you!!`;
+    //           window.open(shareUrl, "_blank");
+    //         }}>
+    //           <RiWhatsappFill className="social-icon whatsapp" />
+    //         </IconButton>
+    //         <IconButton onClick={() => {
+    //           window.open(`mailto:${params.row.email}`, "_blank");
+    //         }}>
+    //           <IoMdMail className="social-icon mail" />
+    //         </IconButton>
+    //       </div>
+    //     )
+    //   },
+    // },
     {
       field: "ratings",
       headerName: "Ratings", headerAlign: "center", align: "center", width: 100,
