@@ -15,7 +15,7 @@ const Success = () => {
       setTimeout(() => {
         setActive(true);
         setTimeout(() => {
-          httpClient.post('/wallet', {email: localStorage.getItem("email"), amount: localStorage.getItem("totalPrice")})
+          httpClient.post('/wallet', {email: localStorage.getItem("email"), walletAmount: localStorage.getItem("totalPrice")})
           httpClient.post('/add_wallet_history', {email: localStorage.getItem("email"), 
           history: {desc: "Recharge", amount: Number(localStorage.getItem("totalPrice")), date: new Date().toLocaleString(), add: true}})
           navigate("/my-wallet");

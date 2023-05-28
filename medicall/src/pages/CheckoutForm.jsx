@@ -64,7 +64,7 @@ export default function CheckoutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
 
-        return_url: "https:/gfg-sfi.onrender.com/success",
+        return_url: "https://gfg-sfi.onrender.com/success",
       },
     });
 
@@ -87,7 +87,7 @@ export default function CheckoutForm() {
   }
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} style={{color: "var(--blue-color-8)"}}>
+    <form id="payment-form" onSubmit={handleSubmit} style={{color: "var()"}}>
       <div id="amount">
           <h1 id="amo">Payment</h1>
           <div id='price'>
