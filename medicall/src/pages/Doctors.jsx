@@ -150,7 +150,7 @@ const Doctors = () => {
                 setMessage(res.data.message);
               }
             })
-          }, 30000);
+          }, 20000);
         }).catch(() => {
           // console.log(res)
         })

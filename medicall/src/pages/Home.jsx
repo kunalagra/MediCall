@@ -163,7 +163,7 @@ const Home = () => {
         setPatient_name(localStorage.getItem("curpname"));
         setSearching(localStorage.getItem("searching")==="2" ? 2 : localStorage.getItem("searching")==="1" ? 1 : 0);
         setSearchPatient(localStorage.getItem("setSearchPatient") === "true" ? true : false);
-    }, 25010);}
+    }, 10000);}
 
     const handleappointmentmeet = (doc, demail, link) => {
         if(doc){
