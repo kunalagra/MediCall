@@ -494,9 +494,9 @@ const Home = () => {
                                      onClick={() => {
                                         httpClient.post("meet_status", {email: localStorage.getItem("email")})
                                         httpClient.put("/currently_in_meet", {email: localStorage.getItem("email")})
-                                        localStorage.setItem("setSearchPatient", false)
                                         .then(res => {
                                             setSearchPatient(false);
+                                            localStorage.setItem("setSearchPatient", false)
                                             navigate(`${meetlink}`);
                                         })
                                         .catch(err => {
