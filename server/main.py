@@ -277,9 +277,10 @@ def set_appointment():
             "link": data['link'],
         })
 
+        pat = patients.find_one({'email': data['pemail']})
         payload = {
                 "messaging_product": "whatsapp",
-                "to": data['phone'],
+                "to": pat['phone'],
                 "text": {
                 "body": "Your Appointment has been booked on" + data['date'] + "at "+ data['time'] + "with Dr." + doc['username'] +"."
             }
