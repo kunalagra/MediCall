@@ -282,7 +282,7 @@ def set_appointment():
                 "messaging_product": "whatsapp",
                 "to": pat['phone'],
                 "text": {
-                "body": "Your Appointment has been booked on" + data['date'] + "at "+ data['time'] + "with Dr." + doc['username'] +"."
+                "body": "Your Appointment has been booked on " + data['date'] + " at "+ data['time'] + " with Dr." + doc['username'] +"."
             }
         }
         whatsapp_message(payload)
