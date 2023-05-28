@@ -64,7 +64,7 @@ export default function CheckoutForm() {
       confirmParams: {
         // Make sure to change this to your payment completion page
 
-        return_url: "https:/gfg-sfi.onrender.com/success",
+        return_url: "https://gfg-sfi.onrender.com/success",
       },
     });
 
