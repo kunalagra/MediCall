@@ -85,7 +85,7 @@ const AccountForm = () => {
                     registerer: usertype,
                     age,
                     gender,
-                    phone,
+                    phone: "91" + phone,
                     email,
                     passwd,
                     specialization

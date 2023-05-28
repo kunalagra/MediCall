@@ -87,7 +87,7 @@ export default function CheckoutForm() {
   }
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} style={{color: "var()"}}>
+    <form id="payment-form" onSubmit={handleSubmit} style={{color: "var(--blue-color-8)"}}>
       <div id="amount">
           <h1 id="amo">Payment</h1>
           <div id='price'>
