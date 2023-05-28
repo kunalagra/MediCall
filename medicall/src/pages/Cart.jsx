@@ -159,7 +159,7 @@ const Cart = () => {
                         //   placeOrder(item);
                         // });
                         localStorage.setItem("orders", JSON.stringify(cartItems))
-                        window.location.href = "http://localhost:3000/success";
+                        window.location.href = "https://gfg-sfi.onrender.com/success";
                       }
                       else{
                         setIsCheckoutLoading(true);

@@ -136,6 +136,7 @@ def register():
                 data['meet'] = False
                 data['appointments'] = 0
                 data['stars'] = 0
+                data["status"] = "offline"
                 data['upcomingAppointments'] = []
                 del data["age"]
                 doctor.insert_one(data)
@@ -215,7 +216,7 @@ def get_status():
     for i in doctor.find():
         if i.get('verified', False):
             count += 1
-            details.append({"email": i["email"], "status": i["status"], "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
+            details.append({"email": i["email"], "status": i.get("status", "offline"), "username": i["username"], "specialization": i["specialization"], "gender": i["gender"], "phone": i["phone"], "isInMeet": i["meet"], "noOfAppointments": i["appointments"], "noOfStars": i["stars"], "id": count, 'fee': i.get('fee', 199)})
     # print(details)
     return jsonify({"details": details}), 200
 

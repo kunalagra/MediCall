@@ -181,7 +181,7 @@ const MedicineDetails = () => {
                                         if (totalBalance===0){
                                             httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: price})
                                             localStorage.setItem("orders",JSON.stringify([product]))
-                                            window.location.href = "http://localhost:3000/success";
+                                            window.location.href = "https://gfg-sfi.onrender.com/success";
                                           }
                                           else{
                                             httpClient.post('/debit_wallet', {email: localStorage.getItem("email"), walletAmount: balance})
