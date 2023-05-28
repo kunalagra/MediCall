@@ -33,7 +33,7 @@ Google Cloud & AMD instance:
 - MongoDB Atlas Cluster
 
 Team Memebers - <br />
-Kunal Agrawal ![LinkedIn](https://www.linkedin.com/in/kunalragrawal/) <br />
-Ganesh Utla ![LinkedIn](https://www.linkedin.com/in/ganesh-utla-888abc/) <br />
-Deexith Madas ![LinkedIn](https://www.linkedin.com/in/deexith-madas-625283208/) <br />
-Aman Tiwari ![LinkedIn](https://www.linkedin.com/in/aman-tiwari-603245200/)
+Kunal Agrawal [LinkedIn](https://www.linkedin.com/in/kunalragrawal/) <br />
+Ganesh Utla [LinkedIn](https://www.linkedin.com/in/ganesh-utla-888abc/) <br />
+Deexith Madas [LinkedIn](https://www.linkedin.com/in/deexith-madas-625283208/) <br />
+Aman Tiwari [LinkedIn](https://www.linkedin.com/in/aman-tiwari-603245200/)
