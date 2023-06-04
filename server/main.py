@@ -36,7 +36,7 @@ jwt = JWTManager(app)
 CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
 
-URI = "mongodb+srv://Deexith06:Deexith06@cluster0gc.0bncw3x.mongodb.net/?retryWrites=true&w=majority"
+URI = os.getenv("DBURL")
 TOKEN = os.getenv("WHATSAPP")
 
 client = pymongo.MongoClient(URI, server_api=ServerApi('1'))
