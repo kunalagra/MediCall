@@ -36,7 +36,7 @@ jwt = JWTManager(app)
 CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
 
-URI = os.getenv("DB")
+URI = os.getenv("DBURL")
 TOKEN = os.getenv("WHATSAPP")
 
 client = pymongo.MongoClient(URI, server_api=ServerApi('1'))
