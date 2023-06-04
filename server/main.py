@@ -137,6 +137,7 @@ def register():
                 data['appointments'] = 0
                 data['stars'] = 0
                 data["status"] = "offline"
+                data["verified"] = True
                 data['upcomingAppointments'] = []
                 del data["age"]
                 doctor.insert_one(data)
