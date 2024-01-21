@@ -138,7 +138,7 @@ const PDFGenerator = ({name, age, gender, selectedDoc}, prescription) => {
     pdf.setFont("Helvetica", "normal");
     pdf.setFontSize(12);
     pdf.setTextColor(150);
-    pdf.text("2023 @Medicall | All Rights Reserved", pdf.internal.pageSize.width - 40 - pdf.getStringUnitWidth("2023 @MediCall | All Rights Reserved") * pdf.internal.getFontSize(), pdf.internal.pageSize.height - 30);
+    pdf.text("2024 @Medicall | All Rights Reserved", pdf.internal.pageSize.width - 40 - pdf.getStringUnitWidth("2024 @MediCall | All Rights Reserved") * pdf.internal.getFontSize(), pdf.internal.pageSize.height - 30);
 
     return pdf;
 }

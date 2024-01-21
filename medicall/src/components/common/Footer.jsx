@@ -55,7 +55,7 @@ const Footer = () => {
                     <div className="sub_footer_wrapper">
                         <div className="foot_copyright">
                             <p>
-                                2023 @ <a href="/">Medicall</a> | All Rights Reserved.
+                                2024 @ <a href="/">Medicall</a> | All Rights Reserved.
                             </p>
                         </div>
                         <div className="foot_social">

@@ -46,7 +46,7 @@ export const footSocial = [
         id: 1,
         icon: <FaGithub />,
         cls: "Github",
-        path: "https://github.com/kunalagra/GFG_SFI",
+        path: "/",
     },
     {
         id: 2,
