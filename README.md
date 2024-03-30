@@ -56,6 +56,9 @@ $ cd medicall
 # Install dependencies
 $ npm install
 
+# Rename .env.example to .env
+$ mv .env.example .env
+
 # Run the app
 $ npm run dev
 
@@ -64,6 +67,9 @@ $ cd server
 
 # Install dependencies
 $ pip install -r requirements.txt
+
+# Rename .env.example to .env
+$ mv .env.example .env
 
 # Run the server
 $ flask run 
