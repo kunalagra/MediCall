@@ -1,39 +1,97 @@
-# GFG SFI
+<h1 align="center">
+  <br>
+  <a href="https://medicall.onrender.com/"><img src="https://raw.githubusercontent.com/kunalagra/MediCall/main/medicall/public/logo512.png" alt="MediCall" width="200"></a>
+  <br>
+  MediCall
+  <br>
+</h1>
 
-Quad's Team repo for GFG's Solving for India Hackathon
+<h4 align="center">AIO Digital Hospital Platform.</h4>
 
-We have successfully implemented
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#license">License</a>
+</p>
 
-- Video calling facility for instant and Scheduled meet
-- Integrated Whatsapp/Email for sending notifications and prescriptions
-- Prescription & Invoice after video call
-- Taking Doctor's feedback by Patient
-- Setting Doctor's Availability 
-- Disease Prediction Model 
-- Personalized Chatbot
-- E Pharmacy integrated with stripe
-- Wallet, Cart and Previous orders integrated with stripe
+![screenshot](https://raw.githubusercontent.com/kunalagra/MediCall/main/medicall/public/screenshot.png)
 
-Additional Features :
-- Login, Logout and update functionality
-- Dual interfaces for doctor and patient
-- Manual verification of doctors after their signup
+## Key Features
 
-# Tech Stack Used
+* 2 types of User - Doctor & Patients
+* Patients Features
+  - Schedule Video calls with doctors
+  - Provide Feedback to Doctor after Video 
+  - Update and view Profile
+  - Shop at E-Pharmacy
+  - View Previous Orders and Prescriptions
+  - Wallet System with Stripe for payments
+    
+* Instructor Features
+  - Add Details
+  - Set Availability
+  - Join video calls
+  - Write Prescription for Patients after meet
+    
+* Smart Queue Management
+* Email & Whatsapp Supprt for Notifications
+* Disease Prediction Model
+* Personalized Chatbot
 
-Front-end:
-- ReactJS & Material UI
+## How To Use
 
-Backend:
-- Flask
-- MongoDB
+To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) & [Python](https://www.python.org/) installed. From your command line:
 
-Google Cloud & AMD instance:
-- Backend Hosted on AMD instance
-- MongoDB Atlas Cluster
+```bash
+# Clone this repository
+$ git clone https://github.com/kunalagra/MediCall
 
-Team Memebers - <br />
-Kunal Agrawal [LinkedIn](https://www.linkedin.com/in/kunalragrawal/) <br />
-Ganesh Utla [LinkedIn](https://www.linkedin.com/in/ganesh-utla-888abc/) <br />
-Deexith Madas [LinkedIn](https://www.linkedin.com/in/deexith-madas-625283208/) <br />
-Aman Tiwari [LinkedIn](https://www.linkedin.com/in/aman-tiwari-603245200/)
+# Go into the repository
+$ cd MediCall
+
+# For frontend
+$ cd medicall
+
+# Install dependencies
+$ npm install
+
+# Run the app
+$ npm run dev
+
+# For Backend
+$ cd server
+
+# Install dependencies
+$ pip install -r requirements.txt
+
+# Run the server
+$ flask run 
+```
+> [!IMPORTANT]  
+> Populate your .env keys with their respective values. 
+
+> [!NOTE]
+> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+
+## Credits
+
+This software uses the following packages:
+
+- [Node.js](https://nodejs.org/)
+- [Python](https://www.python.org/)
+- [React.JS](https://react.dev/)
+- [MongoDB](https://www.mongodb.com/)
+- [Jitsi](https://github.com/jitsi/jitsi)
+
+Built at GFG's Solving for India Hackathon
+
+
+## You may also like...
+
+- [SumUp](https://github.com/kunalagra/SumUp) - Summarize TEAMs Meeting
+- [Codegamy](https://github.com/kunalagra/codegamy) - A LeetCode clone
+
+## License
+
+AGPL-3
